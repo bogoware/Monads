@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Bogoware.Monads</AssemblyName>
+        <RootNamespace>Bogoware.Monads</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="Bogoware.Monads">
+        <HintPath>..\..\test\Monads.UnitTests\bin\Release\net7.0\Bogoware.Monads.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+</Project>
