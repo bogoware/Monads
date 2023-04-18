@@ -98,6 +98,16 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 		=> _value is not null
 			? new Optional<TResult>(map(_value))
 			: new Optional<TResult>();
+	
+	public async Task<Optional<TResult>> Map<TResult>(Func<Task<TResult>> map) where TResult : class
+		=> _value is not null
+			? new(await map())
+			: new();
+	
+	public async Task<Optional<TResult>> Map<TResult>(Func<T, Task<TResult>> map) where TResult : class
+		=> _value is not null
+			? new(await map(_value))
+			: new();
 
 	public Optional<TResult> FlatMap<TResult>(Func<Optional<TResult>> map) where TResult : class
 		=> _value is not null
@@ -108,6 +118,16 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 		=> _value is not null
 			? map(_value)
 			: new Optional<TResult>();
+	
+	public Task<Optional<TResult>> FlatMap<TResult>(Func<Task<Optional<TResult>>> map) where TResult : class
+		=> _value is not null
+			? map()
+			: Task.FromResult(new Optional<TResult>());
+
+	public Task<Optional<TResult>> FlatMap<TResult>(Func<T, Task<Optional<TResult>>> map) where TResult : class
+		=> _value is not null
+			? map(_value)
+			: Task.FromResult(new Optional<TResult>());
 
 	public T Default(T defaultValue) => _value ?? defaultValue;
 
