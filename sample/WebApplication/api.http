@@ -1,0 +1,11 @@
+### GET Some should return the response
+GET http://localhost:5045/some
+Accept: application/json
+
+### GET None should return not found
+GET http://localhost:5045/none
+Accept: application/json
+
+### GET 404, just for reference
+GET http://localhost:5045/notfound
+Accept: application/json
