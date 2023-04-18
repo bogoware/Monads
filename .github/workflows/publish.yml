@@ -3,7 +3,7 @@
 
 name: publish
 on:
-  #workflow_dispatch: # Allow running the workflow manually from the GitHub UI
+  workflow_dispatch: # Allow running the workflow manually from the GitHub UI
   release:
     types:
       - published    # Run the workflow when a new GitHub release is published
@@ -44,8 +44,8 @@ jobs:
       - name: Test
         run: dotnet test --no-build --verbosity normal -c Release
       
-      # Create the NuGet package in the folder from the environment variable NuGetDirectory
-      - run: dotnet pack Demonizer --output ${{ env.NuGetDirectory }} -c Release
+      # Create the NuGet packages in the folder from the environment variable NuGetDirectory
+      - run: dotnet pack src/Monads --output ${{ env.NuGetDirectory }} -c Release
       
       # Publish the NuGet package as an artifact, so they can be used in the following jobs
       - uses: actions/upload-artifact@v3
