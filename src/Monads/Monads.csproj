@@ -8,10 +8,4 @@
         <RootNamespace>Bogoware.Monads</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Reference Include="Bogoware.Monads">
-        <HintPath>..\..\test\Monads.UnitTests\bin\Release\net7.0\Bogoware.Monads.dll</HintPath>
-      </Reference>
-    </ItemGroup>
-
 </Project>
