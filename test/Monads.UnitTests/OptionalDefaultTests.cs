@@ -1,3 +1,4 @@
+// ReSharper disable ArrangeObjectCreationWhenTypeNotEvident
 namespace Bogoware.Monads.UnitTests;
 
 public class OptionalDefaultTests

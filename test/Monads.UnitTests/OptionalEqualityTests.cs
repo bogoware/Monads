@@ -14,7 +14,7 @@ public class OptionalEqualityTests
 	{
 		var value1 = Some(new Value(0));
 		var value2 = Some(new Value(0));
-		value1.Should().Be(value2);
+		value1.Equals(value2).Should().BeTrue();
 		value1.GetHashCode().Should().Be(value2.GetHashCode());
 	}
 	
@@ -23,15 +23,15 @@ public class OptionalEqualityTests
 	{
 		var value1 = Some(new Value(0));
 		var value2 = Some(new Value(1));
-		value1.Should().NotBe(value2);
+		value1.Equals(value2).Should().BeFalse();
 	}
 	
 	[Fact]
 	public void Some_are_not_equals_by_inner_type()
 	{
 		var value1 = Some(new Value(0));
-		var value2 = Some(new AnotherValue(0));
-		value1.Should().NotBe(value2);
+		var value2 = (object)Some(new AnotherValue(0));
+		value1.Equals(value2).Should().BeFalse();
 	}
 	
 	[Fact]
@@ -39,7 +39,7 @@ public class OptionalEqualityTests
 	{
 		var value1 = None<Value>();
 		var value2 = None<Value>();
-		value1.Should().Be(value2);
+		value1.Equals(value2).Should().BeTrue();
 		value1.GetHashCode().Should().Be(value2.GetHashCode());
 	}
 	
@@ -47,8 +47,8 @@ public class OptionalEqualityTests
 	public void None_are_not_equals_by_type()
 	{
 		var value1 = None<Value>();
-		var value2 = None<AnotherValue>();
-		value1.Should().NotBe(value2);
+		var value2 = (object)None<AnotherValue>();
+		value1.Equals(value2).Should().BeFalse();
 	}
 	
 	[Fact]

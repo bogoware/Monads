@@ -6,9 +6,9 @@ public class OptionalCreationTests
 	public void Optional_with_null_produces_a_None()
 	{
 		
-		Optional<string> sut = Optional<string>(null);
+		Optional<string> sut = Optional<string>((string)null!);
 		sut.HasValue.Should().BeFalse();
-		sut.Should().Be(None<string>());
+		sut.Should().BeEquivalentTo(None<string>());
 	}
 	
 	[Fact]
@@ -17,7 +17,7 @@ public class OptionalCreationTests
 		
 		Optional<string> sut = Optional<string>("Some");
 		sut.HasValue.Should().BeTrue();
-		sut.Should().Be(Some("Some"));
+		sut.Should().BeEquivalentTo(Some("Some"));
 	}
 	
 	[Fact]
@@ -26,7 +26,7 @@ public class OptionalCreationTests
 		
 		Optional<string> sut = Some("Some");
 		sut.HasValue.Should().BeTrue();
-		sut.Should().Be(Some("Some"));
+		sut.Should().BeEquivalentTo(Some("Some"));
 	}
 	
 	[Fact]

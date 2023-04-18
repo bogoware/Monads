@@ -1,12 +1,73 @@
+using System.Collections;
 using System.Diagnostics.CodeAnalysis;
 
 // ReSharper disable ArrangeObjectCreationWhenTypeNotEvident
 
 namespace Bogoware.Monads;
 
-public readonly struct Optional<T> : IEquatable<Optional<T>>
+public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 	where T : class
 {
+	#region Enumerators
+	private class SomeEnumerator : IEnumerator<T>
+	{
+		private readonly T _value;
+		private T? _current;
+
+		public SomeEnumerator(T value)
+		{
+			_value = value;
+			_current = null!;
+		}
+
+		public bool MoveNext()
+		{
+			if (_current is null)
+			{
+				_current = _value;
+				return true;
+			}
+
+			return false;
+		}
+
+		public void Reset() => _current = null;
+
+		public T Current
+		{
+			get
+			{
+				if (_current is null)
+					throw new InvalidOperationException("Some value already enumerated");
+				return _current;
+			}
+		}
+
+		object IEnumerator.Current => Current;
+
+		public void Dispose() => Reset();
+	}
+
+	private class NoneEnumerator : IEnumerator<T>
+	{
+		public bool MoveNext() => false;
+
+		public void Reset()
+		{
+		}
+
+		public T Current => throw new InvalidOperationException("None cannot be enumerated");
+
+		object IEnumerator.Current => Current;
+
+		public void Dispose()
+		{
+		}
+	}
+
+	private readonly NoneEnumerator _noneEnumeratorInstance = new();
+	#endregion Enumerators
+
 	private readonly T? _value = default;
 	public bool HasValue => _value is not null;
 	public bool IsNone => _value is null;
@@ -38,12 +99,12 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>
 			? new Optional<TResult>(map(_value))
 			: new Optional<TResult>();
 
-	public Optional<TResult> FlatMap<TResult>(Func<Optional<TResult>> map) where TResult : class 
+	public Optional<TResult> FlatMap<TResult>(Func<Optional<TResult>> map) where TResult : class
 		=> _value is not null
 			? map()
 			: new Optional<TResult>();
 
-	public Optional<TResult> FlatMap<TResult>(Func<T, Optional<TResult>> map) where TResult : class 
+	public Optional<TResult> FlatMap<TResult>(Func<T, Optional<TResult>> map) where TResult : class
 		=> _value is not null
 			? map(_value)
 			: new Optional<TResult>();
@@ -56,6 +117,12 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>
 		typeof(T).IsAssignableFrom(typeof(TNew))
 			? new Optional<TNew>(_value as TNew)
 			: new Optional<TNew>();
+
+	IEnumerator<T> IEnumerable<T>.GetEnumerator()
+	{
+		if (IsNone) return _noneEnumeratorInstance;
+		return new SomeEnumerator(_value!);
+	}
 
 	public override bool Equals(object? obj)
 	{
@@ -76,5 +143,10 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>
 
 	public static bool operator !=(Optional<T> left, Optional<T> right) => !left.Equals(right);
 
-	public override string ToString() => _value is null ? $"None<{typeof(T).GetFriendlyTypeName()}>()" : $"Some({_value})";
+	public override string ToString() =>
+		_value is null ? $"None<{typeof(T).GetFriendlyTypeName()}>()" : $"Some({_value})";
+
+	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<T>)this).GetEnumerator();
+	
+	public static implicit operator Optional<T> (T? value) => new(value);
 }
