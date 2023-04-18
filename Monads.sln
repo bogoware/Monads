@@ -20,7 +20,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{2CDA04
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monads.UnitTests", "test\Monads.UnitTests\Monads.UnitTests.csproj", "{997D9D76-D321-40D2-AAC5-5BA6F01C8DA8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "sample\SampleApp\SampleApp.csproj", "{CAA9459E-5819-46F5-BCDB-407D6F024A65}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApp", "sample\ConsoleApp\ConsoleApp.csproj", "{CAA9459E-5819-46F5-BCDB-407D6F024A65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

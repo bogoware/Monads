@@ -1,5 +1,3 @@
-using System.Runtime.InteropServices.JavaScript;
-
 namespace Bogoware.Monads.UnitTests;
 
 public class OptionalOfTypeTests
