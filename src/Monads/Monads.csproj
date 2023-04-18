@@ -18,6 +18,7 @@
         <Title>Bogoware C# Monads</Title>
         <Description>C# Monads functional extensions.</Description>
         <Summary>Bogoware's Monads provides support for Optional and Result monads</Summary>
+        <PackageTags>c# map flatmap linq option some result success failure error none maybe either monad functional async</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <!-- <PackageIcon>packageIcon.png</PackageIcon> -->
         <!-- <PackageIconUrl></PackageIconUrl> -->
