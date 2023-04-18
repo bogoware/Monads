@@ -16,8 +16,8 @@
         <Copyright>Copyright © Giovanni Costagliola 2023</Copyright>
         <NeutralLanguage>en-US</NeutralLanguage>
         <Title>Bogoware C# Monads</Title>
-        <Description>C# Monads functional extensions.</Description>
-        <Summary>Bogoware's Monads provides support for Optional and Result monads</Summary>
+        <Description>Provides Optional and Result Monads suitable to support functional stye in C#.</Description>
+        <Summary>Provides Optional and Result Monads suitable to support functional stye in C#.</Summary>
         <PackageTags>c# map flatmap linq option some result success failure error none maybe either monad functional async</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <!-- <PackageIcon>packageIcon.png</PackageIcon> -->
