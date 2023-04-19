@@ -18,7 +18,7 @@ public class MaybeOfTypeTests
 		Maybe<Base> value1 = Some((Base)new Derived());
 		Maybe<Derived> value2 = value1.OfType<Derived>();
 
-		value2.HasValue.Should().BeTrue();
+		value2.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]

@@ -8,7 +8,7 @@ public class MaybeExtensionsTests
 	{
 		List<Value> values = new List<Value>() { new Value(1), new Value(2) };
 		var result = values.ToMaybe();
-		result.HasValue.Should().BeTrue();
+		result.IsSome.Should().BeTrue();
 		result.GetValue(new Value(0)).Should().Be(new Value(1));
 	}
 	

@@ -25,7 +25,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Some(new Value(0));
 		var actual = await sut.Map(() => AsyncFunction());
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -33,7 +33,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Some(new Value(0));
 		var actual = await sut.Map(v => AsyncFunction(v));
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -57,7 +57,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Some(new Value(0));
 		var actual = await sut.Bind(() => AsyncFlatFunctionSome());
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -65,7 +65,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Some(new Value(0));
 		var actual = await sut.Bind(v => AsyncFlatFunctionSome(v));
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -89,7 +89,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
 		var actual = await sut.Map(() => AsyncFunction());
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -97,7 +97,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
 		var actual = await sut.Map(v => AsyncFunction(v));
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -121,7 +121,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
 		var actual = await sut.Bind(() => AsyncFlatFunctionSome());
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -129,7 +129,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
 		var actual = await sut.Bind(v => AsyncFlatFunctionSome(v));
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -137,7 +137,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
 		var actual = await sut.Map(() => Function());
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -145,7 +145,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
 		var actual = await sut.Map(v => Function(v));
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -169,7 +169,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
 		var actual = await sut.Bind(() => FlatFunctionSome());
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -177,7 +177,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
 		var actual = await sut.Bind(v => FlatFunctionSome(v));
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -185,7 +185,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(None<Value>());
 		var actual = await sut.WithDefault(new Value(1));
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -193,7 +193,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(None<Value>());
 		var actual = await sut.WithDefault(() => new(1));
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -201,7 +201,7 @@ public class MaybeAsyncTests
 	{
 		var sut = Task.FromResult(None<Value>());
 		var actual = await sut.WithDefault(() => Task.FromResult<Value>(new(0)));
-		actual.HasValue.Should().BeTrue();
+		actual.IsSome.Should().BeTrue();
 	}
 
 	[Fact]

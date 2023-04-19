@@ -7,7 +7,7 @@ public class MaybeMapTests
 	{
 		var value = Some("0");
 		Maybe<string> newValue = value.Map("Hello");
-		newValue.HasValue.Should().BeTrue();
+		newValue.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -15,7 +15,7 @@ public class MaybeMapTests
 	{
 		var value = Some("0");
 		Maybe<string> newValue = value.Map(() => "Hello");
-		newValue.HasValue.Should().BeTrue();
+		newValue.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -23,7 +23,7 @@ public class MaybeMapTests
 	{
 		var value = Some("0");
 		Maybe<string> newValue = value.Map(num => $"Hello {num}");
-		newValue.HasValue.Should().BeTrue();
+		newValue.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]

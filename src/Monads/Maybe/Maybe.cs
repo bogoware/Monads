@@ -8,7 +8,7 @@ public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 	where T : class
 {
 	private readonly T? _value = default;
-	public bool HasValue => _value is not null;
+	public bool IsSome => _value is not null;
 	public bool IsNone => _value is null;
 	public static readonly Maybe<T> None = default;
 
@@ -200,7 +200,7 @@ public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 
 	IEnumerator<T> IEnumerable<T>.GetEnumerator()
 	{
-		if (HasValue) yield return _value!;
+		if (IsSome) yield return _value!;
 	}
 
 	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<T>)this).GetEnumerator();

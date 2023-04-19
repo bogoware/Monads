@@ -8,7 +8,7 @@ public class MaybeBindTests
 		var value = Some(new Value(0));
 		var newValue = value.Bind(() => Some(new AnotherValue(0)));
 		newValue.GetType().Should().Be<Maybe<AnotherValue>>();
-		newValue.HasValue.Should().BeTrue();
+		newValue.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]
@@ -17,7 +17,7 @@ public class MaybeBindTests
 		var value = Some(new Value(0));
 		var newValue = value.Bind(val => Some(new AnotherValue(val.Val + 1)));
 		newValue.GetType().Should().Be<Maybe<AnotherValue>>();
-		newValue.HasValue.Should().BeTrue();
+		newValue.IsSome.Should().BeTrue();
 	}
 	
 	[Fact]

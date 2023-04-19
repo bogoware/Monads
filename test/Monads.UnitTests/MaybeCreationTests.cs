@@ -7,7 +7,7 @@ public class MaybeCreationTests
 	{
 		
 		Maybe<string> sut = Maybe<string>((string)null!);
-		sut.HasValue.Should().BeFalse();
+		sut.IsSome.Should().BeFalse();
 		sut.Should().BeEquivalentTo(None<string>());
 	}
 	
@@ -16,7 +16,7 @@ public class MaybeCreationTests
 	{
 		
 		Maybe<string> sut = Maybe<string>("Some");
-		sut.HasValue.Should().BeTrue();
+		sut.IsSome.Should().BeTrue();
 		sut.Should().BeEquivalentTo(Some("Some"));
 	}
 	
@@ -25,7 +25,7 @@ public class MaybeCreationTests
 	{
 		
 		Maybe<string> sut = Some("Some");
-		sut.HasValue.Should().BeTrue();
+		sut.IsSome.Should().BeTrue();
 		sut.Should().BeEquivalentTo(Some("Some"));
 	}
 	

@@ -5,14 +5,14 @@ public class MaybePreludeTests
 	[Fact]
 	public void Unit_success()
 	{
-		var value = Prelude.Unit();
+		var value = Unit();
 		value.Equals(Unit.Instance).Should().Be(true);
 	} 
 	
 	[Fact]
 	public void None_success()
 	{
-		var value = Prelude.None();
+		var value = None();
 		value.Equals(None<Unit>()).Should().Be(true);
 	}
 }

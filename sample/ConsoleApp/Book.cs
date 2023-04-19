@@ -1,4 +1,3 @@
-using System.Net;
 using Bogoware.Monads;
 
 namespace Sample;

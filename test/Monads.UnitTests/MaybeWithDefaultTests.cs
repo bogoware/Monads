@@ -7,7 +7,7 @@ public class MaybeWithDefaultTests
 	{
 		var none = None<string>();
 		var some = none.WithDefault("Some");
-		some.HasValue.Should().BeTrue();
+		some.IsSome.Should().BeTrue();
 		some.GetValue("").Should().Be("Some");
 	}
 	
@@ -16,7 +16,7 @@ public class MaybeWithDefaultTests
 	{
 		var none = None<string>();
 		var some = none.WithDefault(() => "Some");
-		some.HasValue.Should().BeTrue();
+		some.IsSome.Should().BeTrue();
 		some.GetValue("").Should().Be("Some");
 	}
 	
@@ -25,7 +25,7 @@ public class MaybeWithDefaultTests
 	{
 		var none = None<string>();
 		var some = await none.WithDefault(() => Task.FromResult("Some"));
-		some.HasValue.Should().BeTrue();
+		some.IsSome.Should().BeTrue();
 		some.GetValue("").Should().Be("Some");
 	}
 }
