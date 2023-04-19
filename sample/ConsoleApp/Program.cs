@@ -1,12 +1,18 @@
 ﻿using System.Diagnostics;
 // ReSharper disable PossibleMultipleEnumeration
 
-var bourbaki = new Mathematician("Bourbaki", null);
-var euler = new Mathematician("Leonhard", "Euler");
-var erdos = new Mathematician("Pál", "Erdős");
+var bourbaki = new Person("Bourbaki", null);
+var euler = new Person("Leonhard", "Euler");
+var erdos = new Person("Pál", "Erdős");
 
-Console.WriteLine(bourbaki);
-Console.WriteLine(euler);
+var elementsOfAlgebra = new Book("Elements of Algebra", euler);
+var mathematicalTables = new Book("Mathematical Tables", null);
+
+Console.WriteLine(bourbaki.GetFullName());
+Console.WriteLine(erdos.GetFullName());
+Console.WriteLine(elementsOfAlgebra.GetPrintableTitle());
+Console.WriteLine(mathematicalTables.GetPrintableTitle());
+
 
 IEnumerable<string> none =
 	from b in bourbaki.Surname
@@ -22,4 +28,4 @@ IEnumerable<string> superMather =
 
 Debug.Assert(superMather.Count() == 1);
 
-Console.WriteLine(superMather.First());
+Console.WriteLine($"Super Mathematician: {superMather.First()}");
