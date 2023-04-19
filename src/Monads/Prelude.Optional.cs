@@ -20,8 +20,8 @@ public static partial class Prelude
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Optional<T> None<T>() where T : class => new();
+	public static Optional<T> None<T>() where T : class => Monads.Optional<T>.None;
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Optional<Unit> None() => new();
+	public static Optional<Unit> None() => Monads.Optional<Unit>.None;
 }

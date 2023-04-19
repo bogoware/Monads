@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 // ReSharper disable ArrangeObjectCreationWhenTypeNotEvident
 
@@ -7,73 +8,10 @@ namespace Bogoware.Monads;
 public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 	where T : class
 {
-	#region Enumerators
-	private class SomeEnumerator : IEnumerator<T>
-	{
-		private readonly T _value;
-		private T? _current;
-
-		public SomeEnumerator(T value)
-		{
-			_value = value;
-			_current = null!;
-		}
-
-		public bool MoveNext()
-		{
-			if (_current is null)
-			{
-				_current = _value;
-				return true;
-			}
-
-			return false;
-		}
-
-		public void Reset() => _current = null;
-
-		public T Current
-		{
-			get
-			{
-				if (_current is null)
-					throw new InvalidOperationException("Some value already enumerated");
-				return _current;
-			}
-		}
-
-		object IEnumerator.Current => Current;
-
-		public void Dispose() => Reset();
-	}
-
-	private class NoneEnumerator : IEnumerator<T>
-	{
-		public bool MoveNext() => false;
-
-		public void Reset()
-		{
-		}
-
-		public T Current => throw new InvalidOperationException("None cannot be enumerated");
-
-		object IEnumerator.Current => Current;
-
-		public void Dispose()
-		{
-		}
-	}
-
-	private readonly NoneEnumerator _noneEnumeratorInstance = new();
-	#endregion Enumerators
-
 	private readonly T? _value = default;
 	public bool HasValue => _value is not null;
 	public bool IsNone => _value is null;
-
-	public Optional()
-	{
-	}
+	public static readonly Optional<T> None = default;
 
 	public Optional(T? value)
 	{
@@ -86,62 +24,116 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 	public Optional<TResult> Map<TResult>(TResult value) where TResult : class
 		=> _value is not null
 			? new Optional<TResult>(value)
-			: new Optional<TResult>();
+			: Optional<TResult>.None;
 
 	public Optional<TResult> Map<TResult>(Func<TResult> map) where TResult : class
 		=> _value is not null
 			? new Optional<TResult>(map())
-			: new Optional<TResult>();
+			: Optional<TResult>.None;
 
 	public Optional<TResult> Map<TResult>(Func<T, TResult> map) where TResult : class
 		=> _value is not null
 			? new Optional<TResult>(map(_value))
-			: new Optional<TResult>();
-	
+			: Optional<TResult>.None;
+
 	public async Task<Optional<TResult>> Map<TResult>(Func<Task<TResult>> map) where TResult : class
 		=> _value is not null
 			? new(await map())
-			: new();
-	
+			: Optional<TResult>.None;
+
 	public async Task<Optional<TResult>> Map<TResult>(Func<T, Task<TResult>> map) where TResult : class
 		=> _value is not null
 			? new(await map(_value))
-			: new();
+			: Optional<TResult>.None;
 
-	public Optional<TResult> FlatMap<TResult>(Func<Optional<TResult>> map) where TResult : class
+	public Optional<TResult> Bind<TResult>(Func<Optional<TResult>> map) where TResult : class
 		=> _value is not null
 			? map()
-			: new Optional<TResult>();
+			: Optional<TResult>.None;
 
-	public Optional<TResult> FlatMap<TResult>(Func<T, Optional<TResult>> map) where TResult : class
+	public Optional<TResult> Bind<TResult>(Func<T, Optional<TResult>> map) where TResult : class
 		=> _value is not null
 			? map(_value)
-			: new Optional<TResult>();
+			: Optional<TResult>.None;
+
+	public Task<Optional<TResult>> Bind<TResult>(Func<Task<Optional<TResult>>> map) where TResult : class
+		=> _value is not null
+			? map()
+			: Task.FromResult(Optional<TResult>.None);
+
+	public Task<Optional<TResult>> Bind<TResult>(Func<T, Task<Optional<TResult>>> map) where TResult : class
+		=> _value is not null
+			? map(_value)
+			: Task.FromResult(Optional<TResult>.None);
+
+	public Optional<T> WithDefault(T value)
+		=> _value is not null
+			? this
+			: new(value);
 	
-	public Task<Optional<TResult>> FlatMap<TResult>(Func<Task<Optional<TResult>>> map) where TResult : class
+	public Optional<T> WithDefault(Func<T> value)
 		=> _value is not null
-			? map()
-			: Task.FromResult(new Optional<TResult>());
-
-	public Task<Optional<TResult>> FlatMap<TResult>(Func<T, Task<Optional<TResult>>> map) where TResult : class
+			? this
+			: new(value());
+	
+	public async Task<Optional<T>> WithDefault(Func<Task<T>> value)
 		=> _value is not null
-			? map(_value)
-			: Task.FromResult(new Optional<TResult>());
+			? this
+			: new(await value());
 
-	public T Default(T defaultValue) => _value ?? defaultValue;
+	public Optional<TResult> Match<TResult>(TResult newValue, TResult none) where TResult : class
+		=> _value is not null 
+			? newValue 
+			: none;
 
-	public T Default(Func<T> defaultValue) => _value ?? defaultValue();
+	public Optional<TResult> Match<TResult>(Func<T, TResult> mapValue, TResult none) where TResult : class
+		=> _value is not null 
+			? mapValue(_value) 
+			: none;
+	
+	public Optional<TResult> Match<TResult>(Func<T, TResult> mapValue, Func<TResult> none) where TResult : class
+		=> _value is not null 
+			? mapValue(_value) 
+			: none();
+	
+	public async Task<Optional<TResult>> Match<TResult>(Func<T, Task<TResult>> mapValue, Func<TResult> none) where TResult : class
+		=> _value is not null 
+			? await mapValue(_value) 
+			: none();
+	
+	public async Task<Optional<TResult>> Match<TResult>(Func<T, Task<TResult>> mapValue, Func<Task<TResult>> none) where TResult : class
+		=> _value is not null 
+			? await mapValue(_value) 
+			: await none();
+	
+	public async Task<Optional<TResult>> Match<TResult>(Func<T, TResult> mapValue, Func<Task<TResult>> none) where TResult : class
+		=> _value is not null 
+			? mapValue(_value) 
+			: await none();
+
+	public T GetValue(T defaultValue)
+	{
+		ArgumentNullException.ThrowIfNull(defaultValue);
+		return _value ?? defaultValue;
+	}
+
+	public T GetValue(Func<T> defaultValue)
+	{
+		ArgumentNullException.ThrowIfNull(defaultValue);
+		return _value ?? defaultValue();
+	}
 
 	public Optional<TNew> OfType<TNew>() where TNew : class =>
 		typeof(T).IsAssignableFrom(typeof(TNew))
 			? new Optional<TNew>(_value as TNew)
-			: new Optional<TNew>();
+			: Optional<TNew>.None;
 
 	IEnumerator<T> IEnumerable<T>.GetEnumerator()
 	{
-		if (IsNone) return _noneEnumeratorInstance;
-		return new SomeEnumerator(_value!);
+		if (HasValue) yield return _value!;
 	}
+
+	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<T>)this).GetEnumerator();
 
 	public override bool Equals(object? obj)
 	{
@@ -165,7 +157,5 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 	public override string ToString() =>
 		_value is null ? $"None<{typeof(T).GetFriendlyTypeName()}>()" : $"Some({_value})";
 
-	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<T>)this).GetEnumerator();
-	
-	public static implicit operator Optional<T> (T? value) => new(value);
+	public static implicit operator Optional<T>(T? value) => new(value);
 }

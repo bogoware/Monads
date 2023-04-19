@@ -53,7 +53,7 @@ public class OptionalAsyncTests
 	public async Task Async_flatMap_asyncAction_withSome()
 	{
 		var sut = Some(new Value(0));
-		var actual = await sut.FlatMap(() => AsyncFlatFunctionSome());
+		var actual = await sut.Bind(() => AsyncFlatFunctionSome());
 		actual.HasValue.Should().BeTrue();
 	}
 	
@@ -61,7 +61,7 @@ public class OptionalAsyncTests
 	public async Task Async_flatMap_asyncFunction_withSome()
 	{
 		var sut = Some(new Value(0));
-		var actual = await sut.FlatMap(v => AsyncFlatFunctionSome(v));
+		var actual = await sut.Bind(v => AsyncFlatFunctionSome(v));
 		actual.HasValue.Should().BeTrue();
 	}
 	
@@ -69,7 +69,7 @@ public class OptionalAsyncTests
 	public async Task Async_flatMap_asyncAction_withNone()
 	{
 		var sut = None<Value>();
-		var actual = await sut.FlatMap(() => AsyncFlatFunctionNone());
+		var actual = await sut.Bind(() => AsyncFlatFunctionNone());
 		actual.IsNone.Should().BeTrue();
 	}
 	
@@ -77,7 +77,7 @@ public class OptionalAsyncTests
 	public async Task Async_flatMap_asyncFunction_withNone()
 	{
 		var sut = None<Value>();
-		var actual = await sut.FlatMap(v => AsyncFlatFunctionNone(v));
+		var actual = await sut.Bind(v => AsyncFlatFunctionNone(v));
 		actual.IsNone.Should().BeTrue();
 	}
 	
@@ -117,7 +117,7 @@ public class OptionalAsyncTests
 	public async Task AsyncExtensions_flatMap_asyncAction_withSome()
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.FlatMap(() => AsyncFlatFunctionSome());
+		var actual = await sut.Bind(() => AsyncFlatFunctionSome());
 		actual.HasValue.Should().BeTrue();
 	}
 	
@@ -125,7 +125,7 @@ public class OptionalAsyncTests
 	public async Task AsyncExtensions_flatMap_asyncFunction_withSome()
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.FlatMap(v => AsyncFlatFunctionSome(v));
+		var actual = await sut.Bind(v => AsyncFlatFunctionSome(v));
 		actual.HasValue.Should().BeTrue();
 	}
 	
@@ -165,7 +165,7 @@ public class OptionalAsyncTests
 	public async Task AsyncExtensions_flatMap_Action_withSome()
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.FlatMap(() => FlatFunctionSome());
+		var actual = await sut.Bind(() => FlatFunctionSome());
 		actual.HasValue.Should().BeTrue();
 	}
 	
@@ -173,7 +173,31 @@ public class OptionalAsyncTests
 	public async Task AsyncExtensions_flatMap_Function_withSome()
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.FlatMap(v => FlatFunctionSome(v));
+		var actual = await sut.Bind(v => FlatFunctionSome(v));
+		actual.HasValue.Should().BeTrue();
+	}
+	
+	[Fact]
+	public async Task Async_wthDefault_value()
+	{
+		var sut = Task.FromResult(None<Value>());
+		var actual = await sut.WithDefault(new Value(1));
+		actual.HasValue.Should().BeTrue();
+	}
+	
+	[Fact]
+	public async Task Async_wthDefault_function()
+	{
+		var sut = Task.FromResult(None<Value>());
+		var actual = await sut.WithDefault(() => new(1));
+		actual.HasValue.Should().BeTrue();
+	}
+	
+	[Fact]
+	public async Task Async_wthDefault_asyncFunction()
+	{
+		var sut = Task.FromResult(None<Value>());
+		var actual = await sut.WithDefault(() => Task.FromResult<Value>(new(0)));
 		actual.HasValue.Should().BeTrue();
 	}
 }

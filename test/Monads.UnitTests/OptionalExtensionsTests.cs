@@ -9,7 +9,7 @@ public class OptionalExtensionsTests
 		List<Value> values = new List<Value>() { new Value(1), new Value(2) };
 		var result = values.ToOptional();
 		result.HasValue.Should().BeTrue();
-		result.Default(new Value(0)).Should().Be(new Value(1));
+		result.GetValue(new Value(0)).Should().Be(new Value(1));
 	}
 	
 	[Fact]
