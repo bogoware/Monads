@@ -1,6 +1,6 @@
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalWithDefaultTests
+public class MaybeWithDefaultTests
 {
 	[Fact]
 	public void WithDefault_value()

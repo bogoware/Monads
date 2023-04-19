@@ -2,7 +2,7 @@ using System.Collections;
 
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalLinqTests
+public class MaybeLinqTests
 {
 	[Fact]
 	public void Select_value_from_Some()

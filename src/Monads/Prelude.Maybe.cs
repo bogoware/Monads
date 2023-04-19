@@ -9,19 +9,19 @@ public static partial class Prelude
 	public static Unit Unit() => Monads.Unit.Instance;
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Optional<T> Optional<T>(T? value) where T : class => new(value);
+	public static Maybe<T> Maybe<T>(T? value) where T : class => new(value);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Optional<T> Some<T>(T value) where T : class
+	public static Maybe<T> Some<T>(T value) where T : class
 	{
-		if (value is null) throw new OptionalValueMissingException();
+		if (value is null) throw new MaybeValueMissingException();
 
 		return new(value);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Optional<T> None<T>() where T : class => Monads.Optional<T>.None;
+	public static Maybe<T> None<T>() where T : class => Monads.Maybe<T>.None;
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Optional<Unit> None() => Monads.Optional<Unit>.None;
+	public static Maybe<Unit> None() => Monads.Maybe<Unit>.None;
 }

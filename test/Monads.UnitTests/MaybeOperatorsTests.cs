@@ -1,11 +1,11 @@
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalOperatorsTests
+public class MaybeOperatorsTests
 {
 	[Fact]
 	public void Implicit_conversion_to_Some()
 	{
-		Optional<Value> GetSome() => new Value(0);
+		Maybe<Value> GetSome() => new Value(0);
 
 		var value = GetSome();
 
@@ -15,7 +15,7 @@ public class OptionalOperatorsTests
 	[Fact]
 	public void Implicit_conversion_to_None()
 	{
-		Optional<Value> GetSome() => null;
+		Maybe<Value> GetSome() => null;
 
 		var value = GetSome();
 

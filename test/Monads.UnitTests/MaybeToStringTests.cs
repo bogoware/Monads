@@ -1,6 +1,6 @@
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalToStringTests
+public class MaybeToStringTests
 {
 	[Fact]
 	public void Some_toString()

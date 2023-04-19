@@ -1,13 +1,13 @@
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalExtensionsTests
+public class MaybeExtensionsTests
 {
 	
 	[Fact]
 	public void NonEmptyEnumerable_produces_a_Some()
 	{
 		List<Value> values = new List<Value>() { new Value(1), new Value(2) };
-		var result = values.ToOptional();
+		var result = values.ToMaybe();
 		result.HasValue.Should().BeTrue();
 		result.GetValue(new Value(0)).Should().Be(new Value(1));
 	}
@@ -16,7 +16,7 @@ public class OptionalExtensionsTests
 	public void EmptyEnumerable_produces_a_None()
 	{
 		List<Value> values = new List<Value>() { };
-		var result = values.ToOptional();
+		var result = values.ToMaybe();
 		result.IsNone.Should().BeTrue();
 	}
 	

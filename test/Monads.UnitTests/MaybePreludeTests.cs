@@ -1,6 +1,6 @@
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalPreludeTests
+public class MaybePreludeTests
 {
 	[Fact]
 	public void Unit_success()

@@ -1,7 +1,7 @@
 // ReSharper disable ArrangeObjectCreationWhenTypeNotEvident
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalGetValueTests
+public class MaybeGetValueTests
 {
 	[Fact]
 	public void Some_defaults_to_itsValue()

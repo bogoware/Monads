@@ -1,6 +1,6 @@
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalMatchTests
+public class MaybeMatchTests
 {
 	[Fact]
 	public void Match_some_with_values()

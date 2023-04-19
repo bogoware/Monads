@@ -1,6 +1,6 @@
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalEqualityTests
+public class MaybeEqualityTests
 {
 	[Fact]
 	public void ObjectEquals_null_return_false()

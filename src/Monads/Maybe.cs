@@ -1,19 +1,18 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
 
 // ReSharper disable ArrangeObjectCreationWhenTypeNotEvident
 
 namespace Bogoware.Monads;
 
-public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
+public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 	where T : class
 {
 	private readonly T? _value = default;
 	public bool HasValue => _value is not null;
 	public bool IsNone => _value is null;
-	public static readonly Optional<T> None = default;
+	public static readonly Maybe<T> None = default;
 
-	public Optional(T? value)
+	public Maybe(T? value)
 	{
 		if (value is not null)
 		{
@@ -21,62 +20,62 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 		}
 	}
 
-	public Optional<TResult> Map<TResult>(TResult value) where TResult : class
+	public Maybe<TResult> Map<TResult>(TResult value) where TResult : class
 		=> _value is not null
-			? new Optional<TResult>(value)
-			: Optional<TResult>.None;
+			? new Maybe<TResult>(value)
+			: Maybe<TResult>.None;
 
-	public Optional<TResult> Map<TResult>(Func<TResult> map) where TResult : class
+	public Maybe<TResult> Map<TResult>(Func<TResult> map) where TResult : class
 		=> _value is not null
-			? new Optional<TResult>(map())
-			: Optional<TResult>.None;
+			? new Maybe<TResult>(map())
+			: Maybe<TResult>.None;
 
-	public Optional<TResult> Map<TResult>(Func<T, TResult> map) where TResult : class
+	public Maybe<TResult> Map<TResult>(Func<T, TResult> map) where TResult : class
 		=> _value is not null
-			? new Optional<TResult>(map(_value))
-			: Optional<TResult>.None;
+			? new Maybe<TResult>(map(_value))
+			: Maybe<TResult>.None;
 
-	public async Task<Optional<TResult>> Map<TResult>(Func<Task<TResult>> map) where TResult : class
+	public async Task<Maybe<TResult>> Map<TResult>(Func<Task<TResult>> map) where TResult : class
 		=> _value is not null
 			? new(await map())
-			: Optional<TResult>.None;
+			: Maybe<TResult>.None;
 
-	public async Task<Optional<TResult>> Map<TResult>(Func<T, Task<TResult>> map) where TResult : class
+	public async Task<Maybe<TResult>> Map<TResult>(Func<T, Task<TResult>> map) where TResult : class
 		=> _value is not null
 			? new(await map(_value))
-			: Optional<TResult>.None;
+			: Maybe<TResult>.None;
 
-	public Optional<TResult> Bind<TResult>(Func<Optional<TResult>> map) where TResult : class
+	public Maybe<TResult> Bind<TResult>(Func<Maybe<TResult>> map) where TResult : class
 		=> _value is not null
 			? map()
-			: Optional<TResult>.None;
+			: Maybe<TResult>.None;
 
-	public Optional<TResult> Bind<TResult>(Func<T, Optional<TResult>> map) where TResult : class
+	public Maybe<TResult> Bind<TResult>(Func<T, Maybe<TResult>> map) where TResult : class
 		=> _value is not null
 			? map(_value)
-			: Optional<TResult>.None;
+			: Maybe<TResult>.None;
 
-	public Task<Optional<TResult>> Bind<TResult>(Func<Task<Optional<TResult>>> map) where TResult : class
+	public Task<Maybe<TResult>> Bind<TResult>(Func<Task<Maybe<TResult>>> map) where TResult : class
 		=> _value is not null
 			? map()
-			: Task.FromResult(Optional<TResult>.None);
+			: Task.FromResult(Maybe<TResult>.None);
 
-	public Task<Optional<TResult>> Bind<TResult>(Func<T, Task<Optional<TResult>>> map) where TResult : class
+	public Task<Maybe<TResult>> Bind<TResult>(Func<T, Task<Maybe<TResult>>> map) where TResult : class
 		=> _value is not null
 			? map(_value)
-			: Task.FromResult(Optional<TResult>.None);
+			: Task.FromResult(Maybe<TResult>.None);
 
-	public Optional<T> WithDefault(T value)
+	public Maybe<T> WithDefault(T value)
 		=> _value is not null
 			? this
 			: new(value);
 	
-	public Optional<T> WithDefault(Func<T> value)
+	public Maybe<T> WithDefault(Func<T> value)
 		=> _value is not null
 			? this
 			: new(value());
 	
-	public async Task<Optional<T>> WithDefault(Func<Task<T>> value)
+	public async Task<Maybe<T>> WithDefault(Func<Task<T>> value)
 		=> _value is not null
 			? this
 			: new(await value());
@@ -111,7 +110,7 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 			? mapValue(_value) 
 			: await none();
 
-	public Optional<T> IfSome(Action action)
+	public Maybe<T> IfSome(Action action)
 	{
 		if (_value is not null)
 		{
@@ -120,7 +119,7 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 
 		return this;
 	}
-	public Optional<T> IfSome(Action<T> action)
+	public Maybe<T> IfSome(Action<T> action)
 	{
 		if (_value is not null)
 		{
@@ -130,7 +129,7 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 		return this;
 	}
 	
-	public async Task<Optional<T>> IfSome(Func<Task> action)
+	public async Task<Maybe<T>> IfSome(Func<Task> action)
 	{
 		if (_value is not null)
 		{
@@ -140,7 +139,7 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 		return this;
 	}
 
-	public async Task<Optional<T>> IfSome(Func<T, Task> action)
+	public async Task<Maybe<T>> IfSome(Func<T, Task> action)
 	{
 		if (_value is not null)
 		{
@@ -150,7 +149,7 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 		return this;
 	}
 	
-	public Optional<T> IfNone(Action action)
+	public Maybe<T> IfNone(Action action)
 	{
 		if (_value is null)
 		{
@@ -160,7 +159,7 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 		return this;
 	}
 	
-	public async Task<Optional<T>> IfNone(Func<Task> action)
+	public async Task<Maybe<T>> IfNone(Func<Task> action)
 	{
 		if (_value is null)
 		{
@@ -170,13 +169,13 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 		return this;
 	}
 
-	public Optional<T> Tap(Action<Optional<T>> action)
+	public Maybe<T> Tap(Action<Maybe<T>> action)
 	{
 		action(this);
 		return this;
 	}
 
-	public async Task<Optional<T>> Tap(Func<Optional<T>, Task> action)
+	public async Task<Maybe<T>> Tap(Func<Maybe<T>, Task> action)
 	{
 		await action(this);
 		return this;
@@ -194,10 +193,10 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 		return _value ?? defaultValue();
 	}
 
-	public Optional<TNew> OfType<TNew>() where TNew : class =>
+	public Maybe<TNew> OfType<TNew>() where TNew : class =>
 		typeof(T).IsAssignableFrom(typeof(TNew))
-			? new Optional<TNew>(_value as TNew)
-			: Optional<TNew>.None;
+			? new Maybe<TNew>(_value as TNew)
+			: Maybe<TNew>.None;
 
 	IEnumerator<T> IEnumerable<T>.GetEnumerator()
 	{
@@ -209,11 +208,11 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 	public override bool Equals(object? obj)
 	{
 		if (obj is null) return false;
-		if (obj is Optional<T> other) return Equals(other);
+		if (obj is Maybe<T> other) return Equals(other);
 		return false;
 	}
 
-	public bool Equals(Optional<T> other)
+	public bool Equals(Maybe<T> other)
 	{
 		if (_value is not null) return _value?.Equals(other._value) ?? false;
 		return other._value is null;
@@ -221,12 +220,12 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 
 	public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
-	public static bool operator ==(Optional<T> left, Optional<T> right) => left.Equals(right);
+	public static bool operator ==(Maybe<T> left, Maybe<T> right) => left.Equals(right);
 
-	public static bool operator !=(Optional<T> left, Optional<T> right) => !left.Equals(right);
+	public static bool operator !=(Maybe<T> left, Maybe<T> right) => !left.Equals(right);
 
 	public override string ToString() =>
 		_value is null ? $"None<{typeof(T).GetFriendlyTypeName()}>()" : $"Some({_value})";
 
-	public static implicit operator Optional<T>(T? value) => new(value);
+	public static implicit operator Maybe<T>(T? value) => new(value);
 }

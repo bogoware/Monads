@@ -4,8 +4,8 @@ public interface ICallInspector
 {
 	void MethodVoid();
 	void MethodWithValueArg(Value _);
-	void MethodWithOptionalArg(Optional<Value> _);
+	void MethodWithMaybeArg(Maybe<Value> _);
 	Task MethodVoidAsync();
 	Task MethodWithValueArgAsync(Value _);
-	Task MethodWithOptionalArgAsync(Optional<Value> _);
+	Task MethodWithMaybeArgAsync(Maybe<Value> _);
 }

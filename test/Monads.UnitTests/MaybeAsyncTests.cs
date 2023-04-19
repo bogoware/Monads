@@ -4,21 +4,21 @@ using Moq;
 
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalAsyncTests
+public class MaybeAsyncTests
 {
 	private AnotherValue Function() => new AnotherValue(0);
 	private AnotherValue Function(Value value) => new AnotherValue(value.Val);
-	private Optional<AnotherValue> FlatFunctionSome() => Some(new AnotherValue(0));
-	private Optional<AnotherValue> FlatFunctionSome(Value value) => Some(new AnotherValue(value.Val));
-	private Optional<AnotherValue> FlatFunctionNone() => None<AnotherValue>();
-	private Optional<AnotherValue> FlatFunctionNone(Value value) => None<AnotherValue>();
+	private Maybe<AnotherValue> FlatFunctionSome() => Some(new AnotherValue(0));
+	private Maybe<AnotherValue> FlatFunctionSome(Value value) => Some(new AnotherValue(value.Val));
+	private Maybe<AnotherValue> FlatFunctionNone() => None<AnotherValue>();
+	private Maybe<AnotherValue> FlatFunctionNone(Value value) => None<AnotherValue>();
 	
 	private Task<AnotherValue> AsyncFunction() => Task.FromResult(new AnotherValue(0));
 	private Task<AnotherValue> AsyncFunction(Value value) => Task.FromResult(new AnotherValue(value.Val));
-	private Task<Optional<AnotherValue>> AsyncFlatFunctionSome() => Task.FromResult(Some(new AnotherValue(0)));
-	private Task<Optional<AnotherValue>> AsyncFlatFunctionSome(Value value) => Task.FromResult(Some(new AnotherValue(value.Val)));
-	private Task<Optional<AnotherValue>> AsyncFlatFunctionNone() => Task.FromResult(None<AnotherValue>());
-	private Task<Optional<AnotherValue>> AsyncFlatFunctionNone(Value value) => Task.FromResult(None<AnotherValue>());
+	private Task<Maybe<AnotherValue>> AsyncFlatFunctionSome() => Task.FromResult(Some(new AnotherValue(0)));
+	private Task<Maybe<AnotherValue>> AsyncFlatFunctionSome(Value value) => Task.FromResult(Some(new AnotherValue(value.Val)));
+	private Task<Maybe<AnotherValue>> AsyncFlatFunctionNone() => Task.FromResult(None<AnotherValue>());
+	private Task<Maybe<AnotherValue>> AsyncFlatFunctionNone(Value value) => Task.FromResult(None<AnotherValue>());
 	
 	[Fact]
 	public async Task Async_map_asyncAction_withSome()
@@ -308,15 +308,15 @@ public class OptionalAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(None<Value>());
-		await sut.Tap(inspector.Object.MethodWithOptionalArg);
-		inspector.Verify(_ => _.MethodWithOptionalArg(It.IsAny<Optional<Value>>()));
+		await sut.Tap(inspector.Object.MethodWithMaybeArg);
+		inspector.Verify(_ => _.MethodWithMaybeArg(It.IsAny<Maybe<Value>>()));
 	}
 	[Fact]
 	public async Task Tap_actionAsync()
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(None<Value>());
-		await sut.Tap(inspector.Object.MethodWithOptionalArgAsync);
-		inspector.Verify(_ => _.MethodWithOptionalArgAsync(It.IsAny<Optional<Value>>()));
+		await sut.Tap(inspector.Object.MethodWithMaybeArgAsync);
+		inspector.Verify(_ => _.MethodWithMaybeArgAsync(It.IsAny<Maybe<Value>>()));
 	}
 }

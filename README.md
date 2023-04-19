@@ -1,8 +1,8 @@
 #Bogoware Monads
 
 Functional library that provides the _missing_ monads:
-* `Optional` and `Optional<T>`
+* `Maybe` and `Maybe<T>`
 * `Result` and `Result<T>`
-* `OptionalResult` and `OptionalResult<T>`
+* `MaybeResult` and `MaybeResult<T>`
 
 .

@@ -2,12 +2,12 @@ using Moq;
 
 namespace Bogoware.Monads.UnitTests;
 
-public class OptionalIfSomeIfNoneTapTests
+public class MaybeIfSomeIfNoneTapTests
 {
 	private readonly Mock<ICallInspector> _inspector = new();
 
 	[Fact]
-	public void IfSome_call_void_when_optionalIsSome()
+	public void IfSome_call_void_when_maybeIsSome()
 	{
 		var sut = Some(new Value(0));
 		sut.IfSome(_inspector.Object.MethodVoid);
@@ -15,7 +15,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public void IfSome_doesntCall_void_when_optionalIsNone()
+	public void IfSome_doesntCall_void_when_maybeIsNone()
 	{
 		var sut = None<Value>();
 		sut.IfSome(_inspector.Object.MethodVoid);
@@ -23,7 +23,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public void IfNone_doesntCall_void_when_optionalIsSome()
+	public void IfNone_doesntCall_void_when_maybeIsSome()
 	{
 		var sut = None<Value>();
 		sut.IfNone(_inspector.Object.MethodVoid);
@@ -31,7 +31,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public void IfNone_call_void_when_optionalIsNone()
+	public void IfNone_call_void_when_maybeIsNone()
 	{
 		var sut = Some(new Value(0));
 		sut.IfNone(_inspector.Object.MethodVoid);
@@ -39,7 +39,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public void IfSome_call_withArg_when_optionalIsSome()
+	public void IfSome_call_withArg_when_maybeIsSome()
 	{
 		var sut = Some(new Value(0));
 		sut.IfSome(_inspector.Object.MethodWithValueArg);
@@ -47,7 +47,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public void IfSome_doesntCall_withArg_when_optionalIsNone()
+	public void IfSome_doesntCall_withArg_when_maybeIsNone()
 	{
 		var sut = None<Value>();
 		sut.IfSome(_inspector.Object.MethodWithValueArg);
@@ -55,7 +55,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public async Task IfSome_call_async_when_optionalIsSome()
+	public async Task IfSome_call_async_when_maybeIsSome()
 	{
 		var sut = Some(new Value(0));
 		await sut.IfSome(_inspector.Object.MethodVoidAsync);
@@ -63,7 +63,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public async Task IfSome_doesntCall_async_when_optionalIsNone()
+	public async Task IfSome_doesntCall_async_when_maybeIsNone()
 	{
 		var sut = None<Value>();
 		await sut.IfSome(_inspector.Object.MethodVoidAsync);
@@ -71,7 +71,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public async Task IfNone_doesntCall_async_when_optionalIsSome()
+	public async Task IfNone_doesntCall_async_when_maybeIsSome()
 	{
 		var sut = None<Value>();
 		await sut.IfNone(_inspector.Object.MethodVoidAsync);
@@ -79,7 +79,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public async Task IfNone_call_void_async_optionalIsNone()
+	public async Task IfNone_call_void_async_maybeIsNone()
 	{
 		var sut = Some(new Value(0));
 		await sut.IfNone(_inspector.Object.MethodVoidAsync);
@@ -87,7 +87,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public async Task IfSome_call_asyncArg_when_optionalIsSome()
+	public async Task IfSome_call_asyncArg_when_maybeIsSome()
 	{
 		var sut = Some(new Value(0));
 		await sut.IfSome(_inspector.Object.MethodWithValueArgAsync);
@@ -95,7 +95,7 @@ public class OptionalIfSomeIfNoneTapTests
 	}
 
 	[Fact]
-	public async Task IfSome_doesntCall_asyncArg_when_optionalIsNone()
+	public async Task IfSome_doesntCall_asyncArg_when_maybeIsNone()
 	{
 		var sut = None<Value>();
 		await sut.IfSome(_inspector.Object.MethodWithValueArgAsync);
@@ -106,15 +106,15 @@ public class OptionalIfSomeIfNoneTapTests
 	public void Tap_works()
 	{
 		var sut = None<Value>();
-		sut.Tap(_inspector.Object.MethodWithOptionalArg);
-		_inspector.Verify(_ => _.MethodWithOptionalArg(It.IsAny<Optional<Value>>()));
+		sut.Tap(_inspector.Object.MethodWithMaybeArg);
+		_inspector.Verify(_ => _.MethodWithMaybeArg(It.IsAny<Maybe<Value>>()));
 	}
 
 	[Fact]
 	public async Task Tap_async_works()
 	{
 		var sut = None<Value>();
-		await sut.Tap(_inspector.Object.MethodWithOptionalArgAsync);
-		_inspector.Verify(_ => _.MethodWithOptionalArgAsync(It.IsAny<Optional<Value>>()));
+		await sut.Tap(_inspector.Object.MethodWithMaybeArgAsync);
+		_inspector.Verify(_ => _.MethodWithMaybeArgAsync(It.IsAny<Maybe<Value>>()));
 	}
 }
