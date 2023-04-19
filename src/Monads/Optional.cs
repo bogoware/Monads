@@ -111,6 +111,77 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 			? mapValue(_value) 
 			: await none();
 
+	public Optional<T> IfSome(Action action)
+	{
+		if (_value is not null)
+		{
+			action();
+		}
+
+		return this;
+	}
+	public Optional<T> IfSome(Action<T> action)
+	{
+		if (_value is not null)
+		{
+			action(_value);
+		}
+
+		return this;
+	}
+	
+	public async Task<Optional<T>> IfSome(Func<Task> action)
+	{
+		if (_value is not null)
+		{
+			await action();
+		}
+
+		return this;
+	}
+
+	public async Task<Optional<T>> IfSome(Func<T, Task> action)
+	{
+		if (_value is not null)
+		{
+			await action(_value);
+		}
+
+		return this;
+	}
+	
+	public Optional<T> IfNone(Action action)
+	{
+		if (_value is null)
+		{
+			action();
+		}
+
+		return this;
+	}
+	
+	public async Task<Optional<T>> IfNone(Func<Task> action)
+	{
+		if (_value is null)
+		{
+			await action();
+		}
+
+		return this;
+	}
+
+	public Optional<T> Tap(Action<Optional<T>> action)
+	{
+		action(this);
+		return this;
+	}
+
+	public async Task<Optional<T>> Tap(Func<Optional<T>, Task> action)
+	{
+		await action(this);
+		return this;
+	}
+
 	public T GetValue(T defaultValue)
 	{
 		ArgumentNullException.ThrowIfNull(defaultValue);

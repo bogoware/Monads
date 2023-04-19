@@ -1,4 +1,7 @@
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
+
+using Moq;
+
 namespace Bogoware.Monads.UnitTests;
 
 public class OptionalAsyncTests
@@ -245,5 +248,75 @@ public class OptionalAsyncTests
 		var sut = Task.FromResult(None<Value>());
 		var actual = await sut.Match(_ => Task.FromResult(0), () => Task.FromResult(1));
 		actual.Should().Be(1);
+	}
+
+	[Fact]
+	public async Task IfSome_action()
+	{
+		var inspector = new Mock<ICallInspector>();
+		var sut = Task.FromResult(Some(new Value(0)));
+		await sut.IfSome(inspector.Object.MethodVoid);
+		inspector.Verify(_ => _.MethodVoid());
+	}
+	
+	[Fact]
+	public async Task IfSome_action_with_arg()
+	{
+		var inspector = new Mock<ICallInspector>();
+		var sut = Task.FromResult(Some(new Value(0)));
+		await sut.IfSome(inspector.Object.MethodWithValueArg);
+		inspector.Verify(_ => _.MethodWithValueArg(It.IsAny<Value>()));
+	}
+	
+	[Fact]
+	public async Task IfSome_asyncAction()
+	{
+		var inspector = new Mock<ICallInspector>();
+		var sut = Task.FromResult(Some(new Value(0)));
+		await sut.IfSome(inspector.Object.MethodVoidAsync);
+		inspector.Verify(_ => _.MethodVoidAsync());
+	}
+	
+	[Fact]
+	public async Task IfSome_asyncAction_with_arg()
+	{
+		var inspector = new Mock<ICallInspector>();
+		var sut = Task.FromResult(Some(new Value(0)));
+		await sut.IfSome(inspector.Object.MethodWithValueArgAsync);
+		inspector.Verify(_ => _.MethodWithValueArgAsync(It.IsAny<Value>()));
+	}
+	
+	[Fact]
+	public async Task IfNone_action()
+	{
+		var inspector = new Mock<ICallInspector>();
+		var sut = Task.FromResult(None<Value>());
+		await sut.IfNone(inspector.Object.MethodVoid);
+		inspector.Verify(_ => _.MethodVoid());
+	}
+	[Fact]
+	public async Task IfNone_actionAsync()
+	{
+		var inspector = new Mock<ICallInspector>();
+		var sut = Task.FromResult(None<Value>());
+		await sut.IfNone(inspector.Object.MethodVoidAsync);
+		inspector.Verify(_ => _.MethodVoidAsync());
+	}
+	
+	[Fact]
+	public async Task Tap_action()
+	{
+		var inspector = new Mock<ICallInspector>();
+		var sut = Task.FromResult(None<Value>());
+		await sut.Tap(inspector.Object.MethodWithOptionalArg);
+		inspector.Verify(_ => _.MethodWithOptionalArg(It.IsAny<Optional<Value>>()));
+	}
+	[Fact]
+	public async Task Tap_actionAsync()
+	{
+		var inspector = new Mock<ICallInspector>();
+		var sut = Task.FromResult(None<Value>());
+		await sut.Tap(inspector.Object.MethodWithOptionalArgAsync);
+		inspector.Verify(_ => _.MethodWithOptionalArgAsync(It.IsAny<Optional<Value>>()));
 	}
 }

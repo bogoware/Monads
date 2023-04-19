@@ -1,3 +1,5 @@
+using System.Collections;
+
 namespace Bogoware.Monads.UnitTests;
 
 public class OptionalLinqTests
@@ -70,5 +72,12 @@ public class OptionalLinqTests
 			select v.Val;
 
 		values.Should().BeEmpty();
+	}
+
+	[Fact]
+	public void IEnumerable_coverage()
+	{
+		var sut = (IEnumerable) Some(new Value(1));
+		sut.GetEnumerator().Should().NotBeNull();
 	}
 }

@@ -3,6 +3,22 @@ namespace Bogoware.Monads.UnitTests;
 public class OptionalEqualityTests
 {
 	[Fact]
+	public void ObjectEquals_null_return_false()
+	{
+		var value1 = Some(new Value(0));
+		object value2 = null!;
+		value1.Equals(value2).Should().BeFalse();
+	}
+	
+	[Fact]
+	public void ObjectEquals_return_true()
+	{
+		var value1 = Some(new Value(0));
+		object value2 = Some(new Value(0));
+		value1.Equals(value2).Should().BeTrue();
+	}
+	
+	[Fact]
 	public void Some_are_notEquals_to_null()
 	{
 		var value1 = Some(new Value(0));
