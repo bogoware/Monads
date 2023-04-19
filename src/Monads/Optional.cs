@@ -81,32 +81,32 @@ public readonly struct Optional<T> : IEquatable<Optional<T>>, IEnumerable<T>
 			? this
 			: new(await value());
 
-	public Optional<TResult> Match<TResult>(TResult newValue, TResult none) where TResult : class
+	public TResult Match<TResult>(TResult newValue, TResult none)
 		=> _value is not null 
 			? newValue 
 			: none;
 
-	public Optional<TResult> Match<TResult>(Func<T, TResult> mapValue, TResult none) where TResult : class
+	public TResult Match<TResult>(Func<T, TResult> mapValue, TResult none)
 		=> _value is not null 
 			? mapValue(_value) 
 			: none;
 	
-	public Optional<TResult> Match<TResult>(Func<T, TResult> mapValue, Func<TResult> none) where TResult : class
+	public TResult Match<TResult>(Func<T, TResult> mapValue, Func<TResult> none)
 		=> _value is not null 
 			? mapValue(_value) 
 			: none();
 	
-	public async Task<Optional<TResult>> Match<TResult>(Func<T, Task<TResult>> mapValue, Func<TResult> none) where TResult : class
+	public async Task<TResult> Match<TResult>(Func<T, Task<TResult>> mapValue, Func<TResult> none)
 		=> _value is not null 
 			? await mapValue(_value) 
 			: none();
 	
-	public async Task<Optional<TResult>> Match<TResult>(Func<T, Task<TResult>> mapValue, Func<Task<TResult>> none) where TResult : class
+	public async Task<TResult> Match<TResult>(Func<T, Task<TResult>> mapValue, Func<Task<TResult>> none)
 		=> _value is not null 
 			? await mapValue(_value) 
 			: await none();
 	
-	public async Task<Optional<TResult>> Match<TResult>(Func<T, TResult> mapValue, Func<Task<TResult>> none) where TResult : class
+	public async Task<TResult> Match<TResult>(Func<T, TResult> mapValue, Func<Task<TResult>> none)
 		=> _value is not null 
 			? mapValue(_value) 
 			: await none();

@@ -200,4 +200,50 @@ public class OptionalAsyncTests
 		var actual = await sut.WithDefault(() => Task.FromResult<Value>(new(0)));
 		actual.HasValue.Should().BeTrue();
 	}
+
+	[Fact]
+	public async Task Match_with_values()
+	{
+		var sut = Task.FromResult(None<Value>());
+		var actual = await sut.Match(0, 1);
+		actual.Should().Be(1);
+	}
+	[Fact]
+	public async Task Match_with_func_and_value()
+	{
+		var sut = Task.FromResult(None<Value>());
+		var actual = await sut.Match(_ => 0, 1);
+		actual.Should().Be(1);
+	}
+	
+	[Fact]
+	public async Task Match_with_funcs()
+	{
+		var sut = Task.FromResult(None<Value>());
+		var actual = await sut.Match(_ => 0, () => 1);
+		actual.Should().Be(1);
+	}
+	
+	[Fact]
+	public async Task Match_with_asyncLeft()
+	{
+		var sut = Task.FromResult(None<Value>());
+		var actual = await sut.Match(_ => Task.FromResult(0), () => 1);
+		actual.Should().Be(1);
+	}
+	[Fact]
+	public async Task Match_with_asyncRight()
+	{
+		var sut = Task.FromResult(None<Value>());
+		var actual = await sut.Match(_ => 0, () => Task.FromResult(1));
+		actual.Should().Be(1);
+	}
+	
+	[Fact]
+	public async Task Match_with_asyncBoth()
+	{
+		var sut = Task.FromResult(None<Value>());
+		var actual = await sut.Match(_ => Task.FromResult(0), () => Task.FromResult(1));
+		actual.Should().Be(1);
+	}
 }

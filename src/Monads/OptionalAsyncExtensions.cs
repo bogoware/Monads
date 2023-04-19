@@ -76,4 +76,46 @@ public static class OptionalAsyncExtensions
 		where TResult : class
 		where T : class
 		=> await (await optionalTask).Bind(map);
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<TResult> Match<T, TResult>(
+		this Task<Optional<T>> optionalTask,
+		TResult newValue,
+		TResult none) where T : class 
+		=> (await optionalTask).Match(newValue, none);
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<TResult> Match<T, TResult>(
+		this Task<Optional<T>> optionalTask,
+		Func<T, TResult> value,
+		TResult none) where T : class 
+		=> (await optionalTask).Match(value, none);
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<TResult> Match<T, TResult>(
+		this Task<Optional<T>> optionalTask,
+		Func<T, TResult> value,
+		Func<TResult> none) where T : class 
+		=> (await optionalTask).Match(value, none);
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<TResult> Match<T, TResult>(
+		this Task<Optional<T>> optionalTask,
+		Func<T, Task<TResult>> value,
+		Func<TResult> none) where T : class 
+		=> await (await optionalTask).Match(value, none);
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<TResult> Match<T, TResult>(
+		this Task<Optional<T>> optionalTask,
+		Func<T, TResult> value,
+		Func<Task<TResult>> none) where T : class 
+		=> await (await optionalTask).Match(value, none);
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<TResult> Match<T, TResult>(
+		this Task<Optional<T>> optionalTask,
+		Func<T, Task<TResult>> value,
+		Func<Task<TResult>> none) where T : class 
+		=> await (await optionalTask).Match(value, none);
 }
