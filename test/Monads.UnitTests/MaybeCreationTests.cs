@@ -35,6 +35,6 @@ public class MaybeCreationTests
 		string value = null!;
 		Action act = () => Some(value);
 
-		act.Should().Throw<MaybeValueMissingException>();
+		act.Should().Throw<MaybeNullException>();
 	}
 }

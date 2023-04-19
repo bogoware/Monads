@@ -14,7 +14,7 @@ public static partial class Prelude
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Maybe<T> Some<T>(T value) where T : class
 	{
-		if (value is null) throw new MaybeValueMissingException();
+		if (value is null) throw new MaybeNullException();
 
 		return new(value);
 	}
