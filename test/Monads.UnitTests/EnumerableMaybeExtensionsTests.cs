@@ -1,4 +1,5 @@
 // ReSharper disable SuggestVarOrType_Elsewhere
+
 namespace Bogoware.Monads.UnitTests;
 
 public class EnumerableMaybeExtensionsTests
@@ -37,7 +38,7 @@ public class EnumerableMaybeExtensionsTests
 		Maybe<Value>.None,
 		Some(new Value(2)),
 	};
-	
+
 	private static readonly List<IMaybe> _maybeIMixed = new()
 	{
 		Some(new Value(0)),
@@ -58,7 +59,7 @@ public class EnumerableMaybeExtensionsTests
 		_maybeMixed.IsAllSome().Should().BeFalse();
 		_maybeIMixed.IsAllSome().Should().BeFalse();
 	}
-	
+
 	[Fact]
 	public void IsAllNone_returns_true()
 	{
@@ -72,7 +73,7 @@ public class EnumerableMaybeExtensionsTests
 		_maybeMixed.IsAllNone().Should().BeFalse();
 		_maybeIMixed.IsAllNone().Should().BeFalse();
 	}
-	
+
 	[Fact]
 	public void IsAnySome_returns_true()
 	{
@@ -81,14 +82,14 @@ public class EnumerableMaybeExtensionsTests
 		_allMaybeSome.IsAnySome().Should().BeTrue();
 		_allIMaybeSome.IsAnySome().Should().BeTrue();
 	}
-	
+
 	[Fact]
 	public void IsAnySome_returns_false()
 	{
 		_allMaybeNone.IsAnySome().Should().BeFalse();
 		_allIMaybeNone.IsAnySome().Should().BeFalse();
 	}
-	
+
 	[Fact]
 	public void IsAnyNone_returns_true()
 	{
@@ -97,7 +98,7 @@ public class EnumerableMaybeExtensionsTests
 		_allMaybeNone.IsAnyNone().Should().BeTrue();
 		_allIMaybeNone.IsAnyNone().Should().BeTrue();
 	}
-	
+
 	[Fact]
 	public void IsAnyNone_returns_false()
 	{
@@ -111,18 +112,49 @@ public class EnumerableMaybeExtensionsTests
 		_maybeMixed.Should().HaveCount(3);
 		_maybeMixed.SelectValues().Should().HaveCount(2);
 	}
-	
+
 	[Fact]
 	public void Map_remap_values_to_new_Some()
 	{
 		IEnumerable<Maybe<AnotherValue>> actual = _maybeMixed.Map(v => new AnotherValue(v.Val));
 		actual.Should().HaveCount(2);
 	}
-	
+
 	[Fact]
 	public void Bind_remap_values_to_new_Some()
 	{
 		IEnumerable<Maybe<AnotherValue>> actual = _maybeMixed.Bind(v => Some(new AnotherValue(v.Val)));
 		actual.Should().HaveCount(2);
+	}
+
+	[Fact]
+	public void Where_works()
+	{
+		IEnumerable<Maybe<Value>> maybes = new List<Maybe<Value>>()
+		{
+			new Value(0),
+			new Value(1),
+			new Value(2),
+			new Value(3)
+		};
+
+		IEnumerable<Maybe<Value>> even = maybes.Where(v => v.Val % 2 == 0);
+		even.Should().HaveCount(2);
+	}
+	
+	[Fact]
+	public void WhereNot_works()
+	{
+		IEnumerable<Maybe<Value>> maybes = new List<Maybe<Value>>()
+		{
+			new Value(0),
+			new Value(1),
+			new Value(2),
+			new Value(3),
+			new Value(5)
+		};
+
+		IEnumerable<Maybe<Value>> even = maybes.WhereNot(v => v.Val % 2 == 0);
+		even.Should().HaveCount(3);
 	}
 }
