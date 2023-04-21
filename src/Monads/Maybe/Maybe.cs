@@ -4,6 +4,9 @@ using System.Collections;
 
 namespace Bogoware.Monads;
 
+/// <summary>
+/// Represents an optional value.
+/// </summary>
 public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 	where T : class
 {
@@ -236,7 +239,7 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 
 	/// <summary>
 	/// Evaluate the <see cref="predicate"/> applied to the value if present.
-	/// Return <c>false</c> in case of <c>None</c>
+	/// Return <c>false</c> in case of <c>None</c>.
 	/// </summary>
 	public bool Satisfy(Func<T, bool> predicate)
 		=> _value is not null && predicate(_value);

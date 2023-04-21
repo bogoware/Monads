@@ -8,67 +8,56 @@ namespace Bogoware.Monads;
 public static class EnumerableMaybeExtensions
 {
 	/// <summary>
-	/// Determines if all <see cref="Maybe{T}"/>s of a sequence are <code>Some</code>s.
+	/// Determines if all <see cref="Maybe{T}"/>s of a sequence are <c>Some</c>s.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsAllSome(this IEnumerable<IMaybe> maybes)
 		=> maybes.All(_ => _.IsSome);
 
-	/// <summary>
-	/// Determines if all <see cref="Maybe{T}"/>s of a sequence are <code>Some</code>s.
-	/// </summary>
+	/// <inheritdoc cref="IsAllSome"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsAllSome<T>(this IEnumerable<Maybe<T>> maybes) where T : class
 		=> maybes.All(_ => _.IsSome);
 
 	/// <summary>
-	/// Determines if all <see cref="Maybe{T}"/>s of a sequence are <code>None</code>s.
+	/// Determines if all <see cref="Maybe{T}"/>s of a sequence are <c>None</c>s.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsAllNone(this IEnumerable<IMaybe> maybes)
 		=> maybes.All(_ => _.IsNone);
 
-	/// <summary>
-	/// Determines if all <see cref="Maybe{T}"/>s of a sequence are <code>None</code>s.
-	/// </summary>
+	/// <inheritdoc cref="IsAllNone"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsAllNone<T>(this IEnumerable<Maybe<T>> maybes) where T : class
 		=> maybes.All(_ => _.IsNone);
 
 	/// <summary>
-	/// Determines if any <see cref="Maybe{T}"/> of a sequence is <code>Some</code>.
+	/// Determines if any <see cref="Maybe{T}"/> of a sequence is <c>Some</c>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsAnySome(this IEnumerable<IMaybe> maybes)
 		=> maybes.Any(_ => _.IsSome);
 
-	/// <summary>
-	/// Determines if any <see cref="Maybe{T}"/> of a sequence is <code>Some</code>.
-	/// </summary>
+	/// <inheritdoc cref="IsAnySome"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsAnySome<T>(this IEnumerable<Maybe<T>> maybes) where T : class
 		=> maybes.Any(_ => _.IsSome);
 
 	/// <summary>
-	/// Determines if any <see cref="Maybe{T}"/> of a sequence is <code>None</code>.
+	/// Determines if any <see cref="Maybe{T}"/> of a sequence is <c>None</c>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsAnyNone(this IEnumerable<IMaybe> maybes)
 		=> maybes.Any(_ => _.IsNone);
 
-	/// <summary>
-	/// Determines if any <see cref="Maybe{T}"/> of a sequence is <code>None</code>.
-	/// </summary>
+	/// <inheritdoc cref="IsAnyNone"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool IsAnyNone<T>(this IEnumerable<Maybe<T>> maybes) where T : class => maybes.Any(_ => _.IsNone);
 
 	/// <summary>
 	/// Extract values from <see cref="Maybe{T}"/>s.
-	/// <code>None</code>s are discarded.
+	/// <c>None</c>s are discarded.
 	/// </summary>
-	/// <param name="maybes"></param>
-	/// <typeparam name="T"></typeparam>
-	/// <returns></returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static IEnumerable<T> SelectValues<T>(this IEnumerable<Maybe<T>> maybes)
 		where T : class
@@ -76,14 +65,9 @@ public static class EnumerableMaybeExtensions
 
 	/// <summary>
 	/// Bind values via <see cref="functor"/>.
-	/// <code>None</code>s are discarded but new <code>None</code>s can be produced
+	/// <c>None</c>s are discarded but new <c>None</c>s can be produced
 	/// by the functor.
 	/// </summary>
-	/// <param name="maybes"></param>
-	/// <param name="functor"></param>
-	/// <typeparam name="TSource"></typeparam>
-	/// <typeparam name="TResult"></typeparam>
-	/// <returns></returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static IEnumerable<Maybe<TResult>> Bind<TSource, TResult>(
 		this IEnumerable<Maybe<TSource>> maybes, Func<TSource, Maybe<TResult>> functor)
@@ -93,13 +77,8 @@ public static class EnumerableMaybeExtensions
 
 	/// <summary>
 	/// Maps values via <see cref="functor"/>.
-	/// <code>None</code>s are discarded.
+	/// <c>None</c>s are discarded.
 	/// </summary>
-	/// <param name="maybes"></param>
-	/// <param name="functor"></param>
-	/// <typeparam name="TSource"></typeparam>
-	/// <typeparam name="TResult"></typeparam>
-	/// <returns></returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static IEnumerable<Maybe<TResult>> Map<TSource, TResult>(
 		this IEnumerable<Maybe<TSource>> maybes, Func<TSource, TResult> functor)
@@ -108,8 +87,8 @@ public static class EnumerableMaybeExtensions
 		=> maybes.Bind(v => Prelude.Some(v).Map(functor));
 
 	/// <summary>
-	/// Filters <code>Some</code>s via <see cref="predicate"/>.
-	/// <code>None</code>s are discarded.
+	/// Filters <c>Some</c>s via <see cref="predicate"/>.
+	/// <c>None</c>s are discarded.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static IEnumerable<Maybe<TSource>> Where<TSource>(
@@ -118,8 +97,8 @@ public static class EnumerableMaybeExtensions
 		=> maybes.SelectValues().Where(predicate).Select(Prelude.Some);
 	
 	/// <summary>
-	/// Filters <code>Some</code>s via negated <see cref="predicate"/>.
-	/// <code>None</code>s are discarded.
+	/// Filters <c>Some</c>s via negated <see cref="predicate"/>.
+	/// <c>None</c>s are discarded.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static IEnumerable<Maybe<TSource>> WhereNot<TSource>(
