@@ -8,17 +8,17 @@ public class MaybeAsyncTests
 {
 	private AnotherValue Function() => new AnotherValue(0);
 	private AnotherValue Function(Value value) => new AnotherValue(value.Val);
-	private Maybe<AnotherValue> FlatFunctionSome() => Some(new AnotherValue(0));
-	private Maybe<AnotherValue> FlatFunctionSome(Value value) => Some(new AnotherValue(value.Val));
-	private Maybe<AnotherValue> FlatFunctionNone() => None<AnotherValue>();
-	private Maybe<AnotherValue> FlatFunctionNone(Value value) => None<AnotherValue>();
+	private Maybe<AnotherValue> BindFunctionSome() => Some(new AnotherValue(0));
+	private Maybe<AnotherValue> BindFunctionSome(Value value) => Some(new AnotherValue(value.Val));
+	private Maybe<AnotherValue> BindFunctionNone() => None<AnotherValue>();
+	private Maybe<AnotherValue> BindFunctionNone(Value value) => None<AnotherValue>();
 	
 	private Task<AnotherValue> AsyncFunction() => Task.FromResult(new AnotherValue(0));
 	private Task<AnotherValue> AsyncFunction(Value value) => Task.FromResult(new AnotherValue(value.Val));
-	private Task<Maybe<AnotherValue>> AsyncFlatFunctionSome() => Task.FromResult(Some(new AnotherValue(0)));
-	private Task<Maybe<AnotherValue>> AsyncFlatFunctionSome(Value value) => Task.FromResult(Some(new AnotherValue(value.Val)));
-	private Task<Maybe<AnotherValue>> AsyncFlatFunctionNone() => Task.FromResult(None<AnotherValue>());
-	private Task<Maybe<AnotherValue>> AsyncFlatFunctionNone(Value value) => Task.FromResult(None<AnotherValue>());
+	private Task<Maybe<AnotherValue>> AsyncBindFunctionSome() => Task.FromResult(Some(new AnotherValue(0)));
+	private Task<Maybe<AnotherValue>> AsyncBindFunctionSome(Value value) => Task.FromResult(Some(new AnotherValue(value.Val)));
+	private Task<Maybe<AnotherValue>> AsyncBindFunctionNone() => Task.FromResult(None<AnotherValue>());
+	private Task<Maybe<AnotherValue>> AsyncBindFunctionNone(Value value) => Task.FromResult(None<AnotherValue>());
 	
 	[Fact]
 	public async Task Async_map_asyncAction_withSome()
@@ -56,7 +56,7 @@ public class MaybeAsyncTests
 	public async Task Async_flatMap_asyncAction_withSome()
 	{
 		var sut = Some(new Value(0));
-		var actual = await sut.Bind(() => AsyncFlatFunctionSome());
+		var actual = await sut.Bind(() => AsyncBindFunctionSome());
 		actual.IsSome.Should().BeTrue();
 	}
 	
@@ -64,7 +64,7 @@ public class MaybeAsyncTests
 	public async Task Async_flatMap_asyncFunction_withSome()
 	{
 		var sut = Some(new Value(0));
-		var actual = await sut.Bind(v => AsyncFlatFunctionSome(v));
+		var actual = await sut.Bind(v => AsyncBindFunctionSome(v));
 		actual.IsSome.Should().BeTrue();
 	}
 	
@@ -72,7 +72,7 @@ public class MaybeAsyncTests
 	public async Task Async_flatMap_asyncAction_withNone()
 	{
 		var sut = None<Value>();
-		var actual = await sut.Bind(() => AsyncFlatFunctionNone());
+		var actual = await sut.Bind(() => AsyncBindFunctionNone());
 		actual.IsNone.Should().BeTrue();
 	}
 	
@@ -80,7 +80,7 @@ public class MaybeAsyncTests
 	public async Task Async_flatMap_asyncFunction_withNone()
 	{
 		var sut = None<Value>();
-		var actual = await sut.Bind(v => AsyncFlatFunctionNone(v));
+		var actual = await sut.Bind(v => AsyncBindFunctionNone(v));
 		actual.IsNone.Should().BeTrue();
 	}
 	
@@ -120,7 +120,7 @@ public class MaybeAsyncTests
 	public async Task AsyncExtensions_flatMap_asyncAction_withSome()
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.Bind(() => AsyncFlatFunctionSome());
+		var actual = await sut.Bind(() => AsyncBindFunctionSome());
 		actual.IsSome.Should().BeTrue();
 	}
 	
@@ -128,7 +128,7 @@ public class MaybeAsyncTests
 	public async Task AsyncExtensions_flatMap_asyncFunction_withSome()
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.Bind(v => AsyncFlatFunctionSome(v));
+		var actual = await sut.Bind(v => AsyncBindFunctionSome(v));
 		actual.IsSome.Should().BeTrue();
 	}
 	
@@ -168,7 +168,7 @@ public class MaybeAsyncTests
 	public async Task AsyncExtensions_flatMap_Action_withSome()
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.Bind(() => FlatFunctionSome());
+		var actual = await sut.Bind(() => BindFunctionSome());
 		actual.IsSome.Should().BeTrue();
 	}
 	
@@ -176,7 +176,7 @@ public class MaybeAsyncTests
 	public async Task AsyncExtensions_flatMap_Function_withSome()
 	{
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.Bind(v => FlatFunctionSome(v));
+		var actual = await sut.Bind(v => BindFunctionSome(v));
 		actual.IsSome.Should().BeTrue();
 	}
 	
