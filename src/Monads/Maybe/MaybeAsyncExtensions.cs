@@ -120,50 +120,50 @@ public static class MaybeAsyncExtensions
 		=> await (await maybeTask).Match(value, none);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<T>> IfSome<T>(
+	public static async Task<Maybe<T>> ExecuteIfSome<T>(
 		this Task<Maybe<T>> maybeTask,
 		Action action) where T : class
-		=> (await maybeTask).IfSome(action);
+		=> (await maybeTask).ExecuteIfSome(action);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<T>> IfSome<T>(
+	public static async Task<Maybe<T>> ExecuteIfSome<T>(
 		this Task<Maybe<T>> maybeTask,
 		Action<T> action) where T : class
-		=> (await maybeTask).IfSome(action);
+		=> (await maybeTask).ExecuteIfSome(action);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<T>> IfSome<T>(
+	public static async Task<Maybe<T>> ExecuteIfSome<T>(
 		this Task<Maybe<T>> maybeTask,
 		Func<Task> action) where T : class
-		=> await (await maybeTask).IfSome(action);
+		=> await (await maybeTask).ExecuteIfSome(action);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<T>> IfSome<T>(
+	public static async Task<Maybe<T>> ExecuteIfSome<T>(
 		this Task<Maybe<T>> maybeTask,
 		Func<T, Task> action) where T : class
-		=> await (await maybeTask).IfSome(action);
+		=> await (await maybeTask).ExecuteIfSome(action);
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<T>> IfNone<T>(
+	public static async Task<Maybe<T>> ExecuteIfNone<T>(
 		this Task<Maybe<T>> maybeTask,
 		Action action) where T : class
-		=> (await maybeTask).IfNone(action);
+		=> (await maybeTask).ExecuteIfNone(action);
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<T>> IfNone<T>(
+	public static async Task<Maybe<T>> ExecuteIfNone<T>(
 		this Task<Maybe<T>> maybeTask,
 		Func<Task> action) where T : class
-		=> await (await maybeTask).IfNone(action);
+		=> await (await maybeTask).ExecuteIfNone(action);
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<T>> Tap<T>(
+	public static async Task<Maybe<T>> Execute<T>(
 		this Task<Maybe<T>> maybeTask,
 		Action<Maybe<T>> action) where T : class
-		=> (await maybeTask).Tap(action);
+		=> (await maybeTask).Execute(action);
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<T>> Tap<T>(
+	public static async Task<Maybe<T>> Execute<T>(
 		this Task<Maybe<T>> maybeTask,
 		Func<Maybe<T>, Task> action) where T : class
-		=> await (await maybeTask).Tap(action);
+		=> await (await maybeTask).Execute(action);
 }

@@ -5,7 +5,7 @@ public class ErrorTests
 	[Fact]
 	public void CreateRuntimeError()
 	{
-		var sut = new RuntimeError(new Exception("Message"));
+		var sut = new RuntimeError(new("Message"));
 		sut.Exception.Should().NotBeNull();
 		sut.Message.Should().Be("Message");
 	}

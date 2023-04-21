@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using Bogoware.Monads;
+
 // ReSharper disable PossibleMultipleEnumeration
 
 var bourbaki = new Person("Bourbaki", null);
@@ -29,3 +31,28 @@ IEnumerable<string> superMather =
 Debug.Assert(superMather.Count() == 1);
 
 Console.WriteLine($"Super Mathematician: {superMather.First()}");
+
+
+// Processing a list of Maybe<>s
+
+List<Maybe<Book>> books = new List<Maybe<Book>>{ elementsOfAlgebra, mathematicalTables, None<Book>() };
+
+var validBooks = books.SelectValues();  // Retrieve values of Maybes that hold some value, None are discarded  
+
+Console.WriteLine("=== VALID BOOKS");
+foreach(var b in validBooks)
+{
+	Console.WriteLine(b);
+}
+
+var validAuthors = books
+	.Bind(x => x.Author)
+	.WhereNot(a => a.Name.StartsWith("Xulu"))
+	.WhereNot(a => a.Surname.Satisfy(x => x.StartsWith("Fugu")))
+	.SelectValues();
+
+Console.WriteLine("=== VALID AUTHORS");
+foreach(var a in validAuthors)
+{
+	Console.WriteLine(a);
+}

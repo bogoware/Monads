@@ -255,7 +255,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(Some(new Value(0)));
-		await sut.IfSome(inspector.Object.MethodVoid);
+		await sut.ExecuteIfSome(inspector.Object.MethodVoid);
 		inspector.Verify(_ => _.MethodVoid());
 	}
 	
@@ -264,7 +264,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(Some(new Value(0)));
-		await sut.IfSome(inspector.Object.MethodWithValueArg);
+		await sut.ExecuteIfSome(inspector.Object.MethodWithValueArg);
 		inspector.Verify(_ => _.MethodWithValueArg(It.IsAny<Value>()));
 	}
 	
@@ -273,7 +273,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(Some(new Value(0)));
-		await sut.IfSome(inspector.Object.MethodVoidAsync);
+		await sut.ExecuteIfSome(inspector.Object.MethodVoidAsync);
 		inspector.Verify(_ => _.MethodVoidAsync());
 	}
 	
@@ -282,7 +282,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(Some(new Value(0)));
-		await sut.IfSome(inspector.Object.MethodWithValueArgAsync);
+		await sut.ExecuteIfSome(inspector.Object.MethodWithValueArgAsync);
 		inspector.Verify(_ => _.MethodWithValueArgAsync(It.IsAny<Value>()));
 	}
 	
@@ -291,7 +291,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(None<Value>());
-		await sut.IfNone(inspector.Object.MethodVoid);
+		await sut.ExecuteIfNone(inspector.Object.MethodVoid);
 		inspector.Verify(_ => _.MethodVoid());
 	}
 	[Fact]
@@ -299,7 +299,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(None<Value>());
-		await sut.IfNone(inspector.Object.MethodVoidAsync);
+		await sut.ExecuteIfNone(inspector.Object.MethodVoidAsync);
 		inspector.Verify(_ => _.MethodVoidAsync());
 	}
 	
@@ -308,7 +308,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(None<Value>());
-		await sut.Tap(inspector.Object.MethodWithMaybeArg);
+		await sut.Execute(inspector.Object.MethodWithMaybeArg);
 		inspector.Verify(_ => _.MethodWithMaybeArg(It.IsAny<Maybe<Value>>()));
 	}
 	[Fact]
@@ -316,7 +316,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(None<Value>());
-		await sut.Tap(inspector.Object.MethodWithMaybeArgAsync);
+		await sut.Execute(inspector.Object.MethodWithMaybeArgAsync);
 		inspector.Verify(_ => _.MethodWithMaybeArgAsync(It.IsAny<Maybe<Value>>()));
 	}
 }

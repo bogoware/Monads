@@ -35,6 +35,24 @@ public class MaybeCreationTests
 		string value = null!;
 		Action act = () => Some(value);
 
-		act.Should().Throw<MaybeNullException>();
+		act.Should().Throw<ArgumentNullException>();
+	}
+	
+	[Fact]
+	public void Some_with_None_is_failure()
+	{
+		var value = None<string>();
+		Action act = () => Some(value);
+
+		act.Should().Throw<MaybeNoneException>();
+	}
+
+	[Fact]
+	public void Maybe_copy_constructor()
+	{
+		Maybe<Value> maybe = Maybe(new Value(0));
+		Maybe<Value> maybe2 = Maybe(maybe);
+
+		maybe.Equals(maybe2).Should().BeTrue();
 	}
 }

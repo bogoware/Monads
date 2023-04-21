@@ -5,7 +5,7 @@ public class ResultCreationTests
 	[Fact]
 	public void Create_successful_result()
 	{
-		var sut = Success<Value, LogicError>(new Value(0));
+		var sut = Success<Value, LogicError>(new(0));
 		sut.IsSuccess.Should().BeTrue();
 		sut.IsFailure.Should().BeFalse();
 	}
@@ -45,7 +45,7 @@ public class ResultCreationTests
 	[Fact]
 	public void GetValue_works_with_failedResults()
 	{
-		var sut = UnitFailure<LogicError>(new LogicError("Something went wrong"));
+		var sut = UnitFailure<LogicError>(new("Something went wrong"));
 
 		sut
 			.Invoking(_ => _.GetValueFromSuccessfulResultOrThrowAnExceptionIfTheResultWasFailed())

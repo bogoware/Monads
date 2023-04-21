@@ -16,7 +16,7 @@ public class ResultPreludeTests
 	[Fact]
 	public void TryAction_should_return_a_failedUnitResultRuntime()
 	{
-		void Action() => throw new Exception();
+		void Action() => throw new();
 		var result = Try((Action)Action);
 		result.IsFailure.Should().BeTrue();
 	}
@@ -32,7 +32,7 @@ public class ResultPreludeTests
 	[Fact]
 	public async Task TryActionAsync_should_return_a_failedUnitResultRuntime()
 	{
-		Task Action() => Task.FromException(new Exception());
+		Task Action() => Task.FromException(new());
 		var result = await Try(Action);
 		result.IsFailure.Should().BeTrue();
 	}
@@ -42,7 +42,7 @@ public class ResultPreludeTests
 	{
 		Value Action()
 		{
-			return new Value(0);
+			return new(0);
 		}
 
 		var result = Try(Action);

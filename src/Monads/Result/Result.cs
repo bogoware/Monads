@@ -25,4 +25,28 @@ public readonly struct Result<TValue, TError>
 		=> _value is not null
 			? _value
 			: throw new ResultFailedException();
+
+	public TResult Match<TResult>(TResult successful, TResult failure)
+		=> _value is not null
+			? successful
+			: failure;
+	
+	public TResult Match<TResult>(Func<TResult> successful, TResult failure)
+		=> _value is not null
+			? successful()
+			: failure;
+	
+	public TResult Match<TResult>(Func<TResult> successful, Func<TResult> failure)
+		=> _value is not null
+			? successful()
+			: failure();
+	
+	public TResult Match<TResult>(Func<TValue, TResult> successful, Func<TError, TResult> failure)
+		=> _value is not null
+			? successful(_value)
+			: failure(_error!);
+	
+	
+	// TODO: Map, Bind, Recover, IfSuccess, IfFailure, Execute
+	// TODO: Error Equals…
 }

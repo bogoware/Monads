@@ -4,7 +4,7 @@ using System.Collections;
 
 namespace Bogoware.Monads;
 
-public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
+public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 	where T : class
 {
 	private readonly T? _value = default;
@@ -19,6 +19,9 @@ public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 			_value = value;
 		}
 	}
+	
+	public Maybe(Maybe<T> maybe) =>_value = maybe._value;
+	
 
 	public Maybe<TResult> Map<TResult>(TResult value) where TResult : class
 		=> _value is not null
@@ -110,7 +113,7 @@ public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 			? mapValue(_value) 
 			: await none();
 
-	public Maybe<T> IfSome(Action action)
+	public Maybe<T> ExecuteIfSome(Action action)
 	{
 		if (_value is not null)
 		{
@@ -119,7 +122,7 @@ public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 
 		return this;
 	}
-	public Maybe<T> IfSome(Action<T> action)
+	public Maybe<T> ExecuteIfSome(Action<T> action)
 	{
 		if (_value is not null)
 		{
@@ -129,7 +132,7 @@ public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 		return this;
 	}
 	
-	public async Task<Maybe<T>> IfSome(Func<Task> action)
+	public async Task<Maybe<T>> ExecuteIfSome(Func<Task> action)
 	{
 		if (_value is not null)
 		{
@@ -139,7 +142,7 @@ public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 		return this;
 	}
 
-	public async Task<Maybe<T>> IfSome(Func<T, Task> action)
+	public async Task<Maybe<T>> ExecuteIfSome(Func<T, Task> action)
 	{
 		if (_value is not null)
 		{
@@ -149,7 +152,7 @@ public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 		return this;
 	}
 	
-	public Maybe<T> IfNone(Action action)
+	public Maybe<T> ExecuteIfNone(Action action)
 	{
 		if (_value is null)
 		{
@@ -159,7 +162,7 @@ public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 		return this;
 	}
 	
-	public async Task<Maybe<T>> IfNone(Func<Task> action)
+	public async Task<Maybe<T>> ExecuteIfNone(Func<Task> action)
 	{
 		if (_value is null)
 		{
@@ -169,30 +172,58 @@ public readonly struct Maybe<T> : IEquatable<Maybe<T>>, IEnumerable<T>
 		return this;
 	}
 
-	public Maybe<T> Tap(Action<Maybe<T>> action)
+	public Maybe<T> Execute(Action<Maybe<T>> action)
 	{
 		action(this);
 		return this;
 	}
 
-	public async Task<Maybe<T>> Tap(Func<Maybe<T>, Task> action)
+	public async Task<Maybe<T>> Execute(Func<Maybe<T>, Task> action)
 	{
 		await action(this);
 		return this;
 	}
 
+	/// <summary>
+	/// Retrieve the value if present or return the <see cref="defaultValue"/> if missing.
+	/// </summary>
 	public T GetValue(T defaultValue)
 	{
 		ArgumentNullException.ThrowIfNull(defaultValue);
 		return _value ?? defaultValue;
 	}
 
+	/// <inheritdoc cref="GetValue(T)"/>
 	public T GetValue(Func<T> defaultValue)
 	{
 		ArgumentNullException.ThrowIfNull(defaultValue);
 		return _value ?? defaultValue();
 	}
+	
+	/// <inheritdoc cref="GetValue(T)"/>
+	public async Task<T> GetValue(Func<Task<T>> defaultValue)
+	{
+		ArgumentNullException.ThrowIfNull(defaultValue);
+		return _value ?? await defaultValue();
+	}
 
+	/// <summary>
+	/// Evaluate the <see cref="predicate"/> to the value if present.
+	/// Return <code>false</code> in case of <code>None</code>
+	/// </summary>
+	public bool Satisfy(Func<T, bool> predicate)
+		=> _value is not null && predicate(_value);
+	
+	/// <inheritdoc cref="Satisfy(System.Func{T,bool})"/>
+	public async Task<bool> Satisfy(Func<T, Task<bool>> predicate)
+		=> _value is not null && await predicate(_value);
+
+	/// <summary>
+	/// Downcast to <see cref="TNew"/> if possible, otherwise returns a <see cref="Maybe{TNew}"/>
+	/// that is actually None case.
+	/// </summary>
+	/// <typeparam name="TNew"></typeparam>
+	/// <returns></returns>
 	public Maybe<TNew> OfType<TNew>() where TNew : class =>
 		typeof(T).IsAssignableFrom(typeof(TNew))
 			? new Maybe<TNew>(_value as TNew)
