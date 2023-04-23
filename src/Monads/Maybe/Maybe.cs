@@ -25,20 +25,20 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 
 	public Maybe(Maybe<T> maybe) => _value = maybe._value;
 
-
 	/// <summary>
 	/// Map the value to a new one.
 	/// </summary>
 	public Maybe<TResult> Map<TResult>(TResult value) where TResult : class
-		=> _value is not null
+		=> IsSome
 			? new Maybe<TResult>(value)
 			: Maybe<TResult>.None;
-
+	
 	/// <inheritdoc cref="Map{TResult}(TResult)"/>
 	public Maybe<TResult> Map<TResult>(Func<TResult> map) where TResult : class
-		=> _value is not null
+		=> IsSome
 			? new Maybe<TResult>(map())
 			: Maybe<TResult>.None;
+			
 
 	/// <inheritdoc cref="Map{TResult}(TResult)"/>
 	public Maybe<TResult> Map<TResult>(Func<T, TResult> map) where TResult : class
@@ -48,7 +48,7 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 
 	/// <inheritdoc cref="Map{TResult}(TResult)"/>
 	public async Task<Maybe<TResult>> Map<TResult>(Func<Task<TResult>> map) where TResult : class
-		=> _value is not null
+		=> IsSome
 			? new(await map())
 			: Maybe<TResult>.None;
 
@@ -60,7 +60,7 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 
 	/// Bind a new <see cref="Maybe{TResult}"/>
 	public Maybe<TResult> Bind<TResult>(Func<Maybe<TResult>> map) where TResult : class
-		=> _value is not null
+		=> IsSome
 			? map()
 			: Maybe<TResult>.None;
 
@@ -72,7 +72,7 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 
 	/// <inheritdoc cref="Bind{TResult}(System.Func{Bogoware.Monads.Maybe{TResult}})"/>
 	public Task<Maybe<TResult>> Bind<TResult>(Func<Task<Maybe<TResult>>> map) where TResult : class
-		=> _value is not null
+		=> IsSome
 			? map()
 			: Task.FromResult(Maybe<TResult>.None);
 
@@ -82,71 +82,52 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 			? map(_value)
 			: Task.FromResult(Maybe<TResult>.None);
 
-	/// Map a default value if the current <see cref="Maybe{T}"/> is <c>None</c>. 
-	public Maybe<T> WithDefault(T value)
-		=> _value is not null
-			? this
-			: new(value);
-
-	/// <inheritdoc cref="WithDefault(T)"/>
-	public Maybe<T> WithDefault(Func<T> value)
-		=> _value is not null
-			? this
-			: new(value());
-
-	/// <inheritdoc cref="WithDefault(T)"/>
-	public async Task<Maybe<T>> WithDefault(Func<Task<T>> value)
-		=> _value is not null
-			? this
-			: new(await value());
-
 	/// <summary>
 	/// Maps a new value for both state of a <see cref="Maybe{T}"/> 
 	/// </summary>
-	public TResult Match<TResult>(TResult newValue, TResult none)
-		=> _value is not null
-			? newValue
-			: none;
+	public TResult Match<TResult>(TResult newValue, TResult none) 
+		=> IsSome ? newValue : none;
+
 	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
 	public TResult Match<TResult>(Func<T, TResult> mapValue, TResult none)
 		=> _value is not null
 			? mapValue(_value)
 			: none;
+
 	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
 	public TResult Match<TResult>(Func<T, TResult> mapValue, Func<TResult> none)
 		=> _value is not null
 			? mapValue(_value)
 			: none();
+
+	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
+	public async Task<TResult> Match<TResult>(Func<T, Task<TResult>> mapValue, TResult none)
+		=> _value is not null
+			? await mapValue(_value)
+			: none;
+
 	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
 	public async Task<TResult> Match<TResult>(Func<T, Task<TResult>> mapValue, Func<TResult> none)
 		=> _value is not null
 			? await mapValue(_value)
 			: none();
+
 	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
 	public async Task<TResult> Match<TResult>(Func<T, Task<TResult>> mapValue, Func<Task<TResult>> none)
 		=> _value is not null
 			? await mapValue(_value)
 			: await none();
+
 	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
 	public async Task<TResult> Match<TResult>(Func<T, TResult> mapValue, Func<Task<TResult>> none)
 		=> _value is not null
 			? mapValue(_value)
 			: await none();
 
+
 	/// <summary>
 	/// Execute the action if the <see cref="Maybe{T}"/> is <c>Some</c>.
 	/// </summary>
-	public Maybe<T> ExecuteIfSome(Action action)
-	{
-		if (_value is not null)
-		{
-			action();
-		}
-
-		return this;
-	}
-
-	/// <inheritdoc cref="ExecuteIfSome(System.Action)"/>
 	public Maybe<T> ExecuteIfSome(Action<T> action)
 	{
 		if (_value is not null)
@@ -156,17 +137,8 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 
 		return this;
 	}
-	/// <inheritdoc cref="ExecuteIfSome(System.Action)"/>
-	public async Task<Maybe<T>> ExecuteIfSome(Func<Task> action)
-	{
-		if (_value is not null)
-		{
-			await action();
-		}
 
-		return this;
-	}
-	/// <inheritdoc cref="ExecuteIfSome(System.Action)"/>
+	/// <inheritdoc cref="ExecuteIfSome(System.Action{T})"/>
 	public async Task<Maybe<T>> ExecuteIfSome(Func<T, Task> action)
 	{
 		if (_value is not null)
@@ -174,43 +146,6 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 			await action(_value);
 		}
 
-		return this;
-	}
-	/// <summary>
-	/// Execute the action if the <see cref="Maybe{T}"/> is <c>None</c>.
-	/// </summary>
-	public Maybe<T> ExecuteIfNone(Action action)
-	{
-		if (_value is null)
-		{
-			action();
-		}
-
-		return this;
-	}
-	/// <inheritdoc cref="ExecuteIfNone(System.Action)"/> 
-	public async Task<Maybe<T>> ExecuteIfNone(Func<Task> action)
-	{
-		if (_value is null)
-		{
-			await action();
-		}
-
-		return this;
-	}
-	/// <summary>
-	/// Execute the action.
-	/// </summary>
-	public Maybe<T> Execute(Action<Maybe<T>> action)
-	{
-		action(this);
-		return this;
-	}
-
-	/// <inheritdoc cref="Execute(System.Action{Bogoware.Monads.Maybe{T}})"/>
-	public async Task<Maybe<T>> Execute(Func<Maybe<T>, Task> action)
-	{
-		await action(this);
 		return this;
 	}
 
@@ -238,17 +173,6 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 	}
 
 	/// <summary>
-	/// Evaluate the <see cref="predicate"/> applied to the value if present.
-	/// Return <c>false</c> in case of <c>None</c>.
-	/// </summary>
-	public bool Satisfy(Func<T, bool> predicate)
-		=> _value is not null && predicate(_value);
-
-	/// <inheritdoc cref="Satisfy(System.Func{T,bool})"/>
-	public async Task<bool> Satisfy(Func<T, Task<bool>> predicate)
-		=> _value is not null && await predicate(_value);
-
-	/// <summary>
 	/// Downcast to <see cref="TNew"/> if possible, otherwise returns a <see cref="Maybe{TNew}"/>
 	/// that is actually None case.
 	/// </summary>
@@ -261,7 +185,7 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 
 	IEnumerator<T> IEnumerable<T>.GetEnumerator()
 	{
-		if (IsSome) yield return _value!;
+		if (_value is not null) yield return _value;
 	}
 
 	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<T>)this).GetEnumerator();

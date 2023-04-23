@@ -1,8 +1,7 @@
 namespace Bogoware.Monads;
 
-
 public readonly struct Result<TValue, TError>
-	where TError: Error
+	where TError : Error
 {
 	private readonly TValue? _value;
 	private readonly TError? _error;
@@ -30,23 +29,30 @@ public readonly struct Result<TValue, TError>
 		=> _value is not null
 			? successful
 			: failure;
-	
+
 	public TResult Match<TResult>(Func<TResult> successful, TResult failure)
 		=> _value is not null
 			? successful()
 			: failure;
-	
+
 	public TResult Match<TResult>(Func<TResult> successful, Func<TResult> failure)
 		=> _value is not null
 			? successful()
 			: failure();
-	
+
 	public TResult Match<TResult>(Func<TValue, TResult> successful, Func<TError, TResult> failure)
 		=> _value is not null
 			? successful(_value)
 			: failure(_error!);
-	
-	
-	// TODO: Map, Bind, Recover, IfSuccess, IfFailure, Execute
+
+	public Result<TResult, TError> Map<TResult>(
+		Func<TValue, TResult> functor)
+	{
+		if (_value is null) return Prelude.Failure<TResult, TError>(_error!);
+		return Prelude.Success<TResult, TError>(functor(_value));
+	}
+
+
+	// TODO: Map, Bind, Recover, Ensure, IfSuccess, IfFailure, Execute
 	// TODO: Error Equals…
 }
