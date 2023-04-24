@@ -87,6 +87,5 @@ public readonly struct Result<TValue, TError> : IResult
 		=> _value is not null & await functor(_value!) ? this : new(error);
 
 
-	// TODO: Recover, Ensure, IfSuccess, IfFailure, Execute
-	// TODO: Error Equals…
+	// TODO: IfSuccess, IfFailure, Execute
 }

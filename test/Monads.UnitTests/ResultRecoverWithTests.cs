@@ -2,7 +2,7 @@ using Xunit.Sdk;
 
 namespace Bogoware.Monads.UnitTests;
 
-public class ResultRecoverWithExtensions
+public class ResultRecoverWithTests
 {
 	private static readonly Result<Value, Error> _success = new(new Value(0));
 	private static readonly Result<Value, Error> _failed = new(new LogicError("Something went wrong"));
