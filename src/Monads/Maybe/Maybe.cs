@@ -7,15 +7,15 @@ namespace Bogoware.Monads;
 /// <summary>
 /// Represents an optional value.
 /// </summary>
-public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
-	where T : class
+public readonly struct Maybe<TValue> : IMaybe, IEquatable<Maybe<TValue>>, IEnumerable<TValue>
+	where TValue : class
 {
-	private readonly T? _value = default;
+	private readonly TValue? _value = default;
 	public bool IsSome => _value is not null;
 	public bool IsNone => _value is null;
-	public static readonly Maybe<T> None = default;
+	public static readonly Maybe<TValue> None = default;
 
-	public Maybe(T? value)
+	public Maybe(TValue? value)
 	{
 		if (value is not null)
 		{
@@ -23,181 +23,119 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 		}
 	}
 
-	public Maybe(Maybe<T> maybe) => _value = maybe._value;
+	public Maybe(Maybe<TValue> maybe) => _value = maybe._value;
 
 	/// <summary>
 	/// Map the value to a new one.
 	/// </summary>
-	public Maybe<TResult> Map<TResult>(TResult value) where TResult : class
-		=> IsSome
-			? new Maybe<TResult>(value)
-			: Maybe<TResult>.None;
+	public Maybe<TNewValue> Map<TNewValue>(Func<TValue, TNewValue> map) where TNewValue : class
+		=> _value is not null ? new Maybe<TNewValue>(map(_value)) : Maybe<TNewValue>.None;
+
+	/// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.Map``1(System.Func{`0,``0})"/>
+	public async Task<Maybe<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue>> map) where TNewValue : class
+		=> _value is not null ? new(await map(_value)) : Maybe<TNewValue>.None;
 	
-	/// <inheritdoc cref="Map{TResult}(TResult)"/>
-	public Maybe<TResult> Map<TResult>(Func<TResult> map) where TResult : class
-		=> IsSome
-			? new Maybe<TResult>(map())
-			: Maybe<TResult>.None;
-			
-
-	/// <inheritdoc cref="Map{TResult}(TResult)"/>
-	public Maybe<TResult> Map<TResult>(Func<T, TResult> map) where TResult : class
-		=> _value is not null
-			? new Maybe<TResult>(map(_value))
-			: Maybe<TResult>.None;
-
-	/// <inheritdoc cref="Map{TResult}(TResult)"/>
-	public async Task<Maybe<TResult>> Map<TResult>(Func<Task<TResult>> map) where TResult : class
-		=> IsSome
-			? new(await map())
-			: Maybe<TResult>.None;
-
-	/// <inheritdoc cref="Map{TResult}(TResult)"/>
-	public async Task<Maybe<TResult>> Map<TResult>(Func<T, Task<TResult>> map) where TResult : class
-		=> _value is not null
-			? new(await map(_value))
-			: Maybe<TResult>.None;
-
-	/// Bind a new <see cref="Maybe{TResult}"/>
-	public Maybe<TResult> Bind<TResult>(Func<Maybe<TResult>> map) where TResult : class
-		=> IsSome
-			? map()
-			: Maybe<TResult>.None;
-
-	/// <inheritdoc cref="Bind{TResult}(System.Func{Bogoware.Monads.Maybe{TResult}})"/> 
-	public Maybe<TResult> Bind<TResult>(Func<T, Maybe<TResult>> map) where TResult : class
-		=> _value is not null
-			? map(_value)
-			: Maybe<TResult>.None;
-
-	/// <inheritdoc cref="Bind{TResult}(System.Func{Bogoware.Monads.Maybe{TResult}})"/>
-	public Task<Maybe<TResult>> Bind<TResult>(Func<Task<Maybe<TResult>>> map) where TResult : class
-		=> IsSome
-			? map()
-			: Task.FromResult(Maybe<TResult>.None);
-
-	/// <inheritdoc cref="Bind{TResult}(System.Func{Bogoware.Monads.Maybe{TResult}})"/>
-	public Task<Maybe<TResult>> Bind<TResult>(Func<T, Task<Maybe<TResult>>> map) where TResult : class
-		=> _value is not null
-			? map(_value)
-			: Task.FromResult(Maybe<TResult>.None);
+	/// <summary>
+	/// Bind the maybe and, possibly, to a new one.
+	/// </summary> 
+	public Maybe<TNewValue> Bind<TNewValue>(Func<TValue, Maybe<TNewValue>> map) where TNewValue : class
+		=> _value is not null ? map(_value) : Maybe<TNewValue>.None;
+	
+	/// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.Bind``1(System.Func{`0,Bogoware.Monads.Maybe{``0}})"/>
+	public Task<Maybe<TNewValue>> Bind<TNewValue>(Func<TValue, Task<Maybe<TNewValue>>> map) where TNewValue : class
+		=> _value is not null ? map(_value) : Task.FromResult(Maybe<TNewValue>.None);
 
 	/// <summary>
 	/// Maps a new value for both state of a <see cref="Maybe{T}"/> 
 	/// </summary>
-	public TResult Match<TResult>(TResult newValue, TResult none) 
-		=> IsSome ? newValue : none;
+	public TResult Match<TResult>(Func<TValue, TResult> mapValue, TResult none)
+		=> _value is not null ? mapValue(_value) : none;
 
-	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
-	public TResult Match<TResult>(Func<T, TResult> mapValue, TResult none)
-		=> _value is not null
-			? mapValue(_value)
-			: none;
+	/// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.Match``1(System.Func{`0,``0},``0)"/>
+	public TResult Match<TResult>(Func<TValue, TResult> mapValue, Func<TResult> none)
+		=> _value is not null ? mapValue(_value) : none();
 
-	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
-	public TResult Match<TResult>(Func<T, TResult> mapValue, Func<TResult> none)
-		=> _value is not null
-			? mapValue(_value)
-			: none();
+	/// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.Match``1(System.Func{`0,``0},``0)"/>
+	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> mapValue, TResult none)
+		=> _value is not null ? mapValue(_value) : Task.FromResult(none);
 
-	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
-	public async Task<TResult> Match<TResult>(Func<T, Task<TResult>> mapValue, TResult none)
-		=> _value is not null
-			? await mapValue(_value)
-			: none;
+	/// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.Match``1(System.Func{`0,``0},``0)"/>
+	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> mapValue, Func<TResult> none)
+		=> _value is not null ? mapValue(_value) : Task.FromResult(none());
 
-	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
-	public async Task<TResult> Match<TResult>(Func<T, Task<TResult>> mapValue, Func<TResult> none)
-		=> _value is not null
-			? await mapValue(_value)
-			: none();
+	/// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.Match``1(System.Func{`0,``0},``0)"/>
+	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> mapValue, Func<Task<TResult>> none)
+		=> _value is not null ? mapValue(_value) : none();
 
-	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
-	public async Task<TResult> Match<TResult>(Func<T, Task<TResult>> mapValue, Func<Task<TResult>> none)
-		=> _value is not null
-			? await mapValue(_value)
-			: await none();
-
-	/// <inheritdoc cref="Match{TResult}(TResult,TResult)"/>
-	public async Task<TResult> Match<TResult>(Func<T, TResult> mapValue, Func<Task<TResult>> none)
-		=> _value is not null
-			? mapValue(_value)
-			: await none();
-
+	/// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.Match``1(System.Func{`0,``0},``0)"/>
+	public Task<TResult> Match<TResult>(Func<TValue, TResult> mapValue, Func<Task<TResult>> none)
+		=> _value is not null ? Task.FromResult(mapValue(_value)) : none();
 
 	/// <summary>
 	/// Execute the action if the <see cref="Maybe{T}"/> is <c>Some</c>.
 	/// </summary>
-	public Maybe<T> ExecuteIfSome(Action<T> action)
+	public Maybe<TValue> ExecuteIfSome(Action<TValue> action)
 	{
-		if (_value is not null)
-		{
-			action(_value);
-		}
-
+		if (_value is not null) action(_value);
 		return this;
 	}
 
-	/// <inheritdoc cref="ExecuteIfSome(System.Action{T})"/>
-	public async Task<Maybe<T>> ExecuteIfSome(Func<T, Task> action)
+	/// <inheritdoc cref="ExecuteIfSome(System.Action{TValue})"/>
+	public async Task<Maybe<TValue>> ExecuteIfSome(Func<TValue, Task> action)
 	{
-		if (_value is not null)
-		{
-			await action(_value);
-		}
-
+		if (_value is not null) await action(_value);
 		return this;
 	}
 
 	/// <summary>
-	/// Retrieve the value if present or return the <see cref="defaultValue"/> if missing.
+	/// Retrieve the value if present or return the <c>defaultValue</c> if missing.
 	/// </summary>
-	public T GetValue(T defaultValue)
+	public TValue GetValue(TValue defaultValue)
 	{
 		ArgumentNullException.ThrowIfNull(defaultValue);
 		return _value ?? defaultValue;
 	}
 
-	/// <inheritdoc cref="GetValue(T)"/>
-	public T GetValue(Func<T> defaultValue)
+	/// <inheritdoc cref="GetValue(TValue)"/>
+	public TValue GetValue(Func<TValue> defaultValue)
 	{
 		ArgumentNullException.ThrowIfNull(defaultValue);
 		return _value ?? defaultValue();
 	}
 
-	/// <inheritdoc cref="GetValue(T)"/>
-	public async Task<T> GetValue(Func<Task<T>> defaultValue)
+	/// <inheritdoc cref="GetValue(TValue)"/>
+	public async Task<TValue> GetValue(Func<Task<TValue>> defaultValue)
 	{
 		ArgumentNullException.ThrowIfNull(defaultValue);
 		return _value ?? await defaultValue();
 	}
 
 	/// <summary>
-	/// Downcast to <see cref="TNew"/> if possible, otherwise returns a <see cref="Maybe{TNew}"/>
+	/// Downcast to <c>TNew</c> if possible, otherwise returns a <see cref="Maybe{TNew}"/>
 	/// that is actually None case.
 	/// </summary>
-	/// <typeparam name="TNew"></typeparam>
+	/// <typeparam name="TNewValue"></typeparam>
 	/// <returns></returns>
-	public Maybe<TNew> OfType<TNew>() where TNew : class =>
-		typeof(T).IsAssignableFrom(typeof(TNew))
-			? new Maybe<TNew>(_value as TNew)
-			: Maybe<TNew>.None;
+	public Maybe<TNewValue> OfType<TNewValue>() where TNewValue : class =>
+		typeof(TValue).IsAssignableFrom(typeof(TNewValue))
+			? new Maybe<TNewValue>(_value as TNewValue)
+			: Maybe<TNewValue>.None;
 
-	IEnumerator<T> IEnumerable<T>.GetEnumerator()
+	IEnumerator<TValue> IEnumerable<TValue>.GetEnumerator()
 	{
 		if (_value is not null) yield return _value;
 	}
 
-	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<T>)this).GetEnumerator();
+	IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable<TValue>)this).GetEnumerator();
 
 	public override bool Equals(object? obj)
 	{
 		if (obj is null) return false;
-		if (obj is Maybe<T> other) return Equals(other);
+		if (obj is Maybe<TValue> other) return Equals(other);
 		return false;
 	}
 
-	public bool Equals(Maybe<T> other)
+	public bool Equals(Maybe<TValue> other)
 	{
 		if (_value is not null) return _value?.Equals(other._value) ?? false;
 		return other._value is null;
@@ -205,12 +143,12 @@ public readonly struct Maybe<T> : IMaybe, IEquatable<Maybe<T>>, IEnumerable<T>
 
 	public override int GetHashCode() => _value?.GetHashCode() ?? 0;
 
-	public static bool operator ==(Maybe<T> left, Maybe<T> right) => left.Equals(right);
+	public static bool operator ==(Maybe<TValue> left, Maybe<TValue> right) => left.Equals(right);
 
-	public static bool operator !=(Maybe<T> left, Maybe<T> right) => !left.Equals(right);
+	public static bool operator !=(Maybe<TValue> left, Maybe<TValue> right) => !left.Equals(right);
 
 	public override string ToString() =>
-		_value is null ? $"None<{typeof(T).GetFriendlyTypeName()}>()" : $"Some({_value})";
+		_value is null ? $"None<{typeof(TValue).GetFriendlyTypeName()}>()" : $"Some({_value})";
 
-	public static implicit operator Maybe<T>(T? value) => new(value);
+	public static implicit operator Maybe<TValue>(TValue? value) => new(value);
 }

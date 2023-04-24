@@ -38,7 +38,7 @@ public class ResultCreationTests
 	public void GetValue_works_with_successfulResults()
 	{
 		var sut = UnitSuccess<LogicError>();
-		var unit = sut.GetValueFromSuccessfulResultOrThrowAnExceptionIfTheResultWasFailed();
+		var unit = sut.GetValueOrThrow();
 		unit.Should().NotBeNull();
 	}
 	
@@ -48,7 +48,7 @@ public class ResultCreationTests
 		var sut = UnitFailure<LogicError>(new("Something went wrong"));
 
 		sut
-			.Invoking(_ => _.GetValueFromSuccessfulResultOrThrowAnExceptionIfTheResultWasFailed())
+			.Invoking(_ => _.GetValueOrThrow())
 			.Should().ThrowExactly<ResultFailedException>();
 	}
 }

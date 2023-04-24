@@ -1,3 +1,5 @@
+using IResult = Microsoft.AspNetCore.Http.IResult;
+
 namespace SampleWebApplication;
 
 public static class MaybeExtensions

@@ -24,13 +24,33 @@ namespace Bogoware.Monads;
 /// 	}
 /// }
 /// </example>
-public class LogicError: Error
+public class LogicError: Error, IEquatable<LogicError>
 {
 	public override string Message { get; }
-
 	public LogicError(string message)
 	{
 		ArgumentNullException.ThrowIfNull(message);
 		Message = message;
 	}
+
+	public bool Equals(LogicError? other)
+	{
+		if (ReferenceEquals(null, other)) return false;
+		if (ReferenceEquals(this, other)) return true;
+		return Message == other.Message;
+	}
+
+	public override bool Equals(object? obj) => Equals(obj as LogicError);
+
+	public override int GetHashCode() => Message.GetHashCode();
+
+	public static bool operator ==(LogicError? left, LogicError? right) => Equals(left, right);
+
+	public static bool operator !=(LogicError? left, LogicError? right) => !Equals(left, right);
+	public void Deconstruct(out string message)
+	{
+		message = Message;
+	}
+
+	public override string ToString() => $"""LogicError: "{Message}".""";
 }

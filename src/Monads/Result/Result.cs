@@ -1,6 +1,6 @@
 namespace Bogoware.Monads;
 
-public readonly struct Result<TValue, TError>
+public readonly struct Result<TValue, TError>: IResult
 	where TError : Error
 {
 	private readonly TValue? _value;
@@ -16,40 +16,31 @@ public readonly struct Result<TValue, TError>
 	/// Returns the value if the <see cref="Result{TValue,TError}"/>.<see cref="IsSuccess"/>
 	/// otherwise throw an <see cref="ResultFailedException"/>.
 	/// This method should be avoided in favor of pure functional composition style.
-	/// The ugly name have been purposely chosen. 
 	/// </summary>
 	/// <returns></returns>
 	/// <exception cref="ResultFailedException"></exception>
-	public TValue GetValueFromSuccessfulResultOrThrowAnExceptionIfTheResultWasFailed()
+	public TValue GetValueOrThrow()
 		=> _value is not null
 			? _value
-			: throw new ResultFailedException();
-
-	public TResult Match<TResult>(TResult successful, TResult failure)
-		=> _value is not null
-			? successful
-			: failure;
-
-	public TResult Match<TResult>(Func<TResult> successful, TResult failure)
-		=> _value is not null
-			? successful()
-			: failure;
-
-	public TResult Match<TResult>(Func<TResult> successful, Func<TResult> failure)
-		=> _value is not null
-			? successful()
-			: failure();
-
+			: throw new ResultFailedException(_error!);
+	
 	public TResult Match<TResult>(Func<TValue, TResult> successful, Func<TError, TResult> failure)
-		=> _value is not null
-			? successful(_value)
-			: failure(_error!);
+		=> _value is not null ? successful(_value) : failure(_error!);
+	
+	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<TError, TResult> failure)
+		=> _value is not null ? successful(_value) : Task.FromResult(failure(_error!));
+	
+	public Task<TResult> Match<TResult>(Func<TValue, TResult> successful, Func<TError, Task<TResult>> failure)
+		=> _value is not null ? Task.FromResult(successful(_value)) : failure(_error!);
+	
+	public  Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<TError, Task<TResult>> failure)
+		=> _value is not null ? successful(_value) : failure(_error!);
 
-	public Result<TResult, TError> Map<TResult>(
-		Func<TValue, TResult> functor)
+	public Result<TNewValue, TError> Map<TNewValue>(
+		Func<TValue, TNewValue> functor)
 	{
-		if (_value is null) return Prelude.Failure<TResult, TError>(_error!);
-		return Prelude.Success<TResult, TError>(functor(_value));
+		if (_value is null) return Prelude.Failure<TNewValue, TError>(_error!);
+		return Prelude.Success<TNewValue, TError>(functor(_value));
 	}
 
 

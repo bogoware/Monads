@@ -64,7 +64,7 @@ public static class EnumerableMaybeExtensions
 		=> maybes.SelectMany(_ => _);
 
 	/// <summary>
-	/// Bind values via <see cref="functor"/>.
+	/// Bind values via the functor.
 	/// <c>None</c>s are discarded but new <c>None</c>s can be produced
 	/// by the functor.
 	/// </summary>
@@ -76,7 +76,7 @@ public static class EnumerableMaybeExtensions
 		=> maybes.SelectValues().Select(functor);
 
 	/// <summary>
-	/// Maps values via <see cref="functor"/>.
+	/// Maps values via the functor.
 	/// <c>None</c>s are discarded.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -87,7 +87,7 @@ public static class EnumerableMaybeExtensions
 		=> maybes.Bind(v => Prelude.Some(v).Map(functor));
 
 	/// <summary>
-	/// Filters <c>Some</c>s via <see cref="predicate"/>.
+	/// Filters <c>Some</c>s via the predicate.
 	/// <c>None</c>s are discarded.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -97,7 +97,7 @@ public static class EnumerableMaybeExtensions
 		=> maybes.SelectValues().Where(predicate).Select(Prelude.Some);
 	
 	/// <summary>
-	/// Filters <c>Some</c>s via negated <see cref="predicate"/>.
+	/// Filters <c>Some</c>s via negated predicate.
 	/// <c>None</c>s are discarded.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
