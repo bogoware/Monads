@@ -36,12 +36,20 @@ public readonly struct Result<TValue, TError>: IResult
 	public  Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<TError, Task<TResult>> failure)
 		=> _value is not null ? successful(_value) : failure(_error!);
 
-	public Result<TNewValue, TError> Map<TNewValue>(
-		Func<TValue, TNewValue> functor)
-	{
-		if (_value is null) return Prelude.Failure<TNewValue, TError>(_error!);
-		return Prelude.Success<TNewValue, TError>(functor(_value));
-	}
+	public Result<TNewValue, TError> Map<TNewValue>(TNewValue newValue)
+		=> _value is null ? new(_error!) : new(newValue);
+	
+	public Result<TNewValue, TError> Map<TNewValue>(Func<TNewValue> functor)
+		=> _value is null ? new(_error!) : new(functor());
+	
+	public async Task<Result<TNewValue, TError>> Map<TNewValue>(Func<Task<TNewValue>> functor)
+		=> _value is null ? new(_error!) : new(await functor());
+	
+	public Result<TNewValue, TError> Map<TNewValue>(Func<TValue, TNewValue> functor)
+		=> _value is null ? new(_error!) : new(functor(_value));
+
+	public async Task<Result<TNewValue, TError>> Map<TNewValue>(Func<TValue, Task<TNewValue>> functor)
+		=> _value is null ? new(_error!) : new(await functor(_value));
 
 
 	// TODO: Map, Bind, Recover, Ensure, IfSuccess, IfFailure, Execute
