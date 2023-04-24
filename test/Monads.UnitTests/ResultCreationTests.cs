@@ -51,4 +51,24 @@ public class ResultCreationTests
 			.Invoking(_ => _.GetValueOrThrow())
 			.Should().ThrowExactly<ResultFailedException>();
 	}
+	
+	[Fact]
+	public void GetError_works_with_failedResults()
+	{
+		var sut = UnitFailure<LogicError>(new LogicError("Something went wrong"));
+		var unit = sut.GetErrorOrThrow();
+		unit.Should().NotBeNull();
+	}
+	
+	[Fact]
+	public void GetError_works_with_successResults()
+	{
+		var sut = UnitSuccess<LogicError>();
+
+		sut
+			.Invoking(_ => _.GetErrorOrThrow())
+			.Should().ThrowExactly<ResultSuccessException>();
+	}
+
+	
 }

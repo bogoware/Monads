@@ -143,4 +143,28 @@ public class ResultMatchExtensionsTests
 		var actual = await _failed.Match(success => Task.FromResult($"success: {success.Val}"), () => "failure");
 		actual.Should().StartWith("failure");
 	}
+	
+	[Fact]
+	public void GetValue_with_constant()
+	{
+		var sut = Failure<string, LogicError>(new("Something went wrong"));
+		var actual = sut.GetValue("success");
+		actual.Should().Be("success");
+	}
+	
+	[Fact]
+	public void GetValue_with_function()
+	{
+		var sut = Failure<string, LogicError>(new("Something went wrong"));
+		var actual = sut.GetValue(() => "success");
+		actual.Should().Be("success");
+	}
+	
+	[Fact]
+	public async Task GetValue_with_asyncFunction()
+	{
+		var sut = Failure<string, LogicError>(new("Something went wrong"));
+		var actual = await sut.GetValue(() => Task.FromResult("success"));
+		actual.Should().Be("success");
+	}
 }
