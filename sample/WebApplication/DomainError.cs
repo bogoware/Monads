@@ -1,3 +1,4 @@
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace SampleWebApplication;
 
 public class DomainError: LogicError

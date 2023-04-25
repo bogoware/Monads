@@ -1,3 +1,4 @@
+// ReSharper disable MemberCanBePrivate.Global
 namespace Bogoware.Monads;
 
 public sealed class AggregateError : Error
@@ -23,7 +24,7 @@ public sealed class AggregateError : Error
 		: this(ERROR_MESSAGE, innerErrors)
 	{
 	}
-	
+
 	public AggregateError(Error first, Error second, params Error[] others)
 		: this(ConcatenateErrors(first, second, others))
 	{
@@ -31,9 +32,9 @@ public sealed class AggregateError : Error
 
 	public override string Message { get; }
 
-	private static IEnumerable<Error> ConcatenateErrors(Error first, Error second, Error[] others)
+	private static IEnumerable<Error> ConcatenateErrors(Error first, Error second, IEnumerable<Error> others)
 	{
-		var errors = new List<Error>() { first, second };
+		var errors = new List<Error> { first, second };
 		return errors.Concat(others);
 	}
 }

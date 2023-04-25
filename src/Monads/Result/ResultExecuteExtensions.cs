@@ -1,4 +1,6 @@
 using System.Runtime.CompilerServices;
+// ReSharper disable UnusedMethodReturnValue.Global
+// ReSharper disable UnusedMember.Global
 
 // ReSharper disable MemberCanBePrivate.Global
 

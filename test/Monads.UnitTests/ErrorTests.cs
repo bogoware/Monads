@@ -28,7 +28,7 @@ public class ErrorTests
 	[Fact]
 	public void AggregateError_enumerable_coverage()
 	{
-		IEnumerable<Error> errors = new List<Error>() { new LogicError("One"), new LogicError("Two") };
+		IEnumerable<Error> errors = new List<Error> { new LogicError("One"), new LogicError("Two") };
 		var sut = new AggregateError(errors);
 		sut.Message.Should().NotBeNullOrEmpty();
 		sut.Errors.Should().HaveCount(2);

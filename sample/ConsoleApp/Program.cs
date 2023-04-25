@@ -36,7 +36,7 @@ Console.WriteLine($"Super Mathematician: {superMather.First()}");
 
 // Processing a list of Maybe<>s
 
-List<Maybe<Book>> books = new List<Maybe<Book>> { algebra, elementsOfAlgebra, mathematicalTables, None<Book>() };
+var books = new List<Maybe<Book>> { algebra, elementsOfAlgebra, mathematicalTables, None<Book>() };
 
 var validBooks = books.SelectValues(); // Retrieve values of Maybes that hold some value, None are discarded  
 

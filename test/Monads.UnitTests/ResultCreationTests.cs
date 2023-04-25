@@ -55,7 +55,7 @@ public class ResultCreationTests
 	[Fact]
 	public void GetError_works_with_failedResults()
 	{
-		var sut = UnitFailure<LogicError>(new LogicError("Something went wrong"));
+		var sut = UnitFailure(new LogicError("Something went wrong"));
 		var unit = sut.GetErrorOrThrow();
 		unit.Should().NotBeNull();
 	}

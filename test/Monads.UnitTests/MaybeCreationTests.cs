@@ -1,3 +1,4 @@
+// ReSharper disable SuggestVarOrType_Elsewhere
 namespace Bogoware.Monads.UnitTests;
 
 public class MaybeCreationTests
@@ -6,7 +7,7 @@ public class MaybeCreationTests
 	public void Maybe_with_null_produces_a_None()
 	{
 		
-		Maybe<string> sut = Maybe<string>((string)null!);
+		Maybe<string> sut = Maybe((string)null!);
 		sut.IsSome.Should().BeFalse();
 		sut.Should().BeEquivalentTo(None<string>());
 	}

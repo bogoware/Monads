@@ -1,3 +1,4 @@
+// ReSharper disable UnusedMemberInSuper.Global
 namespace Bogoware.Monads;
 
 public interface IResult

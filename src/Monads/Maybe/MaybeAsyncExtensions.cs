@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+// ReSharper disable UnusedMethodReturnValue.Global
 
 namespace Bogoware.Monads;
 

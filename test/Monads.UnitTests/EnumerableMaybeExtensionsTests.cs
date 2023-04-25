@@ -8,42 +8,42 @@ public class EnumerableMaybeExtensionsTests
 	{
 		Some(new Value(0)),
 		Some(new Value(1)),
-		Some(new Value(2)),
+		Some(new Value(2))
 	};
 
 	private static readonly List<IMaybe> _allIMaybeSome = new()
 	{
 		Some(new Value(0)),
 		Some(new Value(1)),
-		Some(new Value(2)),
+		Some(new Value(2))
 	};
 
 	private static readonly List<Maybe<Value>> _allMaybeNone = new()
 	{
 		Maybe<Value>.None,
 		Maybe<Value>.None,
-		Maybe<Value>.None,
+		Maybe<Value>.None
 	};
 
 	private static readonly List<IMaybe> _allIMaybeNone = new()
 	{
 		Maybe<Value>.None,
 		Maybe<Value>.None,
-		Maybe<Value>.None,
+		Maybe<Value>.None
 	};
 
 	private static readonly List<Maybe<Value>> _maybeMixed = new()
 	{
 		Some(new Value(0)),
 		Maybe<Value>.None,
-		Some(new Value(2)),
+		Some(new Value(2))
 	};
 
 	private static readonly List<IMaybe> _maybeIMixed = new()
 	{
 		Some(new Value(0)),
 		Maybe<Value>.None,
-		Some(new Value(2)),
+		Some(new Value(2))
 	};
 
 	[Fact]
@@ -130,7 +130,7 @@ public class EnumerableMaybeExtensionsTests
 	[Fact]
 	public void Where_works()
 	{
-		IEnumerable<Maybe<Value>> maybes = new List<Maybe<Value>>()
+		IEnumerable<Maybe<Value>> maybes = new List<Maybe<Value>>
 		{
 			new Value(0),
 			new Value(1),
@@ -145,7 +145,7 @@ public class EnumerableMaybeExtensionsTests
 	[Fact]
 	public void WhereNot_works()
 	{
-		IEnumerable<Maybe<Value>> maybes = new List<Maybe<Value>>()
+		IEnumerable<Maybe<Value>> maybes = new List<Maybe<Value>>
 		{
 			new Value(0),
 			new Value(1),

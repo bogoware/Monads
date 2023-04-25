@@ -1,4 +1,7 @@
-﻿namespace Bogoware.Monads;
+﻿// ReSharper disable UnusedParameter.Local
+// ReSharper disable UnusedMember.Local
+// ReSharper disable UnusedParameter.Global
+namespace Bogoware.Monads;
 
 public sealed class Unit
 {

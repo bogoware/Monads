@@ -1,3 +1,4 @@
+// ReSharper disable SuggestVarOrType_Elsewhere
 namespace Bogoware.Monads.UnitTests;
 
 public class MaybeMapTests

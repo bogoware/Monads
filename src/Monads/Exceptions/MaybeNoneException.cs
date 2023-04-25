@@ -1,3 +1,4 @@
+// ReSharper disable UnusedMember.Global
 namespace Bogoware.Monads;
 
 public class MaybeNoneException : ArgumentNullException

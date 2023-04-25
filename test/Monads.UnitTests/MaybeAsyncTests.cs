@@ -1,24 +1,23 @@
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 
 using Moq;
+// ReSharper disable UnusedParameter.Local
 
 namespace Bogoware.Monads.UnitTests;
 
 public class MaybeAsyncTests
 {
-	private AnotherValue Function() => new AnotherValue(0);
-	private AnotherValue Function(Value value) => new AnotherValue(value.Val);
-	private Maybe<AnotherValue> BindFunctionSome() => Some(new AnotherValue(0));
-	private Maybe<AnotherValue> BindFunctionSome(Value value) => Some(new AnotherValue(value.Val));
-	private Maybe<AnotherValue> BindFunctionNone() => None<AnotherValue>();
-	private Maybe<AnotherValue> BindFunctionNone(Value value) => None<AnotherValue>();
-	
-	private Task<AnotherValue> AsyncFunction() => Task.FromResult(new AnotherValue(0));
-	private Task<AnotherValue> AsyncFunction(Value value) => Task.FromResult(new AnotherValue(value.Val));
-	private Task<Maybe<AnotherValue>> AsyncBindFunctionSome() => Task.FromResult(Some(new AnotherValue(0)));
-	private Task<Maybe<AnotherValue>> AsyncBindFunctionSome(Value value) => Task.FromResult(Some(new AnotherValue(value.Val)));
-	private Task<Maybe<AnotherValue>> AsyncBindFunctionNone() => Task.FromResult(None<AnotherValue>());
-	private Task<Maybe<AnotherValue>> AsyncBindFunctionNone(Value value) => Task.FromResult(None<AnotherValue>());
+	private static AnotherValue Function() => new AnotherValue(0);
+	private static AnotherValue Function(Value value) => new AnotherValue(value.Val);
+	private static Maybe<AnotherValue> BindFunctionSome() => Some(new AnotherValue(0));
+	private static Maybe<AnotherValue> BindFunctionSome(Value value) => Some(new AnotherValue(value.Val));
+
+	private static Task<AnotherValue> AsyncFunction() => Task.FromResult(new AnotherValue(0));
+	private static Task<AnotherValue> AsyncFunction(Value value) => Task.FromResult(new AnotherValue(value.Val));
+	private static Task<Maybe<AnotherValue>> AsyncBindFunctionSome() => Task.FromResult(Some(new AnotherValue(0)));
+	private static Task<Maybe<AnotherValue>> AsyncBindFunctionSome(Value value) => Task.FromResult(Some(new AnotherValue(value.Val)));
+	private static Task<Maybe<AnotherValue>> AsyncBindFunctionNone() => Task.FromResult(None<AnotherValue>());
+	private static Task<Maybe<AnotherValue>> AsyncBindFunctionNone(Value value) => Task.FromResult(None<AnotherValue>());
 	
 	[Fact]
 	public async Task Async_map_asyncAction_withSome()
@@ -32,7 +31,7 @@ public class MaybeAsyncTests
 	public async Task Async_map_asyncFunction_withSome()
 	{
 		var sut = Some(new Value(0));
-		var actual = await sut.Map(v => AsyncFunction(v));
+		var actual = await sut.Map(AsyncFunction);
 		actual.IsSome.Should().BeTrue();
 	}
 	
@@ -48,7 +47,7 @@ public class MaybeAsyncTests
 	public async Task Async_map_asyncFunction_withNone()
 	{
 		var sut = None<Value>();
-		var actual = await sut.Map(v => AsyncFunction(v));
+		var actual = await sut.Map(AsyncFunction);
 		actual.IsNone.Should().BeTrue();
 	}
 	
@@ -64,7 +63,7 @@ public class MaybeAsyncTests
 	public async Task Async_flatMap_asyncFunction_withSome()
 	{
 		var sut = Some(new Value(0));
-		var actual = await sut.Bind(v => AsyncBindFunctionSome(v));
+		var actual = await sut.Bind(AsyncBindFunctionSome);
 		actual.IsSome.Should().BeTrue();
 	}
 	
@@ -80,7 +79,7 @@ public class MaybeAsyncTests
 	public async Task Async_flatMap_asyncFunction_withNone()
 	{
 		var sut = None<Value>();
-		var actual = await sut.Bind(v => AsyncBindFunctionNone(v));
+		var actual = await sut.Bind(AsyncBindFunctionNone);
 		actual.IsNone.Should().BeTrue();
 	}
 	
@@ -255,7 +254,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.ExecuteIfSome(inspector.Object.MethodVoid);
+		await sut.ExecuteIfSome(inspector.Object.MethodVoid);
 		inspector.Verify(_ => _.MethodVoid());
 	}
 	
@@ -264,7 +263,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.ExecuteIfSome(inspector.Object.MethodWithValueArg);
+		await sut.ExecuteIfSome(inspector.Object.MethodWithValueArg);
 		inspector.Verify(_ => _.MethodWithValueArg(It.IsAny<Value>()));
 	}
 	
@@ -273,7 +272,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.ExecuteIfSome(inspector.Object.MethodVoidAsync);
+		await sut.ExecuteIfSome(inspector.Object.MethodVoidAsync);
 		inspector.Verify(_ => _.MethodVoidAsync());
 	}
 	
@@ -282,7 +281,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(Some(new Value(0)));
-		var actual = await sut.ExecuteIfSome(inspector.Object.MethodWithValueArgAsync);
+		await sut.ExecuteIfSome(inspector.Object.MethodWithValueArgAsync);
 		inspector.Verify(_ => _.MethodWithValueArgAsync(It.IsAny<Value>()));
 	}
 	
@@ -291,7 +290,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(None<Value>());
-		var actual = await sut.ExecuteIfNone(inspector.Object.MethodVoid);
+		await sut.ExecuteIfNone(inspector.Object.MethodVoid);
 		inspector.Verify(_ => _.MethodVoid());
 	}
 	[Fact]
@@ -299,7 +298,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(None<Value>());
-		var actual = await sut.ExecuteIfNone(inspector.Object.MethodVoidAsync);
+		await sut.ExecuteIfNone(inspector.Object.MethodVoidAsync);
 		inspector.Verify(_ => _.MethodVoidAsync());
 	}
 	
@@ -308,7 +307,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(None<Value>());
-		var actual = await sut.Execute(inspector.Object.MethodWithMaybeArg);
+		await sut.Execute(inspector.Object.MethodWithMaybeArg);
 		inspector.Verify(_ => _.MethodWithMaybeArg(It.IsAny<Maybe<Value>>()));
 	}
 	[Fact]
@@ -316,7 +315,7 @@ public class MaybeAsyncTests
 	{
 		var inspector = new Mock<ICallInspector>();
 		var sut = Task.FromResult(None<Value>());
-		var actual = await sut.Execute(inspector.Object.MethodWithMaybeArgAsync);
+		await sut.Execute(inspector.Object.MethodWithMaybeArgAsync);
 		inspector.Verify(_ => _.MethodWithMaybeArgAsync(It.IsAny<Maybe<Value>>()));
 	}
 }

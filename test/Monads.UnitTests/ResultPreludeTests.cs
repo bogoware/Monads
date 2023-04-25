@@ -3,13 +3,13 @@ namespace Bogoware.Monads.UnitTests;
 public class ResultPreludeTests
 {
 	[Fact]
-	public void TryAction_should_return_a_succesfullUnitResultRuntime()
+	public void TryAction_should_return_a_successfulUnitResultRuntime()
 	{
 		void Action()
 		{
 		}
 
-		var result = Try((Action)Action);
+		var result = Try(Action);
 		result.IsSuccess.Should().BeTrue();
 	}
 
@@ -17,7 +17,7 @@ public class ResultPreludeTests
 	public void TryAction_should_return_a_failedUnitResultRuntime()
 	{
 		void Action() => throw new();
-		var result = Try((Action)Action);
+		var result = Try(Action);
 		result.IsFailure.Should().BeTrue();
 	}
 	
@@ -38,7 +38,7 @@ public class ResultPreludeTests
 	}
 	
 	[Fact]
-	public void TryAction_should_return_a_succesfulResultRuntime()
+	public void TryAction_should_return_a_successfulResultRuntime()
 	{
 		Value Action()
 		{
@@ -61,7 +61,7 @@ public class ResultPreludeTests
 	}
 	
 	[Fact]
-	public async Task TryActionAsync_should_return_a_succesfulResultRuntime()
+	public async Task TryActionAsync_should_return_a_successfulResultRuntime()
 	{
 		Task<Value> Action() => Task.FromResult(new Value(0));
 

@@ -1,4 +1,6 @@
 using System.Runtime.CompilerServices;
+// ReSharper disable UnusedType.Global
+// ReSharper disable UnusedMember.Global
 
 namespace Bogoware.Monads;
 

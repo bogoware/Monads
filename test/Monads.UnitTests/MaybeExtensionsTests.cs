@@ -15,7 +15,8 @@ public class MaybeExtensionsTests
 	[Fact]
 	public void EmptyEnumerable_produces_a_None()
 	{
-		List<Value> values = new() { };
+		// ReSharper disable once CollectionNeverUpdated.Local
+		List<Value> values = new();
 		var result = values.ToMaybe();
 		result.IsNone.Should().BeTrue();
 	}

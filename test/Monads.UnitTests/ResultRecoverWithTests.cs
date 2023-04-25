@@ -1,3 +1,5 @@
+// ReSharper disable UnusedParameter.Local
+// ReSharper disable SuggestVarOrType_Elsewhere
 namespace Bogoware.Monads.UnitTests;
 
 public class ResultRecoverWithTests
@@ -22,14 +24,14 @@ public class ResultRecoverWithTests
 	[Fact]
 	public void Success_recover_voidFunction()
 	{
-		Result<Value, Error> actual = _success.RecoverWith(() => new Value(1));
+		Result<Value, Error> actual = _success.RecoverWith(() => new(1));
 		actual.GetValueOrThrow().Val.Should().Be(0);
 	}
 	
 	[Fact]
 	public void Failure_recover_voidFunction()
 	{
-		Result<Value, Error> actual = _failed.RecoverWith(() => new Value(1));
+		Result<Value, Error> actual = _failed.RecoverWith(() => new(1));
 		actual.GetValueOrThrow().Val.Should().Be(1);
 	}
 	

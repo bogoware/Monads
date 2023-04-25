@@ -1,4 +1,5 @@
 using System.Collections;
+// ReSharper disable UnusedMember.Global
 
 // ReSharper disable ArrangeObjectCreationWhenTypeNotEvident
 
@@ -130,7 +131,6 @@ public readonly struct Maybe<TValue> : IMaybe, IEquatable<Maybe<TValue>>, IEnume
 
 	public override bool Equals(object? obj)
 	{
-		if (obj is null) return false;
 		if (obj is Maybe<TValue> other) return Equals(other);
 		return false;
 	}

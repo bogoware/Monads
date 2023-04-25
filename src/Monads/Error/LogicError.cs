@@ -1,4 +1,5 @@
 // ReSharper disable MemberCanBeProtected.Global
+// ReSharper disable UnusedMember.Global
 namespace Bogoware.Monads;
 
 /// <summary>

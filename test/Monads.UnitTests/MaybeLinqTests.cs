@@ -12,7 +12,7 @@ public class MaybeLinqTests
 			from v in sut
 			select v.Val;
 
-		values.Should().BeEquivalentTo(new List<int>() { 1 });
+		values.Should().BeEquivalentTo(new List<int> { 1 });
 	}
 	
 	[Fact]
@@ -35,7 +35,7 @@ public class MaybeLinqTests
 			where v.Val == 1
 			select v.Val;
 
-		values.Should().BeEquivalentTo(new List<int>() { 1 });
+		values.Should().BeEquivalentTo(new List<int> { 1 });
 	}
 	
 	[Fact]
@@ -59,7 +59,7 @@ public class MaybeLinqTests
 			where v.Val != 0
 			select v.Val;
 
-		values.Should().BeEquivalentTo(new List<int>() { 1 });
+		values.Should().BeEquivalentTo(new List<int> { 1 });
 	}
 	
 	[Fact]
