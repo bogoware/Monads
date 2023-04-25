@@ -1,4 +1,3 @@
-using System.Globalization;
 using System.Runtime.CompilerServices;
 
 // ReSharper disable MemberCanBePrivate.Global

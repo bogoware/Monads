@@ -2,7 +2,7 @@ using Moq;
 
 namespace Bogoware.Monads.UnitTests;
 
-public class MaybeIfSomeIfNoneExecuteTests
+public class MaybeExecuteTests
 {
 	private readonly Mock<ICallInspector> _inspector = new();
 

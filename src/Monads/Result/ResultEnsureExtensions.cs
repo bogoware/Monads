@@ -12,16 +12,19 @@ public static class ResultEnsureExtensions
 		where TError : Error
 		=> result.Ensure(predicate, error());
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Result<TValue, TError>> Ensure<TValue, TError>(
 		this Result<TValue, TError> result, Func<TValue, bool> predicate, Func<Task<TError>> error)
 		where TError : Error
 		=> result.Ensure(predicate, await error());
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Task<Result<TValue, TError>> Ensure<TValue, TError>(
 		this Result<TValue, TError> result, Func<TValue, Task<bool>> predicate, Func<TError> error)
 		where TError : Error
 		=> result.Ensure(predicate, error());
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Result<TValue, TError>> Ensure<TValue, TError>(
 		this Result<TValue, TError> result, Func<TValue, Task<bool>> predicate, Func<Task<TError>> error)
 		where TError : Error
@@ -42,23 +45,26 @@ public static class ResultEnsureExtensions
 		this Task<Result<TValue, TError>> result, Func<TValue, Task<bool>> predicate, TError error)
 		where TError : Error
 		=> await (await result).Ensure(predicate, error);
-	
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Result<TValue, TError>> Ensure<TValue, TError>(
 		this Task<Result<TValue, TError>> result, Func<TValue, bool> predicate, Func<TError> error)
 		where TError : Error
 		=> (await result).Ensure(predicate, error());
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Result<TValue, TError>> Ensure<TValue, TError>(
 		this Task<Result<TValue, TError>> result, Func<TValue, bool> predicate, Func<Task<TError>> error)
 		where TError : Error
 		=> (await result).Ensure(predicate, await error());
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Result<TValue, TError>> Ensure<TValue, TError>(
 		this Task<Result<TValue, TError>> result, Func<TValue, Task<bool>> predicate, Func<TError> error)
 		where TError : Error
 		=> await (await result).Ensure(predicate, error());
 
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Result<TValue, TError>> Ensure<TValue, TError>(
 		this Task<Result<TValue, TError>> result, Func<TValue, Task<bool>> predicate, Func<Task<TError>> error)
 		where TError : Error

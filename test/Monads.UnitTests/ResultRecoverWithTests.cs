@@ -1,5 +1,3 @@
-using Xunit.Sdk;
-
 namespace Bogoware.Monads.UnitTests;
 
 public class ResultRecoverWithTests
