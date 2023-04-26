@@ -118,7 +118,6 @@ public readonly struct Result<TValue, TError> : IResult, IEquatable<Result<TValu
 		return this;
 	}
 	
-	// TODO: IEnumerable, EnumerableExtensions
 	public bool Equals(Result<TValue, TError> other) 
 		=> EqualityComparer<TValue?>.Default.Equals(_value, other._value)
 		   && EqualityComparer<TError?>.Default.Equals(_error, other._error);

@@ -14,6 +14,12 @@ public static partial class Prelude
 	public static Result<TValue, TError> Failure<TValue, TError>(TError error) where TError : Error
 		=> new (error);
 	
+	public static Result<TValue, LogicError> Success<TValue>(TValue value) 
+		=> new (value);
+	
+	public static Result<TValue, LogicError> Failure<TValue>(string message)
+		=> new (new LogicError(message));
+	
 	public static Result<Unit, RuntimeError> Try(Action action)
 	{
 		RuntimeError? error = null;

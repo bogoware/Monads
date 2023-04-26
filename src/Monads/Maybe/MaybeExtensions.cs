@@ -108,7 +108,7 @@ public static class MaybeExtensions
 	public static bool Satisfy<TValue>(this Maybe<TValue> maybe, Func<TValue, bool> predicate) where TValue : class
 		=> maybe.Match(predicate, false);
 
-	/// <inheritdoc cref="Satisfy{T}(Bogoware.Monads.Maybe{T},System.Func{T,bool})"/>
+	/// <inheritdoc cref="Satisfy{TValue}(Bogoware.Monads.Maybe{TValue},System.Func{TValue,System.Threading.Tasks.Task{bool}})"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<bool> Satisfy<TValue>(this Maybe<TValue> maybe, Func<TValue, Task<bool>> predicate) where TValue : class
 		=> await maybe.Match(predicate, false);

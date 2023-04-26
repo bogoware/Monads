@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Bogoware.Monads.UnitTests;
 
@@ -72,6 +73,37 @@ public class MaybeLinqTests
 			select v.Val;
 
 		values.Should().BeEmpty();
+	}
+	
+	[Fact]
+	public void Aggregate_values()
+	{
+		var maybes = new List<Maybe<Value>>
+		{
+			Some(new Value(1)),
+			Some(new Value(2)),
+			Maybe<Value>.None,
+			Some(new Value(3)),
+			Some(new Value(4)),
+		};
+		
+		// style 1: filter over monads
+		var values =
+			from maybe in maybes
+			where maybe.Satisfy(_ => _.Val % 2 == 0)
+			from v in maybe
+			select v.Val;
+
+		values.Sum().Should().Be(6);
+		
+		// style 1: filter in pure linq style
+		var values2 =
+			from maybe in maybes
+			from v in maybe
+			where v.Val % 2 == 0
+			select v.Val;
+
+		values2.Sum().Should().Be(6);
 	}
 
 	[Fact]

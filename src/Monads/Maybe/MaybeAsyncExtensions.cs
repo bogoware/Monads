@@ -116,6 +116,12 @@ public static class MaybeAsyncExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<TResult> Match<TValue, TResult>(
 		this Task<Maybe<TValue>> maybeTask,
+		Func<TValue, Task<TResult>> mapValue, TResult none) where TValue : class
+		=> await (await maybeTask).Match(mapValue, none);
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<TResult> Match<TValue, TResult>(
+		this Task<Maybe<TValue>> maybeTask,
 		Func<TValue, Task<TResult>> value,
 		Func<Task<TResult>> none) where TValue : class
 		=> await (await maybeTask).Match(value, none);
@@ -167,4 +173,21 @@ public static class MaybeAsyncExtensions
 		this Task<Maybe<TValue>> maybeTask,
 		Func<Maybe<TValue>, Task> action) where TValue : class
 		=> await (await maybeTask).Execute(action);
+	
+	
+	
+	/// <summary>
+	/// Evaluate the <c>predicate</c> applied to the value if present.
+	/// Return <c>false</c> in case of <c>None</c>.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Task<bool> Satisfy<TValue>(
+		this Task<Maybe<TValue>> maybe, Func<TValue, bool> predicate) where TValue : class
+		=> maybe.Match(predicate, false);
+
+	/// <inheritdoc cref="Satisfy{TValue}(Bogoware.Monads.Maybe{TValue},System.Func{TValue,System.Threading.Tasks.Task{bool}})"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Task<bool> Satisfy<TValue>(
+		this Task<Maybe<TValue>> maybe, Func<TValue, Task<bool>> predicate) where TValue : class
+		=> maybe.Match(predicate, false);
 }
