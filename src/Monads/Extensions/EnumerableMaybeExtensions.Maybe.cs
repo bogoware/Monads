@@ -84,6 +84,17 @@ public static class EnumerableMaybeExtensions
 		where TValue : class
 		where TNewValue : class
 		=> maybes.Bind(v => Prelude.Some(v).Map(functor));
+	
+	/// <summary>
+	/// Matches maybes via the two functors.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static IEnumerable<TResult> Match<TValue, TResult>(
+		this IEnumerable<Maybe<TValue>> maybes,
+		Func<TValue, TResult> mapSuccesses,
+		TResult none)
+		where TValue : class
+		=> maybes.Select(maybe => maybe.Match(mapSuccesses, none));
 
 	/// <summary>
 	/// Filters <c>Some</c>s via the predicate.

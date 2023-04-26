@@ -89,6 +89,26 @@ public static class EnumerableResultExtensions
 		=> successes.Bind(v => Prelude.Success<TNewValue, TError>(functor(v)));
 
 	/// <summary>
+	/// Matches results.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static IEnumerable<TResult> Match<TValue, TError, TResult>(
+		this IEnumerable<Result<TValue, TError>> results,
+		Func<TValue, TResult> mapSuccesses,
+		Func<TError, TResult> mapFailures)
+		where TError : Error
+		=> results.Select(result => result.Match(mapSuccesses, mapFailures));
+	
+	/// <inheritdoc cref="Match{TValue,TError,TResult}(System.Collections.Generic.IEnumerable{Bogoware.Monads.Result{TValue,TError}},System.Func{TValue,TResult},System.Func{TError,TResult})"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static IEnumerable<TResult> Match<TValue, TError, TResult>(
+		this IEnumerable<Result<TValue, TError>> results,
+		Func<TValue, TResult> mapSuccesses,
+		TResult failure)
+		where TError : Error
+		=> results.Select(result => result.Match(mapSuccesses, failure));
+
+	/// <summary>
 	/// Filters <c>Success</c>es via the predicate.
 	/// <c>Failure</c>s are discarded.
 	/// </summary>

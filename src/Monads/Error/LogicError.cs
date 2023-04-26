@@ -54,4 +54,6 @@ public class LogicError: Error, IEquatable<LogicError>
 	}
 
 	public override string ToString() => $"""LogicError: "{Message}".""";
+	
+	public static implicit operator LogicError(string message) => new(message);
 }
