@@ -49,61 +49,61 @@ public class EnumerableMaybeExtensionsTests
 	[Fact]
 	public void IsAllSome_returns_true()
 	{
-		_allMaybeSome.IsAllSome().Should().BeTrue();
-		_allIMaybeSome.IsAllSome().Should().BeTrue();
+		_allMaybeSome.AllSome().Should().BeTrue();
+		_allIMaybeSome.AllSome().Should().BeTrue();
 	}
 
 	[Fact]
 	public void IsAllSome_returns_false()
 	{
-		_maybeMixed.IsAllSome().Should().BeFalse();
-		_maybeIMixed.IsAllSome().Should().BeFalse();
+		_maybeMixed.AllSome().Should().BeFalse();
+		_maybeIMixed.AllSome().Should().BeFalse();
 	}
 
 	[Fact]
 	public void IsAllNone_returns_true()
 	{
-		_allMaybeNone.IsAllNone().Should().BeTrue();
-		_allIMaybeNone.IsAllNone().Should().BeTrue();
+		_allMaybeNone.AllNone().Should().BeTrue();
+		_allIMaybeNone.AllNone().Should().BeTrue();
 	}
 
 	[Fact]
 	public void IsAllNone_returns_false()
 	{
-		_maybeMixed.IsAllNone().Should().BeFalse();
-		_maybeIMixed.IsAllNone().Should().BeFalse();
+		_maybeMixed.AllNone().Should().BeFalse();
+		_maybeIMixed.AllNone().Should().BeFalse();
 	}
 
 	[Fact]
 	public void IsAnySome_returns_true()
 	{
-		_maybeMixed.IsAnySome().Should().BeTrue();
-		_maybeIMixed.IsAnySome().Should().BeTrue();
-		_allMaybeSome.IsAnySome().Should().BeTrue();
-		_allIMaybeSome.IsAnySome().Should().BeTrue();
+		_maybeMixed.AnySome().Should().BeTrue();
+		_maybeIMixed.AnySome().Should().BeTrue();
+		_allMaybeSome.AnySome().Should().BeTrue();
+		_allIMaybeSome.AnySome().Should().BeTrue();
 	}
 
 	[Fact]
 	public void IsAnySome_returns_false()
 	{
-		_allMaybeNone.IsAnySome().Should().BeFalse();
-		_allIMaybeNone.IsAnySome().Should().BeFalse();
+		_allMaybeNone.AnySome().Should().BeFalse();
+		_allIMaybeNone.AnySome().Should().BeFalse();
 	}
 
 	[Fact]
 	public void IsAnyNone_returns_true()
 	{
-		_maybeMixed.IsAnyNone().Should().BeTrue();
-		_maybeIMixed.IsAnyNone().Should().BeTrue();
-		_allMaybeNone.IsAnyNone().Should().BeTrue();
-		_allIMaybeNone.IsAnyNone().Should().BeTrue();
+		_maybeMixed.AnyNone().Should().BeTrue();
+		_maybeIMixed.AnyNone().Should().BeTrue();
+		_allMaybeNone.AnyNone().Should().BeTrue();
+		_allIMaybeNone.AnyNone().Should().BeTrue();
 	}
 
 	[Fact]
 	public void IsAnyNone_returns_false()
 	{
-		_allMaybeSome.IsAnyNone().Should().BeFalse();
-		_allIMaybeSome.IsAnyNone().Should().BeFalse();
+		_allMaybeSome.AnyNone().Should().BeFalse();
+		_allIMaybeSome.AnyNone().Should().BeFalse();
 	}
 
 	[Fact]

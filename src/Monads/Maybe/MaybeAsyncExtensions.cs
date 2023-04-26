@@ -185,7 +185,7 @@ public static class MaybeAsyncExtensions
 		this Task<Maybe<TValue>> maybe, Func<TValue, bool> predicate) where TValue : class
 		=> maybe.Match(predicate, false);
 
-	/// <inheritdoc cref="Satisfy{TValue}(Bogoware.Monads.Maybe{TValue},System.Func{TValue,System.Threading.Tasks.Task{bool}})"/>
+	/// <inheritdoc cref="Satisfy{TValue}(System.Threading.Tasks.Task{Bogoware.Monads.Maybe{TValue}},System.Func{TValue,bool})"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Task<bool> Satisfy<TValue>(
 		this Task<Maybe<TValue>> maybe, Func<TValue, Task<bool>> predicate) where TValue : class
