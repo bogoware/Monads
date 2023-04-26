@@ -4,14 +4,14 @@ namespace Bogoware.Monads.UnitTests;
 
 public class EnumerableMaybeExtensionsTests
 {
-	private static readonly List<Maybe<Value>> _allMaybeSome = new()
+	private static readonly List<IMaybe> _allIMaybeSome = new()
 	{
 		Some(new Value(0)),
 		Some(new Value(1)),
 		Some(new Value(2))
 	};
 
-	private static readonly List<IMaybe> _allIMaybeSome = new()
+	private static readonly List<Maybe<Value>> _allMaybeSome = new()
 	{
 		Some(new Value(0)),
 		Some(new Value(1)),
@@ -47,35 +47,35 @@ public class EnumerableMaybeExtensionsTests
 	};
 
 	[Fact]
-	public void IsAllSome_returns_true()
+	public void AllSome_returns_true()
 	{
 		_allMaybeSome.AllSome().Should().BeTrue();
 		_allIMaybeSome.AllSome().Should().BeTrue();
 	}
 
 	[Fact]
-	public void IsAllSome_returns_false()
+	public void AllSome_returns_false()
 	{
 		_maybeMixed.AllSome().Should().BeFalse();
 		_maybeIMixed.AllSome().Should().BeFalse();
 	}
 
 	[Fact]
-	public void IsAllNone_returns_true()
+	public void AllNone_returns_true()
 	{
 		_allMaybeNone.AllNone().Should().BeTrue();
 		_allIMaybeNone.AllNone().Should().BeTrue();
 	}
 
 	[Fact]
-	public void IsAllNone_returns_false()
+	public void AllNone_returns_false()
 	{
 		_maybeMixed.AllNone().Should().BeFalse();
 		_maybeIMixed.AllNone().Should().BeFalse();
 	}
 
 	[Fact]
-	public void IsAnySome_returns_true()
+	public void AnySome_returns_true()
 	{
 		_maybeMixed.AnySome().Should().BeTrue();
 		_maybeIMixed.AnySome().Should().BeTrue();
@@ -84,14 +84,14 @@ public class EnumerableMaybeExtensionsTests
 	}
 
 	[Fact]
-	public void IsAnySome_returns_false()
+	public void AnySome_returns_false()
 	{
 		_allMaybeNone.AnySome().Should().BeFalse();
 		_allIMaybeNone.AnySome().Should().BeFalse();
 	}
 
 	[Fact]
-	public void IsAnyNone_returns_true()
+	public void AnyNone_returns_true()
 	{
 		_maybeMixed.AnyNone().Should().BeTrue();
 		_maybeIMixed.AnyNone().Should().BeTrue();
@@ -100,7 +100,7 @@ public class EnumerableMaybeExtensionsTests
 	}
 
 	[Fact]
-	public void IsAnyNone_returns_false()
+	public void AnyNone_returns_false()
 	{
 		_allMaybeSome.AnyNone().Should().BeFalse();
 		_allIMaybeSome.AnyNone().Should().BeFalse();
