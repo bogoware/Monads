@@ -1,6 +1,8 @@
+using System.Collections;
+
 namespace Bogoware.Monads;
 
-public readonly struct Result<TValue, TError> : IResult
+public readonly struct Result<TValue, TError> : IResult, IEquatable<Result<TValue, TError>>, IEnumerable<TValue>
 	where TError : Error
 {
 	private readonly TValue? _value;
@@ -115,4 +117,23 @@ public readonly struct Result<TValue, TError> : IResult
 		if (_error is not null) await action(_error);
 		return this;
 	}
+	
+	// TODO: IEnumerable, EnumerableExtensions
+	public bool Equals(Result<TValue, TError> other) 
+		=> EqualityComparer<TValue?>.Default.Equals(_value, other._value)
+		   && EqualityComparer<TError?>.Default.Equals(_error, other._error);
+
+	public IEnumerator<TValue> GetEnumerator()
+	{
+		if (_value is not null) yield return _value;
+	}
+
+	public override bool Equals(object? obj) => obj is Result<TValue, TError> other && Equals(other);
+
+	public override int GetHashCode() => HashCode.Combine(_value, _error);
+	IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+	public static bool operator ==(Result<TValue, TError> left, Result<TValue, TError> right) => left.Equals(right);
+
+	public static bool operator !=(Result<TValue, TError> left, Result<TValue, TError> right) => !left.Equals(right);
 }

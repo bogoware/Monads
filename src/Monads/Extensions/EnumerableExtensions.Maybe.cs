@@ -15,7 +15,7 @@ public static class EnumerableMaybeExtensions
 
 	/// <inheritdoc cref="IsAllSome"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static bool IsAllSome<T>(this IEnumerable<Maybe<T>> maybes) where T : class
+	public static bool IsAllSome<TValue>(this IEnumerable<Maybe<TValue>> maybes) where TValue : class
 		=> maybes.All(_ => _.IsSome);
 
 	/// <summary>
@@ -27,7 +27,7 @@ public static class EnumerableMaybeExtensions
 
 	/// <inheritdoc cref="IsAllNone"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static bool IsAllNone<T>(this IEnumerable<Maybe<T>> maybes) where T : class
+	public static bool IsAllNone<TValue>(this IEnumerable<Maybe<TValue>> maybes) where TValue : class
 		=> maybes.All(_ => _.IsNone);
 
 	/// <summary>
@@ -39,7 +39,7 @@ public static class EnumerableMaybeExtensions
 
 	/// <inheritdoc cref="IsAnySome"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static bool IsAnySome<T>(this IEnumerable<Maybe<T>> maybes) where T : class
+	public static bool IsAnySome<TValue>(this IEnumerable<Maybe<TValue>> maybes) where TValue : class
 		=> maybes.Any(_ => _.IsSome);
 
 	/// <summary>
@@ -51,15 +51,15 @@ public static class EnumerableMaybeExtensions
 
 	/// <inheritdoc cref="IsAnyNone"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static bool IsAnyNone<T>(this IEnumerable<Maybe<T>> maybes) where T : class => maybes.Any(_ => _.IsNone);
+	public static bool IsAnyNone<TValue>(this IEnumerable<Maybe<TValue>> maybes) where TValue : class => maybes.Any(_ => _.IsNone);
 
 	/// <summary>
 	/// Extract values from <see cref="Maybe{T}"/>s.
 	/// <c>None</c>s are discarded.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static IEnumerable<T> SelectValues<T>(this IEnumerable<Maybe<T>> maybes)
-		where T : class
+	public static IEnumerable<TValue> SelectValues<TValue>(this IEnumerable<Maybe<TValue>> maybes)
+		where TValue : class
 		=> maybes.SelectMany(_ => _);
 
 	/// <summary>
@@ -68,10 +68,10 @@ public static class EnumerableMaybeExtensions
 	/// by the functor.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static IEnumerable<Maybe<TResult>> Bind<TSource, TResult>(
-		this IEnumerable<Maybe<TSource>> maybes, Func<TSource, Maybe<TResult>> functor)
-		where TSource : class
-		where TResult : class
+	public static IEnumerable<Maybe<TNewValue>> Bind<TValue, TNewValue>(
+		this IEnumerable<Maybe<TValue>> maybes, Func<TValue, Maybe<TNewValue>> functor)
+		where TValue : class
+		where TNewValue : class
 		=> maybes.SelectValues().Select(functor);
 
 	/// <summary>
@@ -79,10 +79,10 @@ public static class EnumerableMaybeExtensions
 	/// <c>None</c>s are discarded.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static IEnumerable<Maybe<TResult>> Map<TSource, TResult>(
-		this IEnumerable<Maybe<TSource>> maybes, Func<TSource, TResult> functor)
-		where TSource : class
-		where TResult : class
+	public static IEnumerable<Maybe<TNewValue>> Map<TValue, TNewValue>(
+		this IEnumerable<Maybe<TValue>> maybes, Func<TValue, TNewValue> functor)
+		where TValue : class
+		where TNewValue : class
 		=> maybes.Bind(v => Prelude.Some(v).Map(functor));
 
 	/// <summary>
@@ -90,9 +90,9 @@ public static class EnumerableMaybeExtensions
 	/// <c>None</c>s are discarded.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static IEnumerable<Maybe<TSource>> Where<TSource>(
-		this IEnumerable<Maybe<TSource>> maybes, Func<TSource, bool> predicate)
-		where TSource : class
+	public static IEnumerable<Maybe<TValue>> Where<TValue>(
+		this IEnumerable<Maybe<TValue>> maybes, Func<TValue, bool> predicate)
+		where TValue : class
 		=> maybes.SelectValues().Where(predicate).Select(Prelude.Some);
 	
 	/// <summary>
@@ -100,8 +100,8 @@ public static class EnumerableMaybeExtensions
 	/// <c>None</c>s are discarded.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static IEnumerable<Maybe<TSource>> WhereNot<TSource>(
-		this IEnumerable<Maybe<TSource>> maybes, Func<TSource, bool> predicate)
-		where TSource : class
+	public static IEnumerable<Maybe<TValue>> WhereNot<TValue>(
+		this IEnumerable<Maybe<TValue>> maybes, Func<TValue, bool> predicate)
+		where TValue : class
 		=> maybes.SelectValues().Where(v => !predicate(v)).Select(Prelude.Some);
 }
