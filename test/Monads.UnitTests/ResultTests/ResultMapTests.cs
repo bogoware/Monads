@@ -1,6 +1,6 @@
 // ReSharper disable SuggestVarOrType_Elsewhere
 // ReSharper disable UnusedParameter.Local
-namespace Bogoware.Monads.UnitTests;
+namespace Bogoware.Monads.UnitTests.ResultTests;
 
 public class ResultMapTests
 {

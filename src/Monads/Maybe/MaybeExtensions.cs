@@ -117,13 +117,13 @@ public static class MaybeExtensions
 	/// Execute the action.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Maybe<TValue> Execute<TValue>(this Maybe<TValue> maybe, Action<Maybe<TValue>> action) where TValue : class
+	public static ref readonly Maybe<TValue> Execute<TValue>(in this Maybe<TValue> maybe, Action<Maybe<TValue>> action) where TValue : class
 	{
 		action(maybe);
-		return maybe;
+		return ref maybe;
 	}
 
-	/// <inheritdoc cref="Execute{T}(Bogoware.Monads.Maybe{T},System.Action{Bogoware.Monads.Maybe{T}})"/>
+	/// <inheritdoc cref="T:Bogoware.Monads.Maybe`1"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Maybe<TValue>> Execute<TValue>(this Maybe<TValue> maybe, Func<Maybe<TValue>, Task> action) where TValue : class
 	{
@@ -135,13 +135,13 @@ public static class MaybeExtensions
 	/// Execute the action if the <see cref="Maybe{T}"/> is <c>Some</c>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Maybe<TValue> ExecuteIfSome<TValue>(this Maybe<TValue> maybe, Action action) where TValue : class
+	public static ref readonly Maybe<TValue> ExecuteIfSome<TValue>(in this Maybe<TValue> maybe, Action action) where TValue : class
 	{
 		if (maybe.IsSome) action();
-		return maybe;
+		return ref maybe;
 	}
 
-	/// <inheritdoc cref="ExecuteIfSome{T}(Bogoware.Monads.Maybe{T},System.Action)"/>
+	/// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ExecuteIfSome``1(Bogoware.Monads.Maybe{``0}@,System.Action)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Maybe<TNewValue>> ExecuteIfSome<TNewValue>(this Maybe<TNewValue> maybe, Func<Task> action) where TNewValue : class
 	{
@@ -153,13 +153,13 @@ public static class MaybeExtensions
 	/// Execute the action if the <see cref="Maybe{T}"/> is <c>None</c>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Maybe<TNewValue> ExecuteIfNone<TNewValue>(this Maybe<TNewValue> maybe, Action action) where TNewValue : class
+	public static ref readonly Maybe<TNewValue> ExecuteIfNone<TNewValue>(in this Maybe<TNewValue> maybe, Action action) where TNewValue : class
 	{
 		if (maybe.IsNone) action();
-		return maybe;
+		return ref maybe;
 	}
 
-	/// <inheritdoc cref="ExecuteIfNone{T}(Bogoware.Monads.Maybe{T},System.Action)"/> 
+	/// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ExecuteIfNone``1(Bogoware.Monads.Maybe{``0}@,System.Action)"/> 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Maybe<TNewValue>> ExecuteIfNone<TNewValue>(this Maybe<TNewValue> maybe, Func<Task> action) where TNewValue : class
 	{

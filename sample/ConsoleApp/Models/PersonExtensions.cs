@@ -1,4 +1,4 @@
-namespace Sample;
+namespace Sample.Models;
 
 public static class PersonExtensions
 {

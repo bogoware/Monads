@@ -1,6 +1,6 @@
 using Moq;
 
-namespace Bogoware.Monads.UnitTests;
+namespace Bogoware.Monads.UnitTests.MaybeTests;
 
 public class MaybeExecuteTests
 {

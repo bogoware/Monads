@@ -3,6 +3,7 @@
 
 using System.Diagnostics;
 using Bogoware.Monads;
+using Sample.Models;
 
 namespace Sample.Samples;
 

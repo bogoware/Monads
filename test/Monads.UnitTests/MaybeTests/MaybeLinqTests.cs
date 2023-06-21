@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace Bogoware.Monads.UnitTests;
+namespace Bogoware.Monads.UnitTests.MaybeTests;
 
 public class MaybeLinqTests
 {

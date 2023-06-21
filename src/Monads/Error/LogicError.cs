@@ -3,6 +3,13 @@
 namespace Bogoware.Monads;
 
 /// <summary>
+/// Represents a logic error, that is an error that is caused by a
+/// logical flaw in the application.
+/// A logic error is not caused by an external factor,
+/// such as a network error or a file system error.
+/// Logic errors are usually caused by invalid input or invalid state and should be
+/// treated programmatically.
+///  
 /// This class can be further inherited to model specific domain error needs.
 /// </summary>
 /// <example>

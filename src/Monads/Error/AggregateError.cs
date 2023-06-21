@@ -1,12 +1,24 @@
 // ReSharper disable MemberCanBePrivate.Global
 namespace Bogoware.Monads;
 
+/// <summary>
+/// An error that aggregates multiple errors.
+/// </summary>
 public sealed class AggregateError : Error
 {
 	private const string ERROR_MESSAGE = "Multiple errors occurred";
 	private readonly List<Error> _innerErrors;
+	
+	/// <summary>
+	/// The errors that were aggregated.
+	/// </summary>
 	public IReadOnlyList<Error> Errors => _innerErrors;
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="AggregateError"/> class.
+	/// </summary>
+	/// <param name="message">The error message</param>
+	/// <param name="innerErrors">The inner errors</param>
 	public AggregateError(string message, IEnumerable<Error> innerErrors)
 	{
 		ArgumentNullException.ThrowIfNull(message);

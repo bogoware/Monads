@@ -3,6 +3,9 @@
 // ReSharper disable UnusedParameter.Global
 namespace Bogoware.Monads;
 
+/// <summary>
+/// The Unit type is used to represent the absence of a specific value
+/// </summary>
 public sealed class Unit
 {
 	public static readonly Unit Instance = new();

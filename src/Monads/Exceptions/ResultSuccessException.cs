@@ -1,8 +1,8 @@
 namespace Bogoware.Monads;
 
 /// <summary>
-/// Exception thrown when attempting to get the value
-/// <see cref="Result{TValue,TError}"/> where <see cref="Result{TValue,TError}.IsSuccess"/> is <c>true</c>.
+/// Exception thrown when attempting to get the error of a <see cref="Result{TValue,TError}"/>
+/// where <see cref="Result{TValue,TError}.IsSuccess"/> is <c>true</c>.
 /// </summary>
 public class ResultSuccessException : ResultInvalidOperationException
 {

@@ -1,5 +1,8 @@
 namespace Bogoware.Monads;
 
+/// <summary>
+/// Generic interface for <see cref="Maybe{TValue}"/>.
+/// </summary>
 public interface IMaybe
 {
 	bool IsSome { get; }

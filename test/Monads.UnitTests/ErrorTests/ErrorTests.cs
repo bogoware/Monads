@@ -1,4 +1,4 @@
-namespace Bogoware.Monads.UnitTests;
+namespace Bogoware.Monads.UnitTests.ErrorTests;
 
 public class ErrorTests
 {
