@@ -4,12 +4,12 @@ public interface ICallInspector
 {
 	void MethodVoid();
 	void MethodWithValueArg(Value _);
-	void MethodWithErrorArg(LogicError _);
+	void MethodWithErrorArg(Error _);
 	void MethodWithMaybeArg(Maybe<Value> _);
-	void MethodWithResultArg(Result<Value, LogicError> _);
+	void MethodWithResultArg(Result<Value> _);
 	Task MethodVoidAsync();
 	Task MethodWithValueArgAsync(Value _);
-	Task MethodWithErrorArgAsync(LogicError _);
+	Task MethodWithErrorArgAsync(Error _);
 	Task MethodWithMaybeArgAsync(Maybe<Value> _);
-	Task MethodWithResultArgAsync(Result<Value, LogicError> _);
+	Task MethodWithResultArgAsync(Result<Value> _);
 }

@@ -2,9 +2,9 @@ namespace Bogoware.Monads.UnitTests.ResultTests;
 
 public class ResultMatchExtensionsTests
 {
-	private static readonly Result<Value, Error> _success = new(new Value(0));
+	private static readonly Result<Value> _success = new(new Value(0));
 
-	private static readonly Result<Value, Error> _failed = new(new LogicError("Something went wrong"));
+	private static readonly Result<Value> _failed = new(new LogicError("Something went wrong"));
 
 	[Fact]
 	public void Success_matches_constant_constant()

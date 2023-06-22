@@ -8,7 +8,7 @@ namespace Bogoware.Monads;
 /// <summary>
 /// Represents an optional value.
 /// </summary>
-public readonly struct Maybe<TValue> : IMaybe, IEquatable<Maybe<TValue>>, IEnumerable<TValue>
+public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>, IEnumerable<TValue>
 	where TValue : class
 {
 	private readonly TValue? _value = default;

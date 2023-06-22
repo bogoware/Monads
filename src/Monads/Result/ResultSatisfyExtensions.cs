@@ -11,30 +11,30 @@ public static class ResultSatisfyExtensions
 	/// Return <c>false</c> in case of <c>None</c>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static bool Satisfy<TValue, TError>(this Result<TValue, TError> maybe, Func<TValue, bool> predicate)
-		where TValue : class where TError : Error
-		=> maybe.Match(predicate, false);
+	public static bool Satisfy<TValue>(this Result<TValue> result, Func<TValue, bool> predicate)
+		where TValue : class
+		=> result.Match(predicate, false);
 
-	/// <inheritdoc cref="Satisfy{TValue,TError}(Bogoware.Monads.Result{TValue,TError},System.Func{TValue,bool})"/>
+	/// <inheritdoc cref="Satisfy{TValue}(Bogoware.Monads.Result{TValue},System.Func{TValue,bool})"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<bool> Satisfy<TValue, TError>(
-		this Result<TValue, TError> maybe, Func<TValue, Task<bool>> predicate)
-		where TValue : class where TError : Error
-		=> maybe.Match(predicate, false);
+	public static Task<bool> Satisfy<TValue>(
+		this Result<TValue> result, Func<TValue, Task<bool>> predicate)
+		where TValue : class
+		=> result.Match(predicate, false);
 
 	#endregion Functional Closure
 	
 	#region Left Async Closure
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<bool> Satisfy<TValue, TError>(this Task<Result<TValue, TError>> maybe, Func<TValue, bool> predicate)
-		where TValue : class where TError : Error
-		=> maybe.Match(predicate, false);
+	public static Task<bool> Satisfy<TValue>(this Task<Result<TValue>> result, Func<TValue, bool> predicate)
+		where TValue : class
+		=> result.Match(predicate, false);
 
-	/// <inheritdoc cref="Satisfy{TValue,TError}(Bogoware.Monads.Result{TValue,TError},System.Func{TValue,bool})"/>
+	/// <inheritdoc cref="Satisfy{TValue}(Bogoware.Monads.Result{TValue},System.Func{TValue,bool})"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<bool> Satisfy<TValue, TError>(
-		this Task<Result<TValue, TError>> maybe, Func<TValue, Task<bool>> predicate)
-		where TValue : class where TError : Error
+	public static Task<bool> Satisfy<TValue>(
+		this Task<Result<TValue>> maybe, Func<TValue, Task<bool>> predicate)
+		where TValue : class
 		=> maybe.Match(predicate, false);
 
 	#endregion Left Async Closure

@@ -10,20 +10,20 @@ public static class ResultRecoverWithExtensions
 	#region Functional Closure Extensions
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Result<TValue, TError> RecoverWith<TValue, TError>(
-		this Result<TValue, TError> result, TValue newValue)
+	public static Result<TValue> RecoverWith<TValue, TError>(
+		this Result<TValue> result, TValue newValue)
 		where TError : Error
 		=> result.IsSuccess ? result : new(newValue);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Result<TValue, TError> RecoverWith<TValue, TError>(
-		this Result<TValue, TError> result, Func<TValue> functor)
+	public static Result<TValue> RecoverWith<TValue, TError>(
+		this Result<TValue> result, Func<TValue> functor)
 		where TError : Error
 		=> result.IsSuccess ? result : new(functor());
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Result<TValue, TError>> RecoverWith<TValue, TError>(
-		this Result<TValue, TError> result, Func<Task<TValue>> functor)
+	public static async Task<Result<TValue>> RecoverWith<TValue, TError>(
+		this Result<TValue> result, Func<Task<TValue>> functor)
 		where TError : Error
 		=> result.IsSuccess ? result : new(await functor());
 
@@ -32,33 +32,28 @@ public static class ResultRecoverWithExtensions
 	#region Left Async Extensions
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Result<TValue, TError>> RecoverWith<TValue, TError>(
-		this Task<Result<TValue, TError>> result, Func<TError, TValue> functor)
-		where TError : Error
+	public static async Task<Result<TValue>> RecoverWith<TValue>(
+		this Task<Result<TValue>> result, Func<Error, TValue> functor)
 		=> (await result).RecoverWith(functor);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Result<TValue, TError>> RecoverWith<TValue, TError>(
-		this Task<Result<TValue, TError>> result, Func<TError, Task<TValue>> functor)
-		where TError : Error
+	public static async Task<Result<TValue>> RecoverWith<TValue>(
+		this Task<Result<TValue>> result, Func<Error, Task<TValue>> functor)
 		=> await (await result).RecoverWith(functor);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Result<TValue, TError>> RecoverWith<TValue, TError>(
-		this Task<Result<TValue, TError>> result, TValue newValue)
-		where TError : Error
+	public static async Task<Result<TValue>> RecoverWith<TValue>(
+		this Task<Result<TValue>> result, TValue newValue)
 		=> (await result).RecoverWith(newValue);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Result<TValue, TError>> RecoverWith<TValue, TError>(
-		this Task<Result<TValue, TError>> result, Func<TValue> functor)
-		where TError : Error
+	public static async Task<Result<TValue>> RecoverWith<TValue>(
+		this Task<Result<TValue>> result, Func<TValue> functor)
 		=> (await result).RecoverWith(functor);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Result<TValue, TError>> RecoverWith<TValue, TError>(
-		this Task<Result<TValue, TError>> result, Func<Task<TValue>> functor)
-		where TError : Error
+	public static async Task<Result<TValue>> RecoverWith<TValue>(
+		this Task<Result<TValue>> result, Func<Task<TValue>> functor)
 		=> await (await result).RecoverWith(functor);
 
 	#endregion Left Async Extensions

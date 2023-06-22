@@ -4,7 +4,7 @@ namespace Bogoware.Monads.UnitTests.ResultTests;
 
 public class EnumerableResultExtensionsTests
 {
-	private static readonly List<Result<Value, LogicError>> _allResultSuccess = new()
+	private static readonly List<Result<Value>> _allResultSuccess = new()
 	{
 		Success(new Value(0)),
 		Success(new Value(1)),
@@ -18,7 +18,7 @@ public class EnumerableResultExtensionsTests
 		Success(new Value(2))
 	};
 
-	private static readonly List<Result<Value, LogicError>> _allResultFailure = new()
+	private static readonly List<Result<Value>> _allResultFailure = new()
 	{
 		Failure<Value>("Error 1"),
 		Failure<Value>("Error 2"),
@@ -32,7 +32,7 @@ public class EnumerableResultExtensionsTests
 		Failure<Value>("Error 3")
 	};
 
-	private static readonly List<Result<Value, LogicError>> _resultMixed = new()
+	private static readonly List<Result<Value>> _resultMixed = new()
 	{
 		Success(new Value(0)),
 		Failure<Value>("Error"),
@@ -116,21 +116,21 @@ public class EnumerableResultExtensionsTests
 	[Fact]
 	public void Map_remap_values_to_new_Some()
 	{
-		IEnumerable<Result<AnotherValue, LogicError>> actual = _resultMixed.Map(v => new AnotherValue(v.Val));
+		IEnumerable<Result<AnotherValue>> actual = _resultMixed.Map(v => new AnotherValue(v.Val));
 		actual.Should().HaveCount(2);
 	}
 
 	[Fact]
 	public void Bind_remap_values_to_new_Some()
 	{
-		IEnumerable<Result<AnotherValue, LogicError>> actual = _resultMixed.Bind(v => Success(new AnotherValue(v.Val)));
+		IEnumerable<Result<AnotherValue>> actual = _resultMixed.Bind(v => Success(new AnotherValue(v.Val)));
 		actual.Should().HaveCount(2);
 	}
 
 	[Fact]
 	public void Where_works()
 	{
-		IEnumerable<Result<Value, LogicError>> maybes = new List<Result<Value, LogicError>>
+		IEnumerable<Result<Value>> results = new List<Result<Value>>
 		{
 			Success(new Value(0)),
 			Success(new Value(1)),
@@ -138,14 +138,14 @@ public class EnumerableResultExtensionsTests
 			Success(new Value(3))
 		};
 
-		IEnumerable<Result<Value, LogicError>> even = maybes.Where(v => v.Val % 2 == 0);
+		IEnumerable<Result<Value>> even = results.Where(v => v.Val % 2 == 0);
 		even.Should().HaveCount(2);
 	}
 	
 	[Fact]
 	public void WhereNot_works()
 	{
-		IEnumerable<Result<Value, LogicError>> maybes = new List<Result<Value, LogicError>>
+		IEnumerable<Result<Value>> results = new List<Result<Value>>
 		{
 			Success(new Value(0)),
 			Success(new Value(1)),
@@ -154,7 +154,7 @@ public class EnumerableResultExtensionsTests
 			Success(new Value(5))
 		};
 
-		IEnumerable<Result<Value, LogicError>> even = maybes.WhereNot(v => v.Val % 2 == 0);
+		IEnumerable<Result<Value>> even = results.WhereNot(v => v.Val % 2 == 0);
 		even.Should().HaveCount(3);
 	}
 }

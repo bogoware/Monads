@@ -16,7 +16,7 @@ public static class GamblingPipeline
 
 	public static void Run(int initialAmount, int numberOfAttempts)
 	{
-		Task<Result<Amount, LogicError>> FourBetsInARow() => Success(new Amount(initialAmount))
+		Task<Result<Amount>> FourBetsInARow() => Success(new Amount(initialAmount))
 			.Bind(a => Bet(a, (Colors)Random.Shared.Next(2)))
 			.Bind(a => Bet(a, (Colors)Random.Shared.Next(2)))
 			.Bind(a => Bet(a, (Colors)Random.Shared.Next(2)))
@@ -24,7 +24,7 @@ public static class GamblingPipeline
 		
 		Console.WriteLine($"You're attempting to win 4 red/black bets in a row in {numberOfAttempts} attempts.");
 
-		var attemptsTasks = new List<Task<Result<Amount, LogicError>>>();
+		var attemptsTasks = new List<Task<Result<Amount>>>();
 		for (var i = 0; i < numberOfAttempts; i++)
 		{
 			attemptsTasks.Add(FourBetsInARow());
@@ -51,7 +51,7 @@ public static class GamblingPipeline
 		Console.WriteLine($"You 'won': {totalWin}");
 	}
 
-	private static async Task<Result<Amount, LogicError>> Bet(Amount amount, Colors color)
+	private static async Task<Result<Amount>> Bet(Amount amount, Colors color)
 	{
 		var winColor = (Colors) Random.Shared.Next(2);
 

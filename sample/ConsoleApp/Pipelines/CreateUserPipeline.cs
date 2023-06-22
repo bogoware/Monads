@@ -13,7 +13,7 @@ public static class CreateUserPipeline
 		username ??= DEMO_USER;
 		Console.WriteLine($"Creating user '{username}'");
 		var outcome = CreateUsername(username)
-			.Ensure(u => LookupUser(u).IsNone, "User already exists")
+			.Ensure(u => LookupUser(u).IsNone, new LogicError("User already exists"))
 			.Map(u => new User(u, "FirstName", "LastName"))
 			.Bind(CreateUser)
 			.ExecuteIfSuccess(NotifyCreation)
@@ -25,7 +25,7 @@ public static class CreateUserPipeline
 		Console.WriteLine(outcome);
 	}
 
-	private static Result<Username, LogicError> CreateUsername(string username)
+	private static Result<Username> CreateUsername(string username)
 	{
 		if (!username.Contains('@'))
 			return Failure<Username>("Username must contain at least one '@'");
@@ -39,7 +39,7 @@ public static class CreateUserPipeline
 		return None<User>();
 	}
 
-	private static Result<User, LogicError> CreateUser(User user)
+	private static Result<User> CreateUser(User user)
 	{
 		if (false) return Failure<User>("Error creating user");
 		return new(user);

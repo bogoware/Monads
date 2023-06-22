@@ -2,25 +2,25 @@ namespace Bogoware.Monads;
 
 public static partial class Prelude
 {
-	public static Result<Unit, TError> UnitSuccess<TError>() where TError : Error
+	public static Result<Unit> UnitSuccess<TError>() where TError : Error
 		=> new (Monads.Unit.Instance);
 	
-	public static Result<Unit, TError> UnitFailure<TError>(TError error) where TError : Error
+	public static Result<Unit> UnitFailure<TError>(TError error) where TError : Error
 		=> new (error);
 	
-	public static Result<TValue, TError> Success<TValue, TError>(TValue value) where TError : Error
+	public static Result<TValue> Success<TValue, TError>(TValue value) where TError : Error
 		=> new (value);
 	
-	public static Result<TValue, TError> Failure<TValue, TError>(TError error) where TError : Error
+	public static Result<TValue> Failure<TValue, TError>(TError error) where TError : Error
 		=> new (error);
 	
-	public static Result<TValue, LogicError> Success<TValue>(TValue value) 
+	public static Result<TValue> Success<TValue>(TValue value) 
 		=> new (value);
 	
-	public static Result<TValue, LogicError> Failure<TValue>(string message)
+	public static Result<TValue> Failure<TValue>(string message)
 		=> new (new LogicError(message));
 	
-	public static Result<Unit, RuntimeError> Try(Action action)
+	public static Result<Unit> Try(Action action)
 	{
 		RuntimeError? error = null;
 		try
@@ -37,7 +37,7 @@ public static partial class Prelude
 			: UnitFailure(error);
 	}
 
-	public static async Task<Result<Unit, RuntimeError>> Try(Func<Task> action)
+	public static async Task<Result<Unit>> Try(Func<Task> action)
 	{
 		RuntimeError? error = null;
 		try
@@ -54,7 +54,7 @@ public static partial class Prelude
 			: UnitFailure(error);
 	}
 
-	public static Result<TValue, RuntimeError> Try<TValue>(Func<TValue> function)
+	public static Result<TValue> Try<TValue>(Func<TValue> function)
 	{
 		RuntimeError? error = null;
 		TValue? value = default;
@@ -72,7 +72,7 @@ public static partial class Prelude
 			: Failure<TValue, RuntimeError>(error);
 	}
 	
-	public static async Task<Result<TValue, RuntimeError>> Try<TValue>(Func<Task<TValue>> function)
+	public static async Task<Result<TValue>> Try<TValue>(Func<Task<TValue>> function)
 	{
 		RuntimeError? error = null;
 		TValue? value = default;

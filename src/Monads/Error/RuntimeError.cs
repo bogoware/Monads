@@ -5,7 +5,7 @@ namespace Bogoware.Monads;
 /// and are to be considered as exceptional.
 /// For example: network errors, file system errors, etc.
 /// </summary>
-public class RuntimeError : Error
+public sealed class RuntimeError : Error
 {
 	public Exception Exception { get; }
 	public RuntimeError(Exception exception)

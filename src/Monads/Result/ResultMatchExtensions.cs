@@ -7,105 +7,89 @@ public static class ResultMatchExtensions
 {
 	#region Match Functional Closure
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static TResult Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, TResult successful, TResult failure)
-		where TError : Error
+	public static TResult Match<TValue, TResult>(
+		this Result<TValue> result, TResult successful, TResult failure)
 		=> result.IsSuccess ? successful : failure;
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static TResult Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, Func<TResult> successful, TResult failure)
-		where TError : Error
+	public static TResult Match<TValue, TResult>(
+		this Result<TValue> result, Func<TResult> successful, TResult failure)
 		=> result.IsSuccess ? successful() : failure;
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<TResult> Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, Func<Task<TResult>> successful, TResult failure)
-		where TError : Error
+	public static Task<TResult> Match<TValue,TResult>(
+		this Result<TValue> result, Func<Task<TResult>> successful, TResult failure)
 		=> result.IsSuccess ? successful() : Task.FromResult(failure);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static TResult Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, TResult successful, Func<TResult> failure)
-		where TError : Error
+	public static TResult Match<TValue, TResult>(
+		this Result<TValue> result, TResult successful, Func<TResult> failure)
 		=> result.IsSuccess ? successful : failure();
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<TResult> Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, TResult successful, Func<Task<TResult>> failure)
-		where TError : Error
+	public static Task<TResult> Match<TValue, TResult>(
+		this Result<TValue> result, TResult successful, Func<Task<TResult>> failure)
 		=> result.IsSuccess ? Task.FromResult(successful) : failure();
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static TResult Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, Func<TResult> successful, Func<TResult> failure)
-		where TError : Error
+	public static TResult Match<TValue, TResult>(
+		this Result<TValue> result, Func<TResult> successful, Func<TResult> failure)
 		=> result.IsSuccess ? successful() : failure();
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static TResult Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, Func<TValue, TResult> successful, TResult failure)
-		where TError : Error
+	public static TResult Match<TValue, TResult>(
+		this Result<TValue> result, Func<TValue, TResult> successful, TResult failure)
 		=> result.Match(successful, _ => failure);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static TResult Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, Func<TValue, TResult> successful, Func<TResult> failure)
-		where TError : Error
+	public static TResult Match<TValue, TResult>(
+		this Result<TValue> result, Func<TValue, TResult> successful, Func<TResult> failure)
 		=> result.Match(successful, _ => failure());
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<TResult> Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, Func<TValue, TResult> successful, Func<Task<TResult>> failure)
-		where TError : Error
+	public static async Task<TResult> Match<TValue, TResult>(
+		this Result<TValue> result, Func<TValue, TResult> successful, Func<Task<TResult>> failure)
 		=> await result.Match(successful, _ => failure());
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<TResult> Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, TResult successful, Func<TError, Task<TResult>> failure)
-		where TError : Error
+	public static Task<TResult> Match<TValue,TResult>(
+		this Result<TValue> result, TResult successful, Func<Error, Task<TResult>> failure)
 		=> result.Match(_ => successful, failure);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<TResult> Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, Func<TResult> successful, Func<TError, Task<TResult>> failure)
-		where TError : Error
+	public static Task<TResult> Match<TValue, TResult>(
+		this Result<TValue> result, Func<TResult> successful, Func<Error, Task<TResult>> failure)
 		=> result.Match(_ => successful(), failure);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<TResult> Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, Func<TValue, Task<TResult>> successful, TResult failure)
-		where TError : Error
+	public static Task<TResult> Match<TValue, TResult>(
+		this Result<TValue> result, Func<TValue, Task<TResult>> successful, TResult failure)
 		=> result.Match(successful, _ => failure);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<TResult> Match<TValue, TError, TResult>(
-		this Result<TValue, TError> result, Func<TValue, Task<TResult>> successful, Func<TResult> failure)
-		where TError : Error
+	public static Task<TResult> Match<TValue, TResult>(
+		this Result<TValue> result, Func<TValue, Task<TResult>> successful, Func<TResult> failure)
 		=> result.Match(successful, _ => failure());
 	#endregion Match Functional Closure
 
 	#region Utils based on Match
 	/// <summary>
-	/// Retrieve the value if <see cref="Result{TValue,TError}.IsSuccess"/> or return the <c>recoverValue</c> if <see cref="Result{TValue,TError}.IsFailure"/>.
+	/// Retrieve the value if <see cref="Result{TValue}.IsSuccess"/> or return the <c>recoverValue</c> if <see cref="Result{TValue}.IsFailure"/>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static TValue GetValue<TValue, TError>(this Result<TValue, TError> result, TValue recoverValue)
-		where TError : Error
+	public static TValue GetValue<TValue>(this Result<TValue> result, TValue recoverValue)
 		=> result.Match(successful => successful, recoverValue);
 
-	/// <inheritdoc cref="GetValue{TValue,TError}(Bogoware.Monads.Result{TValue,TError},TValue)"/>
+	/// <inheritdoc cref="GetValue{TValue}(Bogoware.Monads.Result{TValue},TValue)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static TValue GetValue<TValue, TError>(
-		this Result<TValue, TError> result, Func<TValue> recoverValue)
-		where TError : Error
+	public static TValue GetValue<TValue>(
+		this Result<TValue> result, Func<TValue> recoverValue)
 		=> result.Match(successful => successful, recoverValue);
 	
-	/// <inheritdoc cref="GetValue{TValue,TError}(Bogoware.Monads.Result{TValue,TError},TValue)"/>
+	/// <inheritdoc cref="GetValue{TValue}(Bogoware.Monads.Result{TValue},TValue)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<TValue> GetValue<TValue, TError>(
-		this Result<TValue, TError> result, Func<Task<TValue>> recoverValue)
-		where TError : Error
+	public static Task<TValue> GetValue<TValue>(
+		this Result<TValue> result, Func<Task<TValue>> recoverValue)
 		=> result.Match(successful => successful, recoverValue);
 	
 	#endregion Utils based on Match

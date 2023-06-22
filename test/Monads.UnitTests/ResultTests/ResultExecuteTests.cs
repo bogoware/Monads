@@ -4,8 +4,8 @@ namespace Bogoware.Monads.UnitTests.ResultTests;
 
 public class ResultExecuteTests
 {
-	private static readonly Result<Value, LogicError> _success = new(new Value(0));
-	private static readonly Result<Value, LogicError> _failed = new(new LogicError("Something went wrong"));
+	private static readonly Result<Value> _success = new(new Value(0));
+	private static readonly Result<Value> _failed = new(new LogicError("Something went wrong"));
 	private readonly Mock<ICallInspector> _inspector = new();
 
 	[Fact]
@@ -152,27 +152,27 @@ public class ResultExecuteTests
 	public void Successful_execute_calls_function()
 	{
 		_success.Execute(_inspector.Object.MethodWithResultArg);
-		_inspector.Verify(_ => _.MethodWithResultArg(It.IsAny<Result<Value, LogicError>>()));
+		_inspector.Verify(_ => _.MethodWithResultArg(It.IsAny<Result<Value>>()));
 	}
 
 	[Fact]
 	public void Failure_execute_calls_function()
 	{
 		_failed.Execute(_inspector.Object.MethodWithResultArg);
-		_inspector.Verify(_ => _.MethodWithResultArg(It.IsAny<Result<Value, LogicError>>()));
+		_inspector.Verify(_ => _.MethodWithResultArg(It.IsAny<Result<Value>>()));
 	}
 	
 	[Fact]
 	public async Task Successful_execute_calls_asyncFunction()
 	{
 		await _success.Execute(_inspector.Object.MethodWithResultArgAsync);
-		_inspector.Verify(_ => _.MethodWithResultArgAsync(It.IsAny<Result<Value, LogicError>>()));
+		_inspector.Verify(_ => _.MethodWithResultArgAsync(It.IsAny<Result<Value>>()));
 	}
 
 	[Fact]
 	public async Task Failure_execute_calls_asyncFunction()
 	{
 		await _failed.Execute(_inspector.Object.MethodWithResultArgAsync);
-		_inspector.Verify(_ => _.MethodWithResultArgAsync(It.IsAny<Result<Value, LogicError>>()));
+		_inspector.Verify(_ => _.MethodWithResultArgAsync(It.IsAny<Result<Value>>()));
 	}
 }

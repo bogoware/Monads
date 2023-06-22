@@ -31,7 +31,7 @@ public class ResultLinqTests
 	[Fact]
 	public void Aggregate_values()
 	{
-		var results = new List<Result<Value, LogicError>>
+		var results = new List<Result<Value>>
 		{
 			Success(new Value(1)),
 			Success(new Value(2)),
