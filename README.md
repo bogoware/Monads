@@ -2,17 +2,33 @@
 
 _Yet another functional library for C#_
 
-This library provides the `Result` and `Maybe` monads to support functional programming in C# providing a means to model pipelines of operations in a coincise, readable and safe way.
+## Monads: quick introduction
 
-The benefit of adopting a functional approach is that it allows to model operations in a way that is more readable and easier to reason about, moreover it allows to write code that is more robust and less prone to errors.
+Monads are a powerful tool to model operations in a functional way and it's not a coincidence that they are the cornerstone of functional programming.
+It's not our mission to explain what monads are and how they work, there are plenty of
+resources on the web that do that.
 
-> The `Result<T, E>` monad is used to model operations that can fail and return a value.
+For the objective of this library they can be considered as a sort of _container_ that
+encapsulates the result of an operation and provides a set of methods that allow to chain
+tasks in a safe way, warranting that the operation will be executed only if it is fine,
+shielding from attempting to perform further processing in case of failure or missing data.
 
->The `Maybe<T>` monad is used to model operations that can return a value or no value.
+The benefit of adopting a functional approach is that it allows to model operations in a way
+that is more readable and easier to reason about, moreover it allows to write code that is more
+robust and less prone to errors.
+
+## Bogoware Monads
+
+This library provides the `Result` and `Maybe` monads to support functional programming in C#. 
+These monads provide te means to model pipelines of operations in a robust, coincise and readable way.
+
+> The `Result<T, E>` monad is used to model operations that can fail.
+
+>The `Maybe<T>` monad is used to model operations that can return a value or not.
 
 ## `Result<T, E>` Design Goals
 
-The `Result<T, E>` monad is used to model operations that can fail or return a value. The `Result<T, E>` monad is a generic type that has two type parameters, `T` and `E`, where `T` is the type of the value returned by the operation  uppon success and `E` is the type of the error returned by the operation.
+The `Result<T, E>` monad is used to model operations that can fail or return a value. The `Result<T, E>` monad is a generic type that has two type parameters, `T` and `E`, where `T` is the type of the value returned by the operation  uppon success and `E` is the type of the error returned in case of failure.
 
 `Result<T, E>` provides a set of methods that allow to chain operations in a functional way:
 * `Map` allows to transform the value returned by the operation, thus modelliing the _happy_ flow
