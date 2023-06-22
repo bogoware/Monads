@@ -9,7 +9,7 @@ It's not our mission to explain what monads are and how they work, there are ple
 resources on the web that do that.
 
 For the objective of this library they can be considered as a sort of _container_ that
-encapsulates the result of an operation and provides a set of methods that allow to chain
+encapsulate the result of an operation and provides a set of methods that allow to chain
 tasks in a safe way, warranting that the operation will be executed only if it is fine,
 shielding from attempting to perform further processing in case of failure or missing data.
 
