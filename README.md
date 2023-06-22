@@ -4,29 +4,41 @@ _Yet another functional library for C#_
 
 ## Monads: quick introduction
 
-Monads are a powerful tool to model operations in a functional way and it's not a coincidence that they are the cornerstone of functional programming.
-It's not our mission to explain what monads are and how they work, there are plenty of
-resources on the web that do that.
+Monads are a powerful tool to model operations in a functional way and it's not 
+a coincidence that they are the cornerstone of functional programming.
+It's not our mission to explain what monads are and how they works:, there are plenty of
+resources on the web that face the question from different persepectives.
 
-For the objective of this library they can be considered as a sort of _container_ that
-encapsulate the result of an operation and provides a set of methods that allow to chain
-tasks in a safe way, warranting that the operation will be executed only if it is fine,
-shielding from attempting to perform further processing in case of failure or missing data.
+For the objective of this introduction let's say taht they can be considered 
+as a sort of _safe container_ that encapsulate the result of an operation and 
+provides method methods that allow to manipulate the result in a safe way, 
+ensuring that the operation will be executed only if it is fine.
+
+This contract is enough to shield code from performing any further processing in case
+of errors or missing data.
 
 The benefit of adopting a functional approach is that it allows to model operations in a way
 that is more readable and easier to reason about, moreover it allows to write code that is more
 robust and less prone to errors.
 
+## C# functional challenges
+
+C# has a good support to functional programming but there are some limitations that
+imply challenging design descisions.
+
 ## Bogoware Monads
 
-This library provides the `Result` and `Maybe` monads to support functional programming in C#. 
-These monads provide te means to model pipelines of operations in a robust, coincise and readable way.
+This library provides the well knows `Result` and `Maybe` monads (also known as `Either`, `Optional`, `Option` in
+other contexts):
 
 > The `Result<T, E>` monad is used to model operations that can fail.
 
 >The `Maybe<T>` monad is used to model operations that can return a value or not.
 
-## `Result<T, E>` Design Goals
+Moreover the library provides the `Error` abstract class that complements the `Result<T, E>` monad to
+provide an ergonimic approach to error management at application-wide scale.
+
+## `Result<T, E>` design goals
 
 The `Result<T, E>` monad is used to model operations that can fail or return a value. The `Result<T, E>` monad is a generic type that has two type parameters, `T` and `E`, where `T` is the type of the value returned by the operation  uppon success and `E` is the type of the error returned in case of failure.
 
@@ -50,7 +62,7 @@ and make the code less robust and exposed to unwanted exceptions:
 
 The benefit of sticking to the `Result<T, E>` monad is that it allows to model operations in a way that is more readable and easier to reason about, moreover it allows to write code that is more robust and less prone to errors.
 
-## `Error` Design Goals
+## `Error` design goals
 
 The `Error` class is used to model errors and work inconjunction with the `Result<T, E>` monad.
 
@@ -64,7 +76,7 @@ Distinguishing between `LogicError`s and `RuntimeError`s is important because it
 * `LogicError`s should be handled programmatically and can be safely reported to the user in case of malformed request
 * while `RuntimeError`s should be handled by the infrastructure and aren't meant to be reported to the user.
 
-## `Maybe<T>` Design Goals
+## `Maybe<T>` design goals
 
 Before stating what is intended to be achieved with the `Maybe` monad, let's clarify that it's not intended to be used as a replacement for `Nullable<T>` essentailly because some fundamental libraries, such as Entity Framework, rely on `Nullable<T>` to model class attributes and the support to structural types is still limited. A more pragmatic approach is to use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and or method paramethers. 
 

@@ -4,7 +4,7 @@ namespace Bogoware.Monads;
 /// <summary>
 /// An error that aggregates multiple errors.
 /// </summary>
-public sealed class AggregateError : Error
+public class AggregateError : Error
 {
 	private const string ERROR_MESSAGE = "Multiple errors occurred";
 	private readonly List<Error> _innerErrors;
