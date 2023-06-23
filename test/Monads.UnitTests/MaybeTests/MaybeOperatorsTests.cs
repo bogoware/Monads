@@ -9,7 +9,7 @@ public class MaybeOperatorsTests
 
 		var value = GetSome();
 
-		value.Equals(Some(new Value(0))).Should().BeTrue();
+		value.Equals(Maybe.Some(new Value(0))).Should().BeTrue();
 	}
 	
 	[Fact]
@@ -19,6 +19,6 @@ public class MaybeOperatorsTests
 
 		var value = GetSome();
 
-		value.Equals(None<Value>()).Should().BeTrue();
+		value.Equals(Maybe.None<Value>()).Should().BeTrue();
 	}
 }

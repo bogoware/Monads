@@ -83,7 +83,7 @@ public static class EnumerableMaybeExtensions
 		this IEnumerable<Maybe<TValue>> maybes, Func<TValue, TNewValue> functor)
 		where TValue : class
 		where TNewValue : class
-		=> maybes.Bind(v => Prelude.Some(v).Map(functor));
+		=> maybes.Bind(v => Maybe.Some(v).Map(functor));
 	
 	/// <summary>
 	/// Matches maybes via the two functors.
@@ -104,7 +104,7 @@ public static class EnumerableMaybeExtensions
 	public static IEnumerable<Maybe<TValue>> Where<TValue>(
 		this IEnumerable<Maybe<TValue>> maybes, Func<TValue, bool> predicate)
 		where TValue : class
-		=> maybes.SelectValues().Where(predicate).Select(Prelude.Some);
+		=> maybes.SelectValues().Where(predicate).Select(Maybe.Some);
 
 	/// <summary>
 	/// Filters <c>Some</c>s via negated predicate.
@@ -114,5 +114,5 @@ public static class EnumerableMaybeExtensions
 	public static IEnumerable<Maybe<TValue>> WhereNot<TValue>(
 		this IEnumerable<Maybe<TValue>> maybes, Func<TValue, bool> predicate)
 		where TValue : class
-		=> maybes.SelectValues().Where(v => !predicate(v)).Select(Prelude.Some);
+		=> maybes.SelectValues().Where(v => !predicate(v)).Select(Maybe.Some);
 }

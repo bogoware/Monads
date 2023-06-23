@@ -29,16 +29,4 @@ public class UnitTests
 	{
 		Unit.Instance.ToString().Should().Be("Unit");
 	}
-
-	[Fact]
-	public void Equality_operator()
-	{
-		Assert.True(Unit() == Unit.Instance);
-	}
-	
-	[Fact]
-	public void InEquality_operator()
-	{
-		Assert.False(Unit() != Unit.Instance);
-	}
 }

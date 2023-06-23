@@ -6,44 +6,44 @@ public class EnumerableResultExtensionsTests
 {
 	private static readonly List<Result<Value>> _allResultSuccess = new()
 	{
-		Success(new Value(0)),
-		Success(new Value(1)),
-		Success(new Value(2))
+		Result.Success(new Value(0)),
+		Result.Success(new Value(1)),
+		Result.Success(new Value(2))
 	};
 
 	private static readonly List<IResult> _allIResultSuccess = new()
 	{
-		Success(new Value(0)),
-		Success(new Value(1)),
-		Success(new Value(2))
+		Result.Success(new Value(0)),
+		Result.Success(new Value(1)),
+		Result.Success(new Value(2))
 	};
 
 	private static readonly List<Result<Value>> _allResultFailure = new()
 	{
-		Failure<Value>("Error 1"),
-		Failure<Value>("Error 2"),
-		Failure<Value>("Error 3")
+		Result.Failure<Value>("Error 1"),
+		Result.Failure<Value>("Error 2"),
+		Result.Failure<Value>("Error 3")
 	};
 
 	private static readonly List<IResult> _allIResultFailure = new()
 	{
-		Failure<Value>("Error 1"),
-		Failure<Value>("Error 2"),
-		Failure<Value>("Error 3")
+		Result.Failure<Value>("Error 1"),
+		Result.Failure<Value>("Error 2"),
+		Result.Failure<Value>("Error 3")
 	};
 
 	private static readonly List<Result<Value>> _resultMixed = new()
 	{
-		Success(new Value(0)),
-		Failure<Value>("Error"),
-		Success(new Value(2)),
+		Result.Success(new Value(0)),
+		Result.Failure<Value>("Error"),
+		Result.Success(new Value(2)),
 	};
 
 	private static readonly List<IResult> _resultIMixed = new()
 	{
-		Success(new Value(0)),
-		Failure<Value>("Error"),
-		Success(new Value(2)),
+		Result.Success(new Value(0)),
+		Result.Failure<Value>("Error"),
+		Result.Success(new Value(2)),
 	};
 
 	[Fact]
@@ -123,7 +123,7 @@ public class EnumerableResultExtensionsTests
 	[Fact]
 	public void Bind_remap_values_to_new_Some()
 	{
-		IEnumerable<Result<AnotherValue>> actual = _resultMixed.Bind(v => Success(new AnotherValue(v.Val)));
+		IEnumerable<Result<AnotherValue>> actual = _resultMixed.Bind(v => Result.Success(new AnotherValue(v.Val)));
 		actual.Should().HaveCount(2);
 	}
 
@@ -132,10 +132,10 @@ public class EnumerableResultExtensionsTests
 	{
 		IEnumerable<Result<Value>> results = new List<Result<Value>>
 		{
-			Success(new Value(0)),
-			Success(new Value(1)),
-			Success(new Value(2)),
-			Success(new Value(3))
+			Result.Success(new Value(0)),
+			Result.Success(new Value(1)),
+			Result.Success(new Value(2)),
+			Result.Success(new Value(3))
 		};
 
 		IEnumerable<Result<Value>> even = results.Where(v => v.Val % 2 == 0);
@@ -147,11 +147,11 @@ public class EnumerableResultExtensionsTests
 	{
 		IEnumerable<Result<Value>> results = new List<Result<Value>>
 		{
-			Success(new Value(0)),
-			Success(new Value(1)),
-			Success(new Value(2)),
-			Success(new Value(3)),
-			Success(new Value(5))
+			Result.Success(new Value(0)),
+			Result.Success(new Value(1)),
+			Result.Success(new Value(2)),
+			Result.Success(new Value(3)),
+			Result.Success(new Value(5))
 		};
 
 		IEnumerable<Result<Value>> even = results.WhereNot(v => v.Val % 2 == 0);

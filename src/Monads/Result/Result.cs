@@ -1,6 +1,97 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 
 namespace Bogoware.Monads;
+
+public static class Result
+{
+	public static Result<Unit> Unit { get; } = new(Monads.Unit.Instance);
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Result<TValue> Success<TValue>(TValue value) => new(value);
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Result<TValue> Failure<TValue>(string errorMessage) => new(new LogicError(errorMessage));
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Result<TValue> Failure<TValue>(Error error) => new(error);
+	
+	/// <summary>
+	/// Wraps the execution of the given <paramref name="action"/> in a <see cref="Result{TValue}"/>
+	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Result<Unit> Execute(Action action)
+	{
+		RuntimeError? error = null;
+		try
+		{
+			action();
+		}
+		catch (Exception ex)
+		{
+			error = new(ex);
+		}
+
+		return error ?? Unit;
+	}
+	
+	/// <summary>
+	///	Wraps the execution of the given <paramref name="action"/> in a <see cref="Result{TValue}"/>
+	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
+	/// </summary>
+	public static async Task<Result<Unit>> Execute(Func<Task> action)
+	{
+		RuntimeError? error = null;
+		try
+		{
+			await action();
+		}
+		catch (Exception ex)
+		{
+			error = new(ex);
+		}
+
+		return error ?? Unit;
+	}
+	
+	/// <summary>
+	/// Wraps the execution of the given <paramref name="function"/> in a <see cref="Result{TValue}"/>
+	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
+	/// </summary>
+	public static Result<TValue> Execute<TValue>(Func<TValue> function)
+	{
+		RuntimeError? error = null;
+		TValue? value = default;
+		try
+		{
+			value = function();
+		}
+		catch (Exception ex)
+		{
+			error = new(ex);
+		}
+
+		return error ?? new Result<TValue>(value!);
+	}
+
+	/// <summary>
+	/// Wraps the execution of the given <paramref name="function"/> in a <see cref="Result{TValue}"/>
+	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
+	/// </summary>
+	public static async Task<Result<TValue>> Execute<TValue>(Func<Task<TValue>> function)
+	{
+		RuntimeError? error = null;
+		TValue? value = default;
+		try
+		{
+			value = await function();
+		}
+		catch (Exception ex)
+		{
+			error = new(ex);
+		}
+
+		return error ?? new Result<TValue>(value!);
+	}
+}
 
 public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValue>>, IEnumerable<TValue>
 {

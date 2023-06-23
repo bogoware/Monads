@@ -6,16 +6,16 @@ public class EnumerableMaybeExtensionsTests
 {
 	private static readonly List<IMaybe> _allIMaybeSome = new()
 	{
-		Some(new Value(0)),
-		Some(new Value(1)),
-		Some(new Value(2))
+		Maybe.Some(new Value(0)),
+		Maybe.Some(new Value(1)),
+		Maybe.Some(new Value(2))
 	};
 
 	private static readonly List<Maybe<Value>> _allMaybeSome = new()
 	{
-		Some(new Value(0)),
-		Some(new Value(1)),
-		Some(new Value(2))
+		Maybe.Some(new Value(0)),
+		Maybe.Some(new Value(1)),
+		Maybe.Some(new Value(2))
 	};
 
 	private static readonly List<Maybe<Value>> _allMaybeNone = new()
@@ -34,16 +34,16 @@ public class EnumerableMaybeExtensionsTests
 
 	private static readonly List<Maybe<Value>> _maybeMixed = new()
 	{
-		Some(new Value(0)),
+		Maybe.Some(new Value(0)),
 		Maybe<Value>.None,
-		Some(new Value(2))
+		Maybe.Some(new Value(2))
 	};
 
 	private static readonly List<IMaybe> _maybeIMixed = new()
 	{
-		Some(new Value(0)),
+		Maybe.Some(new Value(0)),
 		Maybe<Value>.None,
-		Some(new Value(2))
+		Maybe.Some(new Value(2))
 	};
 
 	[Fact]
@@ -123,7 +123,7 @@ public class EnumerableMaybeExtensionsTests
 	[Fact]
 	public void Bind_remap_values_to_new_Some()
 	{
-		IEnumerable<Maybe<AnotherValue>> actual = _maybeMixed.Bind(v => Some(new AnotherValue(v.Val)));
+		IEnumerable<Maybe<AnotherValue>> actual = _maybeMixed.Bind(v => Maybe.Some(new AnotherValue(v.Val)));
 		actual.Should().HaveCount(2);
 	}
 

@@ -26,7 +26,7 @@ public class MaybeExtensionsTests
 	{
 		var value = new Value(0);
 		var outcome = value.Where(v => v.Val == 0);
-		outcome.Equals(Some(new Value(0))).Should().BeTrue();
+		outcome.Equals(Maybe.Some(new Value(0))).Should().BeTrue();
 	}
 	
 	[Fact]
@@ -34,7 +34,7 @@ public class MaybeExtensionsTests
 	{
 		var value = new Value(0);
 		var outcome = value.Where(v => v.Val == 1);
-		outcome.Equals(None<Value>()).Should().BeTrue();
+		outcome.Equals(Maybe.None<Value>()).Should().BeTrue();
 	}
 	
 	[Fact]
@@ -42,7 +42,7 @@ public class MaybeExtensionsTests
 	{
 		var value = new Value(0);
 		var outcome = value.WhereNot(v => v.Val == 1);
-		outcome.Equals(Some(new Value(0))).Should().BeTrue();
+		outcome.Equals(Maybe.Some(new Value(0))).Should().BeTrue();
 	}
 	
 	[Fact]
@@ -50,6 +50,6 @@ public class MaybeExtensionsTests
 	{
 		var value = new Value(0);
 		var outcome = value.WhereNot(v => v.Val == 0);
-		outcome.Equals(None<Value>()).Should().BeTrue();
+		outcome.Equals(Maybe.None<Value>()).Should().BeTrue();
 	}
 }

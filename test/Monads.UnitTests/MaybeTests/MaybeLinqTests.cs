@@ -7,7 +7,7 @@ public class MaybeLinqTests
 	[Fact]
 	public void Select_value_from_Some()
 	{
-		var sut = Some(new Value(1));
+		var sut = Maybe.Some(new Value(1));
 		var values =
 			from v in sut
 			select v.Val;
@@ -18,7 +18,7 @@ public class MaybeLinqTests
 	[Fact]
 	public void Select_value_from_None()
 	{
-		var sut = None<Value>();
+		var sut = Maybe.None<Value>();
 		var values =
 			from v in sut
 			select v.Val;
@@ -29,7 +29,7 @@ public class MaybeLinqTests
 	[Fact]
 	public void Where_satisfied_returns_a_nonEmpty_enumerable()
 	{
-		var sut = Some(new Value(1));
+		var sut = Maybe.Some(new Value(1));
 		var values =
 			from v in sut
 			where v.Val == 1
@@ -41,7 +41,7 @@ public class MaybeLinqTests
 	[Fact]
 	public void Where_notSatisfied_returns_an_Empty_enumerable()
 	{
-		var sut = Some(new Value(1));
+		var sut = Maybe.Some(new Value(1));
 		var values =
 			from v in sut
 			where v.Val == 0
@@ -53,7 +53,7 @@ public class MaybeLinqTests
 	[Fact]
 	public void WhereNot_satisfied_returns_a_nonEmpty_enumerable()
 	{
-		var sut = Some(new Value(1));
+		var sut = Maybe.Some(new Value(1));
 		var values =
 			from v in sut
 			where v.Val != 0
@@ -65,7 +65,7 @@ public class MaybeLinqTests
 	[Fact]
 	public void WhereNot_notSatisfied_returns_an_Empty_enumerable()
 	{
-		var sut = Some(new Value(1));
+		var sut = Maybe.Some(new Value(1));
 		var values =
 			from v in sut
 			where v.Val != 1
@@ -79,11 +79,11 @@ public class MaybeLinqTests
 	{
 		var maybes = new List<Maybe<Value>>
 		{
-			Some(new Value(1)),
-			Some(new Value(2)),
+			Maybe.Some(new Value(1)),
+			Maybe.Some(new Value(2)),
 			Maybe<Value>.None,
-			Some(new Value(3)),
-			Some(new Value(4)),
+			Maybe.Some(new Value(3)),
+			Maybe.Some(new Value(4)),
 		};
 		
 		// Pure linq style
@@ -115,7 +115,7 @@ public class MaybeLinqTests
 	[Fact]
 	public void IEnumerable_coverage()
 	{
-		var sut = (IEnumerable) Some(new Value(1));
+		var sut = (IEnumerable) Maybe.Some(new Value(1));
 		sut.GetEnumerator().Should().NotBeNull();
 	}
 }

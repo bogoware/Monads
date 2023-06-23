@@ -1,6 +1,6 @@
 namespace Bogoware.Monads.UnitTests.ResultTests;
 
-public class ResultPreludeTests
+public class ResultTests
 {
 	[Fact]
 	public void TryAction_should_return_a_successfulUnitResultRuntime()
@@ -9,7 +9,7 @@ public class ResultPreludeTests
 		{
 		}
 
-		var result = Try(Action);
+		var result = Result.Execute(Action);
 		result.IsSuccess.Should().BeTrue();
 	}
 
@@ -17,15 +17,15 @@ public class ResultPreludeTests
 	public void TryAction_should_return_a_failedUnitResultRuntime()
 	{
 		void Action() => throw new();
-		var result = Try(Action);
+		var result = Result.Execute(Action);
 		result.IsFailure.Should().BeTrue();
 	}
 	
 	[Fact]
 	public async Task TryActionAsync_should_return_a_successfulUnitResultRuntime()
 	{
-		Task Action() => Task.FromResult(Unit());
-		var result = await Try(Action);
+		Task Action() => Task.FromResult(Result.Unit);
+		var result = await Result.Execute(Action);
 		result.IsSuccess.Should().BeTrue();
 	}
 
@@ -33,7 +33,7 @@ public class ResultPreludeTests
 	public async Task TryActionAsync_should_return_a_failedUnitResultRuntime()
 	{
 		Task Action() => Task.FromException(new());
-		var result = await Try(Action);
+		var result = await Result.Execute(Action);
 		result.IsFailure.Should().BeTrue();
 	}
 	
@@ -45,7 +45,7 @@ public class ResultPreludeTests
 			return new(0);
 		}
 
-		var result = Try(Action);
+		var result = Result.Execute(Action);
 		result.IsSuccess.Should().BeTrue();
 	}
 
@@ -56,7 +56,7 @@ public class ResultPreludeTests
 		{
 			throw new NotImplementedException();
 		}
-		var result = Try(Action);
+		var result = Result.Execute(Action);
 		result.IsFailure.Should().BeTrue();
 	}
 	
@@ -65,7 +65,7 @@ public class ResultPreludeTests
 	{
 		Task<Value> Action() => Task.FromResult(new Value(0));
 
-		var result = await Try(Action);
+		var result = await Result.Execute(Action);
 		result.IsSuccess.Should().BeTrue();
 	}
 
@@ -77,7 +77,7 @@ public class ResultPreludeTests
 			throw new NotImplementedException();
 		}
 		
-		var result = await Try(Action);
+		var result = await Result.Execute(Action);
 		result.IsFailure.Should().BeTrue();
 	}
 }

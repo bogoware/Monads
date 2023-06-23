@@ -1,9 +1,42 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
+
 // ReSharper disable UnusedMember.Global
 
 // ReSharper disable ArrangeObjectCreationWhenTypeNotEvident
 
 namespace Bogoware.Monads;
+
+public static class Maybe
+{
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Maybe<T> From<T>(T? value) where T : class => new(value);
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Maybe<T> From<T>(Maybe<T> maybe) where T : class => new(maybe);
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Maybe<T> Some<T>(T value) where T : class
+	{
+		ArgumentNullException.ThrowIfNull(value);
+		return new(value);
+	}
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Maybe<T> Some<T>(Maybe<T> maybe) where T : class
+	{
+		if (maybe.IsNone) throw new MaybeNoneException();
+
+		return new(maybe);
+	}
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Maybe<T> None<T>() where T : class => Maybe<T>.None;
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Maybe<Unit> None() => Maybe<Unit>.None;
+}
+
 
 /// <summary>
 /// Represents an optional value.

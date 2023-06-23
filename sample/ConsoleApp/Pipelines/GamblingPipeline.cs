@@ -16,7 +16,7 @@ public static class GamblingPipeline
 
 	public static void Run(int initialAmount, int numberOfAttempts)
 	{
-		Task<Result<Amount>> FourBetsInARow() => Success(new Amount(initialAmount))
+		Task<Result<Amount>> FourBetsInARow() => Result.Success(new Amount(initialAmount))
 			.Bind(a => Bet(a, (Colors)Random.Shared.Next(2)))
 			.Bind(a => Bet(a, (Colors)Random.Shared.Next(2)))
 			.Bind(a => Bet(a, (Colors)Random.Shared.Next(2)))
@@ -60,12 +60,12 @@ public static class GamblingPipeline
 		if (winColor == color)
 		{
 			Console.WriteLine("   you won :)");
-			return Success(new Amount(amount.Value * 2));
+			return Result.Success(new Amount(amount.Value * 2));
 		}
 		else
 		{
 			Console.WriteLine("   you lost :(");
-			return Failure<Amount>("You lost");
+			return new LogicError("You lost");
 		}
 	}
 

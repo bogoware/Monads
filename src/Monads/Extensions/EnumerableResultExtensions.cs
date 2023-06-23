@@ -79,7 +79,7 @@ public static class EnumerableResultExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static IEnumerable<Result<TNewValue>> Map<TValue, TNewValue>(
 		this IEnumerable<Result<TValue>> successes, Func<TValue, TNewValue> functor)
-		=> successes.Bind(v => Prelude.Success<TNewValue, Error>(functor(v)));
+		=> successes.Bind(v => new Result<TNewValue>(functor(v)));
 
 	/// <summary>
 	/// Matches results.
@@ -108,7 +108,7 @@ public static class EnumerableResultExtensions
 		this IEnumerable<Result<TValue>> successes, Func<TValue, bool> predicate)
 		=> successes.SelectValues()
 			.Where(predicate)
-			.Select(Prelude.Success<TValue, Error>);
+			.Select(v => new Result<TValue>(v));
 
 	/// <summary>
 	/// Filters <c>Success</c>es via negated predicate.
@@ -119,5 +119,5 @@ public static class EnumerableResultExtensions
 		this IEnumerable<Result<TValue>> successes, Func<TValue, bool> predicate)
 		=> successes.SelectValues()
 			.Where(v => !predicate(v))
-			.Select(Prelude.Success<TValue, Error>);
+			.Select(v => new Result<TValue>(v));
 }

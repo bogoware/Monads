@@ -1,18 +1,18 @@
 namespace Bogoware.Monads.UnitTests.MaybeTests;
 
-public class MaybePreludeTests
+public class MaybeTests
 {
 	[Fact]
 	public void Unit_success()
 	{
-		var value = Unit();
+		var value = Result.Unit;
 		value.Equals(Unit.Instance).Should().Be(true);
 	} 
 	
 	[Fact]
 	public void None_success()
 	{
-		var value = None();
-		value.Equals(None<Unit>()).Should().Be(true);
+		var value = Maybe.None();
+		value.Equals(Maybe.None<Unit>()).Should().Be(true);
 	}
 }

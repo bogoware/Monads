@@ -28,20 +28,20 @@ public static class CreateUserPipeline
 	private static Result<Username> CreateUsername(string username)
 	{
 		if (!username.Contains('@'))
-			return Failure<Username>("Username must contain at least one '@'");
-		return Success(new Username(username));
+			return Result.Failure<Username>("Username must contain at least one '@'");
+		return Result.Success(new Username(username));
 	}
 
 	private static Maybe<User> LookupUser(Username username)
 	{
 		if (username.Value == DEMO_USER)
 			return new User(username, "FirstName", "LastName");
-		return None<User>();
+		return Maybe.None<User>();
 	}
 
 	private static Result<User> CreateUser(User user)
 	{
-		if (false) return Failure<User>("Error creating user");
+		if (false) return Result.Failure<User>("Error creating user");
 		return new(user);
 	}
 	private static void NotifyCreation(User user)

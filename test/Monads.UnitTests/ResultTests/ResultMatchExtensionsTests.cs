@@ -147,7 +147,7 @@ public class ResultMatchExtensionsTests
 	[Fact]
 	public void GetValue_with_constant()
 	{
-		var sut = Failure<string, LogicError>(new("Something went wrong"));
+		var sut = Result.Failure<string>(new LogicError("Something went wrong"));
 		var actual = sut.GetValue("success");
 		actual.Should().Be("success");
 	}
@@ -155,7 +155,7 @@ public class ResultMatchExtensionsTests
 	[Fact]
 	public void GetValue_with_function()
 	{
-		var sut = Failure<string, LogicError>(new("Something went wrong"));
+		var sut = Result.Failure<string>(new LogicError("Something went wrong"));
 		var actual = sut.GetValue(() => "success");
 		actual.Should().Be("success");
 	}
@@ -163,7 +163,7 @@ public class ResultMatchExtensionsTests
 	[Fact]
 	public async Task GetValue_with_asyncFunction()
 	{
-		var sut = Failure<string, LogicError>(new("Something went wrong"));
+		var sut = Result.Failure<string>(new LogicError("Something went wrong"));
 		var actual = await sut.GetValue(() => Task.FromResult("success"));
 		actual.Should().Be("success");
 	}

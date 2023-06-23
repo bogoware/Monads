@@ -5,8 +5,8 @@ public class ResultEqualityTests
 	[Fact]
 	public void Success_are_equals()
 	{
-		var success = Success<string, LogicError>("Hello");
-		var other = Success<string, LogicError>("Hello");
+		var success = Result.Success("Hello");
+		var other = Result.Success("Hello");
 
 		success.Equals(other).Should().BeTrue();
 		success.GetHashCode().Should().Be(other.GetHashCode());
@@ -15,8 +15,8 @@ public class ResultEqualityTests
 	[Fact]
 	public void Success_arent_equals()
 	{
-		var success = Success<string, LogicError>("Hello");
-		var other = Success<string, LogicError>("World");
+		var success = Result.Success("Hello");
+		var other = Result.Success("World");
 
 		success.Equals(other).Should().BeFalse();
 	}
@@ -24,8 +24,8 @@ public class ResultEqualityTests
 	[Fact]
 	public void Failure_are_equals()
 	{
-		var failure = Failure<string, LogicError>(new("Error"));
-		var other = Failure<string, LogicError>(new("Error"));
+		var failure = Result.Failure<Value>(new LogicError("Error"));
+		Result<Value> other = new LogicError("Error");
 
 		failure.Equals(other).Should().BeTrue();
 		failure.GetHashCode().Should().Be(other.GetHashCode());
@@ -34,18 +34,9 @@ public class ResultEqualityTests
 	[Fact]
 	public void Failure_arent_equals()
 	{
-		var failure = Failure<string, LogicError>(new("Error"));
-		var other = Failure<string, LogicError>(new("Another error"));
+		var failure = Result.Failure<Value>(new LogicError("Error"));
+		Result<Value> other = new LogicError("Another error");
 
 		failure.Equals(other).Should().BeFalse();
-	}
-	
-	[Fact]
-	public void SuccessFailure_arent_equals()
-	{
-		var failure = Failure<string, LogicError>(new("Error"));
-		var success = Success<string, LogicError>("Another error");
-
-		failure.Equals(success).Should().BeFalse();
 	}
 }

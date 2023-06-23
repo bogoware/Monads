@@ -43,7 +43,7 @@ public static class Books
 
 
 		// Processing a list of Maybe<>s
-		var books = new List<Maybe<Book>> { algebra, elementsOfAlgebra, mathematicalTables, None<Book>() };
+		var books = new List<Maybe<Book>> { algebra, elementsOfAlgebra, mathematicalTables, Maybe.None<Book>() };
 
 		var validBooks = books.SelectValues(); // Retrieve values of Maybes that hold some value, None are discarded  
 

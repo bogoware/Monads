@@ -5,7 +5,7 @@ public class ResultCreationTests
 	[Fact]
 	public void Create_successful_result()
 	{
-		var sut = Success<Value, LogicError>(new(0));
+		var sut = Result.Success(new Value(0));
 		sut.IsSuccess.Should().BeTrue();
 		sut.IsFailure.Should().BeFalse();
 	}
@@ -13,7 +13,7 @@ public class ResultCreationTests
 	[Fact]
 	public void Create_failed_result()
 	{
-		var sut = Failure<Value, LogicError>(new("Something went wrong"));
+		var sut = Result.Failure<Value>(new LogicError("Something went wrong"));
 		sut.IsSuccess.Should().BeFalse();
 		sut.IsFailure.Should().BeTrue();
 	}
@@ -21,7 +21,7 @@ public class ResultCreationTests
 	[Fact]
 	public void Create_successful_unitResult()
 	{
-		var sut = UnitSuccess<LogicError>();
+		var sut = Result.Unit;
 		sut.IsSuccess.Should().BeTrue();
 		sut.IsFailure.Should().BeFalse();
 	}
@@ -29,7 +29,7 @@ public class ResultCreationTests
 	[Fact]
 	public void Create_failed_unitResult()
 	{
-		var sut = UnitFailure<LogicError>(new("Something went wrong"));
+		Result<Unit> sut = new LogicError("Something went wrong");
 		sut.IsSuccess.Should().BeFalse();
 		sut.IsFailure.Should().BeTrue();
 	}
@@ -37,7 +37,7 @@ public class ResultCreationTests
 	[Fact]
 	public void GetValue_works_with_successfulResults()
 	{
-		var sut = UnitSuccess<LogicError>();
+		var sut = Result.Unit;
 		var unit = sut.GetValueOrThrow();
 		unit.Should().NotBeNull();
 	}
@@ -45,7 +45,7 @@ public class ResultCreationTests
 	[Fact]
 	public void GetValue_works_with_failedResults()
 	{
-		var sut = UnitFailure<LogicError>(new("Something went wrong"));
+		Result<Unit> sut = new LogicError("Something went wrong");
 
 		sut
 			.Invoking(_ => _.GetValueOrThrow())
@@ -55,7 +55,7 @@ public class ResultCreationTests
 	[Fact]
 	public void GetError_works_with_failedResults()
 	{
-		var sut = UnitFailure(new LogicError("Something went wrong"));
+		Result<Unit> sut = new LogicError("Something went wrong");
 		var unit = sut.GetErrorOrThrow();
 		unit.Should().NotBeNull();
 	}
@@ -63,7 +63,7 @@ public class ResultCreationTests
 	[Fact]
 	public void GetError_works_with_successResults()
 	{
-		var sut = UnitSuccess<LogicError>();
+		var sut = Result.Unit;
 
 		sut
 			.Invoking(_ => _.GetErrorOrThrow())

@@ -79,8 +79,8 @@ public static class MaybeExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Maybe<TValue> ToMaybe<TValue>(this IEnumerable<TValue>? values) where TValue : class
 		=> values is not null && values.Any()
-			? Prelude.Some(values.First())
-			: Prelude.None<TValue>();
+			? Maybe.Some(values.First())
+			: Maybe.None<TValue>();
 
 	/// <summary>
 	/// Returns the original <c>Some</c> if predicate is satisfied, <c>None</c> otherwise.
@@ -88,8 +88,8 @@ public static class MaybeExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Maybe<TValue> Where<TValue>(this TValue? obj, Func<TValue, bool> predicate) where TValue : class
 		=> obj is not null && predicate(obj)
-			? Prelude.Some(obj)
-			: Prelude.None<TValue>();
+			? Maybe.Some(obj)
+			: Maybe.None<TValue>();
 
 	/// <summary>
 	/// Returns the original <c>Some</c> if predicate is not satisfied, <c>None</c> otherwise.
@@ -97,8 +97,8 @@ public static class MaybeExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Maybe<TValue> WhereNot<TValue>(this TValue? obj, Func<TValue, bool> predicate) where TValue : class
 		=> obj is not null && !predicate(obj)
-			? Prelude.Some(obj)
-			: Prelude.None<TValue>();
+			? Maybe.Some(obj)
+			: Maybe.None<TValue>();
 
 	/// <summary>
 	/// Evaluate the <c>predicate</c> applied to the value if present.
