@@ -12,6 +12,9 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 
 	public bool IsSuccess => _value is not null;
 	public bool IsFailure => _error is not null;
+	
+	public static implicit operator Result<TValue>(TValue value) => new(value);
+	public static implicit operator Result<TValue>(Error error) => new(error);
 
 	/// <summary>
 	/// Returns the value if the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/>
