@@ -56,4 +56,21 @@ public class MaybeCreationTests
 		
 		maybe.Equals(maybe2).Should().BeTrue();
 	}
+	
+	[Fact]
+	public void Maybe_from_struct_value_should_be_true()
+	{
+		bool? value = false;
+		var maybe = Maybe.From(value);
+		maybe.IsSome.Should().BeTrue();
+	}
+	[Fact]
+	public void Maybe_from_struct_value_should_be_false()
+	{
+		Maybe<bool?> maybe = Maybe.None<bool?>();
+		bool? value = default;
+		Maybe<bool?> maybe2 = new Maybe<bool?>(value);
+		maybe.IsNone.Should().BeTrue();
+		maybe2.IsNone.Should().BeTrue();
+	}
 }

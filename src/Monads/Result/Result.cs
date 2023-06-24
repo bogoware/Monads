@@ -97,12 +97,13 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 {
 	private readonly TValue? _value;
 	private readonly Error? _error;
+	private readonly bool _isSuccess;
 
-	public Result(TValue value) => _value = value;
-	public Result(Error error) => _error = error;
+	public Result(TValue value) => (_value, _isSuccess) = (value, true);
+	public Result(Error error) => (_error, _isSuccess) = (error, false);
 
-	public bool IsSuccess => _value is not null;
-	public bool IsFailure => _error is not null;
+	public bool IsSuccess => _isSuccess;
+	public bool IsFailure => !_isSuccess;
 	
 	public static implicit operator Result<TValue>(TValue value) => new(value);
 	public static implicit operator Result<TValue>(Error error) => new(error);

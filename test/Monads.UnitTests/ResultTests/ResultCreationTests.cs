@@ -70,5 +70,19 @@ public class ResultCreationTests
 			.Should().ThrowExactly<ResultSuccessException>();
 	}
 
+	[Fact]
+	public void Create_successful_with_struct_result()
+	{
+		var sut = Result.Success(true);
+		sut.IsSuccess.Should().BeTrue();
+		sut.IsFailure.Should().BeFalse();
+	}
 	
+	[Fact]
+	public void Create_failed_with_struct_result()
+	{
+		var sut = Result.Failure<bool>(new LogicError("Something went wrong"));
+		sut.IsSuccess.Should().BeFalse();
+		sut.IsFailure.Should().BeTrue();
+	}
 }

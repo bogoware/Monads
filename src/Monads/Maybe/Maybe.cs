@@ -10,20 +10,23 @@ namespace Bogoware.Monads;
 public static class Maybe
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Maybe<T> From<T>(T? value) where T : class => new(value);
+	public static Maybe<T> From<T>(T? value)  => new(value);
+	
+	//[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	//public static Maybe<T> From<T>(T? value) where T : struct => new(value);
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Maybe<T> From<T>(Maybe<T> maybe) where T : class => new(maybe);
+	public static Maybe<T> From<T>(Maybe<T> maybe) => new(maybe);
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Maybe<T> Some<T>(T value) where T : class
+	public static Maybe<T> Some<T>(T value)
 	{
 		ArgumentNullException.ThrowIfNull(value);
 		return new(value);
 	}
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Maybe<T> Some<T>(Maybe<T> maybe) where T : class
+	public static Maybe<T> Some<T>(Maybe<T> maybe)
 	{
 		if (maybe.IsNone) throw new MaybeNoneException();
 
@@ -31,7 +34,7 @@ public static class Maybe
 	}
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Maybe<T> None<T>() where T : class => Maybe<T>.None;
+	public static Maybe<T> None<T>() => Maybe<T>.None;
 	
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Maybe<Unit> None() => Maybe<Unit>.None;
@@ -42,7 +45,6 @@ public static class Maybe
 /// Represents an optional value.
 /// </summary>
 public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>, IEnumerable<TValue>
-	where TValue : class
 {
 	private readonly TValue? _value = default;
 	public bool IsSome => _value is not null;
