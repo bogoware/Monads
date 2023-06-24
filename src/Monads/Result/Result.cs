@@ -125,24 +125,65 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	/// <exception cref="ResultFailedException"></exception>
 	public Error GetErrorOrThrow() => _error ?? throw new ResultSuccessException();
 
+	/// <summary>
+	/// In case of success returns the <paramref name="newValue"/>..
+	/// </summary>
 	public Result<TNewValue> Map<TNewValue>(TNewValue newValue)
 		=> _value is null ? new(_error!) : new(newValue);
 
+	/// <summary>
+	/// In case of success returns the <paramref name="functor"/> result.
+	/// </summary>
 	public Result<TNewValue> Map<TNewValue>(Func<TNewValue> functor)
 		=> _value is null ? new(_error!) : new(functor());
 
+	/// <inheritdoc cref="Map{TNewValue}(System.Func{TNewValue})"/>
 	public async Task<Result<TNewValue>> Map<TNewValue>(Func<Task<TNewValue>> functor)
 		=> _value is null ? new(_error!) : new(await functor());
 
+	/// <summary>
+	/// In case of success transform the original value by applying the <paramref name="functor"/>.
+	/// </summary>
 	public Result<TNewValue> Map<TNewValue>(Func<TValue, TNewValue> functor)
 		=> _value is null ? new(_error!) : new(functor(_value));
 
+	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
 	public async Task<Result<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue>> functor)
 		=> _value is null ? new(_error!) : new(await functor(_value));
+	
+	/// <summary>
+	/// In case of failure return the <paramref name="newError"/>.
+	/// </summary>
+	public Result<TValue> MapError(Error newError)
+		=> _value is null ? newError : this;
+	/// <summary>
+	/// In case of failure return the <paramref name="newErrorFunctor"/> result.
+	/// </summary>
+	public Result<TValue> MapError<TNewError>(Func<TNewError> newErrorFunctor)
+		where TNewError : Error
+		=> _value is null ? newErrorFunctor() : this;
+	/// <inheritdoc cref="MapError(Error)"/>
+	public Result<TValue> MapError<TNewError>(Func<Error, TNewError> newErrorFunctor)
+		where TNewError : Error
+		=> _value is null ? newErrorFunctor(_error!) : this;
+	/// <inheritdoc cref="MapError(Error)"/>
+	public async Task<Result<TValue>> MapError<TNewError>(Func<Task<TNewError>> newErrorFunctor)
+		where TNewError : Error
+		=> _value is null ? await newErrorFunctor() : this;
+	/// <inheritdoc cref="MapError(Error)"/>
+	public async Task<Result<TValue>> MapError<TNewError>(Func<Error, Task<TNewError>> newErrorFunctor)
+		where TNewError : Error
+		=> _value is null ? await newErrorFunctor(_error!) : this;
 
+	/// <summary>
+	/// In case of success return the <paramref name="newResult"/>.
+	/// </summary>
 	public Result<TNewValue> Bind<TNewValue>(Result<TNewValue> newResult)
 		=> _value is null ? new(_error!) : newResult;
 
+	/// <summary>
+	/// In case of success return the <paramref name="functor"/> result.
+	/// </summary>
 	public Result<TNewValue> Bind<TNewValue>(Func<Result<TNewValue>> functor)
 		=> _value is null ? new(_error!) : functor();
 

@@ -2,92 +2,90 @@
 
 _Yet another functional library for C#_
 
-## Monads: quick introduction
+## Introduction to Monads
 
-Monads are a powerful tool to model operations in a functional way and it's not 
-a coincidence that they are the cornerstone of functional programming.
-It's not our mission to explain what monads are and how they works:, there are plenty of
-resources on the web that face the question from different persepectives.
+Monads are a powerful tool for modeling operations in a functional way, making them a cornerstone 
+of functional programming. While we won't delve into a detailed explanation of monads and their inner 
+workings in this document, there are numerous resources available online that approach the topic 
+from different perspectives.
 
-For the objective of this introduction let's say taht they can be considered 
-as a sort of _safe container_ that encapsulate the result of an operation and 
-provides method methods that allow to manipulate the result in a safe way, 
-ensuring that the operation will be executed only if it is fine.
+For the purpose of this introduction, we can consider monads as a type of "safe container" that encapsulates
+the result of an operation. They provide methods that enable manipulation of the result in a safe manner,
+ensuring that the operation executes only if it succeeds.
 
-This contract is enough to shield code from performing any further processing in case
-of errors or missing data.
+By employing monads, code can be protected from further processing in case of errors or missing data. 
+Adopting a functional approach offers benefits such as increased readability, improved reasoning capabilities,
+and more robust and error-resistant code.
 
-The benefit of adopting a functional approach is that it allows to model operations in a way
-that is more readable and easier to reason about, moreover it allows to write code that is more
-robust and less prone to errors.
+## Functional Challenges in C#
 
-## C# functional challenges
-
-C# has a good support to functional programming but there are some limitations that
-imply challenging design descisions.
+C# offers good support for functional programming, but there are certain limitations that necessitate 
+careful design decisions.
 
 ## Bogoware Monads
 
-This library provides the well knows `Result` and `Maybe` monads (also known as `Either`, `Optional`, `Option` in
-other contexts):
+This library provides two well-known monads: `Result` and `Maybe` monads (also referred to as `Either`, 
+`Optional`, `Option` in other contexts):
 
 > The `Result<T>` monad is used to model operations that can fail.
 
->The `Maybe<T>` monad is used to model operations that can return a value or not.
+>The `Maybe<T>` monad is used to model operations that can either return a value or be empty.
 
-Moreover the library provides the `Error` abstract class that complements the `Result<T, E>` monad to
-provide an ergonimic approach to error management at application-wide scale.
+Additionally, the library provides the `Error` abstract class, which complements the `Result<T>` monad and
+offers an ergonomic approach to error management at an application-wide scale.
 
-## `Result<T>` design goals
+## Design Goals for `Result<T>`
 
-The `Result<T>` monad is used to model operations that can fail or return a value.
-The `Result<T>` monad is a generic type where `T` is the type of the value returned by the operation  uppon success.
+The `Result<T>` monad is designed for modeling operations that can either fail or return a value.
+It is a generic type, with `T` representing the type of the value returned by the successful operation.
 
-`Result<T>` provides a set of methods that allow to chain operations in a functional way:
-* `Map` allows to transform the value returned by the operation, thus modelliing the _happy_ flow
-* `Bind` allows to chain operations that return a `Result<T>`.
-* `Match` allows to handle the result of the operation.
-* `RecoverWith` allows to recover from an error by returning a `Result<T>`
-* `Ensure` allow to assert a condition on the value returned by the operation
-* `ExecuteIfSuccess` allows to execute an action if the operation succeeds
-* `ExecuteIfFailure` allows to execute an action if the operation fails
- 
-There are also some unsafe methods intended to switch to the procedural way.
-They are intended to support developers that aren't familiar with the functional approach and may need
-to switch to the procedural way to get things done.
+`Result<T>` provides a set of methods that facilitate chaining operations in a functional manner:
+* `Map`: Allows transformation of the value returned by the operation, representing the "happy" flow.
+* `MapError`: Allows transformation of the error returned by the operation, representing the "unhappy" flow.
+* `Bind`: Enables chaining of operations that return a `Result<T>`.
+* `Match`: Facilitates handling of the operation's result by providing separate paths for the "happy" and "unhappy" flows.
+* `RecoverWith`: Provides a way to recover from an error by returning a `Result<T>`
+* `Ensure`: Allows asserting a condition on the value returned by the operation.
+* `ExecuteIfSuccess`: Executes an action if the operation succeeds.
+* `ExecuteIfFailure`: Executes an action if the operation fails.
 
-These methods should be avoided as much as possible because they break the functional approach
-and make the code less robust and exposed to unwanted exceptions:
+There are also some unsafe methods intended to support developers who are less familiar with the functional approach
+and may need to resort to a procedural style to achieve their goals.
+These methods should be used sparingly, as they deviate from the functional paradigm and make the code less
+robust, potentially leading to unexpected exceptions:
 
-* `GetValueOrThrow` allows to extract the value from the `Result<T>` monad.
-* `GetErrorOrThrow` allows to extract the error from the `Result<T>` monad. 
+* `GetValueOrThrow`: Extracts the value from the `Result<T>` monad.
+* `GetErrorOrThrow`: Extracts the error from the `Result<T>` monad. 
 
-The benefit of sticking to the `Result<T>` monad is that it allows to model operations in a way that is more 
-readable and easier to reason about, moreover it allows to write code that is more robust and less prone to errors.
+By adhering to the `Result<T>` monad, code can be modeled in a more readable and reasoned manner.
+It also contributes to writing more robust code with reduced error-proneness.
 
-## `Error` design goals
+## Design Goals for `Error`
 
-The `Error` class is used to model errors and work inconjunction with the `Result<T>` monad.
+The `Error` class is used for modeling errors and works in conjunction with the `Result<T>` monad.
 
 There are two types of errors:
-* `LogicError`s: these errors are caused by the application logic and should be handled programmatically. For example: `InvalidEmailError`, `InvalidPasswordError`, `InvalidUsernameError`, etc.
-* `RuntimeError`s: these errors are caused by external sources and are not related to domain logic. For example: `DatabaseError`, `NetworkError`, `FileSystemError`, etc.
+* `LogicError`: These errors are caused by application logic and should be programmatically handled.
+Examples include `InvalidEmailError`, `InvalidPasswordError`, `InvalidUsernameError`, etc.
+* `RuntimeError`: These errors are caused by external sources and are unrelated to domain logic.
+Examples include `DatabaseError`, `NetworkError`, `FileSystemError`, etc.
 
-Distinguishing between `LogicError`s and `RuntimeError`s is important because it allows to handle them differently.
-* `LogicError`s should be handled programmatically and can be safely reported to the user in case of malformed request
-* while `RuntimeError`s should be handled by the infrastructure and aren't meant to be reported to the user.
 
-A typical Asp.Net Core application should handle `LogicError`s by returning a `BadRequest` response to the client
-and `RuntimeError`s by returning an `InternalServerError` response to the client for example.
+Distinguishing between `LogicError`s and `RuntimeError`s is important, as they require different handling approaches:
+* `LogicError`s should be programmatically handled and can be safely reported to the user in case of a malformed request.
+* `RuntimeError`s should be handled by the infrastructure and should not be reported to the user.
 
-### `Error` hierarchy: best practices
-Every application should model its own logic errors by deriving from the `LogicError` class a root class 
-that represents the base class for all logic errors.
+For example, in a typical ASP.NET Core application, `LogicErrors` can be handled by returning a `BadRequest`
+response to the client, while `RuntimeErrors` can be handled by returning an `InternalServerError` response.
 
-From this root class the application should derive a class for the different kinds of logic errors that can occur.
-Each class should model a specific logic error and provide the necessary properties to describe the error.
+### `Error` Hierarchy Best Practices
+Each application should model its own logic errors by deriving from a root class that represents the base class
+for all logic errors. The root class should derive from the `LogicError` class.
 
-In the following example we model two logic errors: `NotFoundError` and `InvalidOperationError`:
+For different kinds of logic errors that can occur, the application should derive specific classes,
+each modeling a particular logic error and providing the necessary properties to describe the error.
+
+In the following example, we model two logic errors: `NotFoundError` and `InvalidOperationError`:
 
 ```csharp
 
@@ -130,19 +128,29 @@ public class InvalidOperationError : ApplicationError
 }
 ```
 
-As shown in the project [FluentValidationSample](./samples/FluentValidationSample) the `FluentValidation` library 
+As demonstrated in the project [FluentValidationSample](./samples/FluentValidationSample) the `FluentValidation` library 
 can be used to model validation errors.
 
 In contrast to `LogicError`s, `RuntimeError`s are generated by the `Result.Execute()` methods to encapsulate exceptions 
 thrown by the application.
 
-## `Maybe<T>` design goals
+## Design Goals for `Maybe<T>`
 
-Before stating what is intended to be achieved with the `Maybe` monad, let's clarify that it's not intended to be used as a replacement for `Nullable<T>` essentailly because some fundamental libraries, such as Entity Framework, rely on `Nullable<T>` to model class attributes and the support to structural types is still limited. A more pragmatic approach is to use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and or method paramethers. 
+Before discussing what can be achieved with the `Maybe<T>` monad, let's clarify that it is not intended as a 
+replacement for Nullable<T>.
+This is mainly due to fundamental libraries, such as Entity Framework, relying on `Nullable<T>` to model class
+attributes, while support for structural types remains limited.
+A pragmatic approach involves using `Nullable<T>` for modeling class attributes and `Maybe<T>` for modeling
+return values and method parameters.
 
-The benefit of using `Maybe` over `Nullable<T>` is that `Maybe` provides a set of methods that allow to chain operations in a functional way. This becomes very useful when dealing with operations that can return a value or not, like when querying a database.
+The advantage of using `Maybe<T>` over `Nullable<T>` is that `Maybe<T>` provides a set of methods that enable
+chaining operations in a functional manner.
+This becomes particularly useful when dealing with operations that can either return a value or be empty,
+such as querying a database.
 
-The presence of an implicit conversion from `Nullable<T>` to `Maybe<T>` allows to lift up `Nullable<T>` values to `Maybe<T>` values and use the `Maybe<T>` methods to chain operations.
+The implicit conversion from `Nullable<T>` to `Maybe<T>` allows for lifting `Nullable<T>` values to `Maybe<T>`
+values and utilizing `Maybe<T>` methods for chaining operations.
 
-> **Practical rule**: use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and or method paramethers.
-.
+> **Practical rule**: Use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and
+> method paramethers.
+
