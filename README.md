@@ -91,9 +91,7 @@ You can write:
 ```csharp
 /// Publishes the project
 public Result<Unit> Publish() => Result
-    .Bind(() => PublishingStatus == PublishingStatus.Published
-        ? new InvalidOperationError("Already published")
-        : Result.Unit)
+    .Ensure(PublishingStatus != PublishingStatus.Published, () => new InvalidOperationError("Already published")
     .Bind(ValidateCostComponents)
     .Bind(ValidateTimingComponents)
     // ... more binding to validation methods
