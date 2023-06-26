@@ -6,13 +6,39 @@ namespace Bogoware.Monads;
 public static class Result
 {
 	public static Result<Unit> Unit { get; } = new(Monads.Unit.Instance);
+
+	/// <summary>
+	/// Initializes a new successful instance of the <see cref="Result{TValue}"/> with the given <paramref name="value"/>.
+	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Result<TValue> Success<TValue>(TValue value) => new(value);
+
+	/// <summary>
+	/// Initializes a new failed instance of the <see cref="Result{TValue}"/> with a <see cref="LogicError"/>
+	/// with the message <paramref name="errorMessage"/>.
+	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Result<TValue> Failure<TValue>(string errorMessage) => new(new LogicError(errorMessage));
+
+	/// <summary>
+	/// Initializes a new failed instance of the <see cref="Result{TValue}"/> with the given <paramref name="error"/>.
+	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Result<TValue> Failure<TValue>(Error error) => new(error);
+
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Result{TValue}"/> with the value returned by <paramref name="result"/>.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Result<TValue> Bind<TValue>(Func<Result<TValue>> result) => result();
 	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Result{TValue}"/> with the value returned by <paramref name="result"/>.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Task<Result<TValue>> Bind<TValue>(Func<Task<Result<TValue>>> result) => result();
+	
+
 	/// <summary>
 	/// Wraps the execution of the given <paramref name="action"/> in a <see cref="Result{TValue}"/>
 	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
@@ -32,7 +58,7 @@ public static class Result
 
 		return error ?? Unit;
 	}
-	
+
 	/// <summary>
 	///	Wraps the execution of the given <paramref name="action"/> in a <see cref="Result{TValue}"/>
 	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
@@ -51,7 +77,7 @@ public static class Result
 
 		return error ?? Unit;
 	}
-	
+
 	/// <summary>
 	/// Wraps the execution of the given <paramref name="function"/> in a <see cref="Result{TValue}"/>
 	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
@@ -102,9 +128,12 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	public Result(TValue value) => (_value, _isSuccess) = (value, true);
 	public Result(Error error) => (_error, _isSuccess) = (error, false);
 
+	public Result(Result<TValue> result) =>
+		(_value, _error, _isSuccess) = (result._value, result._error, result._isSuccess);
+
 	public bool IsSuccess => _isSuccess;
 	public bool IsFailure => !_isSuccess;
-	
+
 	public static implicit operator Result<TValue>(TValue value) => new(value);
 	public static implicit operator Result<TValue>(Error error) => new(error);
 
@@ -151,26 +180,30 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
 	public async Task<Result<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue>> functor)
 		=> _value is null ? new(_error!) : new(await functor(_value));
-	
+
 	/// <summary>
 	/// In case of failure return the <paramref name="newError"/>.
 	/// </summary>
 	public Result<TValue> MapError(Error newError)
 		=> _value is null ? newError : this;
+
 	/// <summary>
 	/// In case of failure return the <paramref name="newErrorFunctor"/> result.
 	/// </summary>
 	public Result<TValue> MapError<TNewError>(Func<TNewError> newErrorFunctor)
 		where TNewError : Error
 		=> _value is null ? newErrorFunctor() : this;
+
 	/// <inheritdoc cref="MapError(Error)"/>
 	public Result<TValue> MapError<TNewError>(Func<Error, TNewError> newErrorFunctor)
 		where TNewError : Error
 		=> _value is null ? newErrorFunctor(_error!) : this;
+
 	/// <inheritdoc cref="MapError(Error)"/>
 	public async Task<Result<TValue>> MapError<TNewError>(Func<Task<TNewError>> newErrorFunctor)
 		where TNewError : Error
 		=> _value is null ? await newErrorFunctor() : this;
+
 	/// <inheritdoc cref="MapError(Error)"/>
 	public async Task<Result<TValue>> MapError<TNewError>(Func<Error, Task<TNewError>> newErrorFunctor)
 		where TNewError : Error

@@ -60,6 +60,34 @@ robust, potentially leading to unexpected exceptions:
 By adhering to the `Result<T>` monad, code can be modeled in a more readable and reasoned manner.
 It also contributes to writing more robust code with reduced error-proneness.
 
+### `Result` Helper Methods
+
+The `Result` class provides a set of helper methods that facilitate the creation of `Result<T>` instances or
+make the code more readable.
+
+* `Result.Success`: Creates a successful `Result<T>` instance with the specified value.
+* `Result.Failure`: Creates a failed `Result<T>` instance with the specified error.
+* `Result.Bind`: Creates a `Result<T>` instance from a delegate. This method is particularly useful
+when you need to start a chain of operations with a `Result<T>` instance and you like to have a consistent
+syntax for all the steps of the chain.
+
+For example, instead of writing:
+```csharp 
+return ValidateCostComponents() // Note the explicit invocation of the method
+    .Bind(ValidateTimingComponents)
+    // ... more binding to validation methods
+    .ExecuteIfSuccess(() => PublishingStatus = PaintingProcessPublishingStatus.Published);
+```
+
+You can write:
+```csharp
+return Result
+    .Bind(ValidateCostComponents) // Note the consistent use of the method reference at each step
+    .Bind(ValidateTimingComponents)
+    // ... more binding to validation methods
+    .ExecuteIfSuccess(() => PublishingStatus = PaintingProcessPublishingStatus.Published);
+```
+
 ## Design Goals for `Error`
 
 The `Error` class is used for modeling errors and works in conjunction with the `Result<T>` monad.
