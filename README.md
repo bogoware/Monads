@@ -74,7 +74,7 @@ syntax for all the steps of the chain.
 For example, instead of writing:
 ```csharp
 if (PublishingStatus == PublishingStatus.Published)
-    return nee InvalidOperationError("Already published");
+    return new InvalidOperationError("Already published");
 
 return ValidateCostComponents() // Note the explicit invocation of the method
     .Bind(ValidateTimingComponents)
