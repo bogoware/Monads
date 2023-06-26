@@ -72,20 +72,26 @@ when you need to start a chain of operations with a `Result<T>` instance and you
 syntax for all the steps of the chain.
 
 For example, instead of writing:
-```csharp 
+```csharp
+if (PublishingStatus == PublishingStatus.Published)
+    return nee InvalidOperationError("Already published");
+
 return ValidateCostComponents() // Note the explicit invocation of the method
     .Bind(ValidateTimingComponents)
     // ... more binding to validation methods
-    .ExecuteIfSuccess(() => PublishingStatus = PaintingProcessPublishingStatus.Published);
+    .ExecuteIfSuccess(() => PublishingStatus = PublishingStatus.Published);
 ```
 
 You can write:
 ```csharp
 return Result
-    .Bind(ValidateCostComponents) // Note the consistent use of the method reference at each step
+    .Bind(() => PublishingStatus == PublishingStatus.Published
+        ? new InvalidOperationError("Already published")
+        : Result.Unit)
+    .Bind(ValidateCostComponents)
     .Bind(ValidateTimingComponents)
     // ... more binding to validation methods
-    .ExecuteIfSuccess(() => PublishingStatus = PaintingProcessPublishingStatus.Published);
+    .ExecuteIfSuccess(() => PublishingStatus = PublishingStatus.Published);
 ```
 
 ## Design Goals for `Error`
