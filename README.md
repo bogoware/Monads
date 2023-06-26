@@ -67,24 +67,30 @@ make the code more readable.
 
 * `Result.Success`: Creates a successful `Result<T>` instance with the specified value.
 * `Result.Failure`: Creates a failed `Result<T>` instance with the specified error.
+* `Result.Ensure`: Creates a successful `Result<Unit>` instance if the specified condition is true, otherwise creates 
+a failed instance with the specified error.
 * `Result.Bind`: Creates a `Result<T>` instance from a delegate. This method is particularly useful
 when you need to start a chain of operations with a `Result<T>` instance and you like to have a consistent
 syntax for all the steps of the chain.
 
 For example, instead of writing:
 ```csharp
-if (PublishingStatus == PublishingStatus.Published)
-    return new InvalidOperationError("Already published");
-
-return ValidateCostComponents() // Note the explicit invocation of the method
-    .Bind(ValidateTimingComponents)
-    // ... more binding to validation methods
-    .ExecuteIfSuccess(() => PublishingStatus = PublishingStatus.Published);
+/// Publishes the project
+public Result<Unit> Publish() {
+    if (PublishingStatus == PublishingStatus.Published)
+        return new InvalidOperationError("Already published");
+    
+    return ValidateCostComponents() // Note the explicit invocation of the method
+        .Bind(ValidateTimingComponents)
+        // ... more binding to validation methods
+        .ExecuteIfSuccess(() => PublishingStatus = PublishingStatus.Published);
+}
 ```
 
 You can write:
 ```csharp
-return Result
+/// Publishes the project
+public Result<Unit> Publish() => Result
     .Bind(() => PublishingStatus == PublishingStatus.Published
         ? new InvalidOperationError("Already published")
         : Result.Unit)

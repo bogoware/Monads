@@ -27,17 +27,41 @@ public static class Result
 	public static Result<TValue> Failure<TValue>(Error error) => new(error);
 
 	/// <summary>
+	///  If the <paramref name="condition"/> is <c>true</c> then initializes a new successful instance
+	/// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
+	/// with the given <paramref name="error"/>.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Result<Unit> Ensure(bool condition, Func<Error> error) => condition ? Unit : error();
+	
+	/// <summary>
+	///  If the <paramref name="predicate"/> evaluates to <c>true</c> then initializes a new successful instance
+	/// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
+	/// with the given <paramref name="error"/>.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Result<Unit> Ensure(Func<bool> predicate, Func<Error> error) => predicate() ? Unit : error();
+	
+	/// <summary>
+	///  If the <paramref name="predicate"/> evaluates to <c>true</c> then initializes a new successful instance
+	/// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
+	/// with the given <paramref name="error"/>.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<Result<Unit>> Ensure(Func<Task<bool>> predicate, Func<Error> error) => await predicate() ? Unit : error();
+
+	/// <summary>
 	/// Initializes a new instance of the <see cref="Result{TValue}"/> with the value returned by <paramref name="result"/>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Result<TValue> Bind<TValue>(Func<Result<TValue>> result) => result();
-	
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Result{TValue}"/> with the value returned by <paramref name="result"/>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Task<Result<TValue>> Bind<TValue>(Func<Task<Result<TValue>>> result) => result();
-	
+
 
 	/// <summary>
 	/// Wraps the execution of the given <paramref name="action"/> in a <see cref="Result{TValue}"/>
