@@ -33,7 +33,7 @@ public static class Result
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Result<Unit> Ensure(bool condition, Func<Error> error) => condition ? Unit : error();
-	
+
 	/// <summary>
 	///  If the <paramref name="predicate"/> evaluates to <c>true</c> then initializes a new successful instance
 	/// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
@@ -41,14 +41,15 @@ public static class Result
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Result<Unit> Ensure(Func<bool> predicate, Func<Error> error) => predicate() ? Unit : error();
-	
+
 	/// <summary>
 	///  If the <paramref name="predicate"/> evaluates to <c>true</c> then initializes a new successful instance
 	/// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
 	/// with the given <paramref name="error"/>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Result<Unit>> Ensure(Func<Task<bool>> predicate, Func<Error> error) => await predicate() ? Unit : error();
+	public static async Task<Result<Unit>> Ensure(Func<Task<bool>> predicate, Func<Error> error) =>
+		await predicate() ? Unit : error();
 
 	/// <summary>
 	/// Initializes a new instance of the <see cref="Result{TValue}"/> with the value returned by <paramref name="result"/>.
@@ -287,23 +288,39 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	public async Task<Result<TValue>> RecoverWith(Func<Error, Task<TValue>> functor)
 		=> _error is not null ? new(await functor(_error)) : this;
 
-	public Result<TValue> Ensure(Func<TValue, bool> functor, Error error)
-		=> _value is not null & functor(_value!) ? this : new(error);
+	/// <summary>
+	/// If the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/> is true then evaluate the <paramref name="predicate"/>
+	/// and return the <see cref="Result{TValue}"/> if the predicate is true, otherwise return
+	/// a new <see cref="Result{TValue}"/> provided by <paramref name="error"/>.
+	/// </summary>
+	public Result<TValue> Ensure(Func<TValue, bool> predicate, Error error)
+		=> IsFailure             ? this
+			: predicate(_value!) ? this : new(error);
 
-	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> functor, Error error)
-		=> _value is not null & await functor(_value!) ? this : new(error);
+	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Error)"/>
+	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Error error)
+		=> IsFailure                   ? this
+			: await predicate(_value!) ? this : new(error);
 
-	public Result<TValue> Ensure(Func<TValue, bool> functor, Func<Maybe<TValue>, Error> errorFunctor)
-		=> _value is not null & functor(_value!) ? this : new(errorFunctor(_value));
+	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Error)"/>
+	public Result<TValue> Ensure(Func<TValue, bool> predicate, Func<TValue, Error> error)
+		=> IsFailure             ? this
+			: predicate(_value!) ? this : new(error(_value!));
 
-	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> functor, Func<Maybe<TValue>,Error> errorFunctor)
-		=> _value is not null & await functor(_value!) ? this : new(errorFunctor(_value));
-	
-	public async Task<Result<TValue>> Ensure(Func<TValue, bool> functor, Func<Maybe<TValue>, Task<Error>> errorFunctor)
-		=> _value is not null & functor(_value!) ? this : new(await errorFunctor(_value));
+	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Error)"/>
+	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Func<TValue, Error> error)
+		=> IsFailure                   ? this
+			: await predicate(_value!) ? this : new(error(_value!));
 
-	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> functor, Func<Maybe<TValue>,Task<Error>> errorFunctor)
-		=> _value is not null & await functor(_value!) ? this : new(await errorFunctor(_value));
+	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Error)"/>
+	public async Task<Result<TValue>> Ensure(Func<TValue, bool> predicate, Func<TValue, Task<Error>> error)
+		=> IsFailure             ? this
+			: predicate(_value!) ? this : new(await error(_value!));
+
+	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Error)"/>
+	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Func<TValue, Task<Error>> error)
+		=> IsFailure                   ? this
+			: await predicate(_value!) ? this : new(await error(_value!));
 
 	/// <summary>
 	/// Execute the action if the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/> is true.
