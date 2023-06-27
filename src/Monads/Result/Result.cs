@@ -293,6 +293,17 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> functor, Error error)
 		=> _value is not null & await functor(_value!) ? this : new(error);
 
+	public Result<TValue> Ensure(Func<TValue, bool> functor, Func<Maybe<TValue>, Error> errorFunctor)
+		=> _value is not null & functor(_value!) ? this : new(errorFunctor(_value));
+
+	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> functor, Func<Maybe<TValue>,Error> errorFunctor)
+		=> _value is not null & await functor(_value!) ? this : new(errorFunctor(_value));
+	
+	public async Task<Result<TValue>> Ensure(Func<TValue, bool> functor, Func<Maybe<TValue>, Task<Error>> errorFunctor)
+		=> _value is not null & functor(_value!) ? this : new(await errorFunctor(_value));
+
+	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> functor, Func<Maybe<TValue>,Task<Error>> errorFunctor)
+		=> _value is not null & await functor(_value!) ? this : new(await errorFunctor(_value));
 
 	/// <summary>
 	/// Execute the action if the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/> is true.
