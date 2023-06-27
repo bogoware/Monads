@@ -60,6 +60,13 @@ public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>
 	}
 
 	public Maybe(Maybe<TValue> maybe) => _value = maybe._value;
+	
+	/// <summary>
+	/// Returns the value if the maybe is some, otherwise throws an exception.
+	/// </summary>
+	/// <returns></returns>
+	/// <exception cref="MaybeNoneException"></exception>
+	public TValue GetValueOrThrow() => _value ?? throw new MaybeNoneException();
 
 	/// <summary>
 	/// Map the value to a new one.
