@@ -1,6 +1,17 @@
 # Bogoware Monads
 
+![Nuget](https://img.shields.io/nuget/dt/Bogoware.Monads?logo=nuget&style=plastic)
+
 _Yet another functional library for C#_
+
+## Quickstart
+
+Install from Nuget and enjoy!
+
+```shell
+dotnet add package Bogoware.Monads
+```
+
 
 ## Introduction to Monads
 
