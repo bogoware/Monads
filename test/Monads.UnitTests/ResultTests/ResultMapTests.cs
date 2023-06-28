@@ -77,4 +77,40 @@ public class ResultMapTests
 		Result<string> actual = await _failed.Map(success => Task.FromResult($"success: {_success}"));
 		actual.IsFailure.Should().BeTrue();
 	}
+
+	[Fact]
+	public void VoidFunctor_maps_success_to_ResultUnit()
+	{
+		void VoidFunctor(string arg) { }
+		Result<string> sut = Result.Success("success");
+		Result<Unit> actual = sut.Map(VoidFunctor);
+		actual.IsSuccess.Should().BeTrue();
+	}
+	
+	[Fact]
+	public async Task VoidFunctor_maps_success_to_TaskResultUnit()
+	{
+		Task VoidFunctor(string arg) { return Task.CompletedTask; }
+		Result<string> sut = Result.Success("success");
+		Result<Unit> actual = await sut.Map(VoidFunctor);
+		actual.IsSuccess.Should().BeTrue();
+	}
+	
+	[Fact]
+	public void VoidFunctor_maps_failure_to_ResultUnit()
+	{
+		void VoidFunctor(string arg) { }
+		Result<string> sut = Result.Failure<string>("failed");
+		Result<Unit> actual = sut.Map(VoidFunctor);
+		actual.IsFailure.Should().BeTrue();
+	}
+	
+	[Fact]
+	public async Task VoidFunctor_maps_failure_to_TaskResultUnit()
+	{
+		Task VoidFunctor(string arg) { return Task.CompletedTask; }
+		Result<string> sut = Result.Failure<string>("failed");
+		Result<Unit> actual = await sut.Map(VoidFunctor);
+		actual.IsFailure.Should().BeTrue();
+	}
 }

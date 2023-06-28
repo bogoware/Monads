@@ -6,10 +6,12 @@ namespace Bogoware.Monads;
 
 public static class ResultMapAsyncExtensions
 {
+	/*
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Result<TNewValue>> Map<TValue, TNewValue>(
 		this Task<Result<TValue>> result, TNewValue newValue)
 		=> (await result).Map(newValue);
+	*/
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Result<TNewValue>> Map<TValue, TNewValue>(
@@ -40,7 +42,7 @@ public static class ResultMapAsyncExtensions
 	{
 		var result = await resultTask;
 		if (result.IsFailure) return Result.Failure<Unit>(result.GetErrorOrThrow());
-		functor(result.GetValueOrThrow());
+		functor(result.Value!);
 		return Result.Unit;
 	}
 	
@@ -51,7 +53,7 @@ public static class ResultMapAsyncExtensions
 	{
 		var result = await resultTask;
 		if (result.IsFailure) return Result.Failure<Unit>(result.GetErrorOrThrow());
-		await functor(result.GetValueOrThrow());
+		await functor(result.Value!);
 		return Result.Unit;
 	}
 }

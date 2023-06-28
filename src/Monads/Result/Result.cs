@@ -146,15 +146,15 @@ public static class Result
 
 public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValue>>, IEnumerable<TValue>
 {
-	private readonly TValue? _value;
-	private readonly Error? _error;
+	internal readonly TValue? Value;
+	internal readonly Error? Error;
 	private readonly bool _isSuccess;
 
-	public Result(TValue value) => (_value, _isSuccess) = (value, true);
-	public Result(Error error) => (_error, _isSuccess) = (error, false);
+	public Result(TValue value) => (Value, _isSuccess) = (value, true);
+	public Result(Error error) => (Error, _isSuccess) = (error, false);
 
 	public Result(Result<TValue> result) =>
-		(_value, _error, _isSuccess) = (result._value, result._error, result._isSuccess);
+		(Value, Error, _isSuccess) = (result.Value, result.Error, result._isSuccess);
 
 	public bool IsSuccess => _isSuccess;
 	public bool IsFailure => !_isSuccess;
@@ -169,7 +169,7 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	/// </summary>
 	/// <returns></returns>
 	/// <exception cref="ResultFailedException"></exception>
-	public TValue GetValueOrThrow() => _value ?? throw new ResultFailedException(_error!);
+	public TValue GetValueOrThrow() => Value ?? throw new ResultFailedException(Error!);
 
 	/// <summary>
 	/// Returns the error if the <see cref="Result{TValue}"/>.<see cref="IsFailure"/>
@@ -178,46 +178,46 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	/// </summary>
 	/// <returns></returns>
 	/// <exception cref="ResultFailedException"></exception>
-	public Error GetErrorOrThrow() => _error ?? throw new ResultSuccessException();
+	public Error GetErrorOrThrow() => Error ?? throw new ResultSuccessException();
 
 	/// <summary>
 	/// In case of success returns the <paramref name="newValue"/>..
 	/// </summary>
 	public Result<TNewValue> Map<TNewValue>(TNewValue newValue)
-		=> _value is null ? new(_error!) : new(newValue);
+		=> Value is null ? new(Error!) : new(newValue);
 
 	/// <summary>
 	/// In case of success returns the <paramref name="functor"/> result.
 	/// </summary>
 	public Result<TNewValue> Map<TNewValue>(Func<TNewValue> functor)
-		=> _value is null ? new(_error!) : new(functor());
+		=> Value is null ? new(Error!) : new(functor());
 
 	/// <inheritdoc cref="Map{TNewValue}(System.Func{TNewValue})"/>
 	public async Task<Result<TNewValue>> Map<TNewValue>(Func<Task<TNewValue>> functor)
-		=> _value is null ? new(_error!) : new(await functor());
+		=> Value is null ? new(Error!) : new(await functor());
 
 	/// <summary>
 	/// In case of success transform the original value by applying the <paramref name="functor"/>.
 	/// </summary>
 	public Result<TNewValue> Map<TNewValue>(Func<TValue, TNewValue> functor)
-		=> _value is null ? new(_error!) : new(functor(_value));
+		=> Value is null ? new(Error!) : new(functor(Value));
 
 	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
 	public async Task<Result<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue>> functor)
-		=> _value is null ? new(_error!) : new(await functor(_value));
+		=> Value is null ? new(Error!) : new(await functor(Value));
 	
 	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
-	public Result<Unit> Map<TNewValue>(Action<TValue> functor)
+	public Result<Unit> Map(Action<TValue> functor)
 	{
-		if (_value is null) return new(_error!);
-		functor(_value);
+		if (Value is null) return new(Error!);
+		functor(Value);
 		return Result.Unit;
 	}
 	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
-	public async Task<Result<Unit>> Map<TNewValue>(Func<TValue, Task> functor)
+	public async Task<Result<Unit>> Map(Func<TValue, Task> functor)
 	{
-		if (_value is null) return new(_error!);
-		await functor(_value);
+		if (Value is null) return new(Error!);
+		await functor(Value);
 		return Result.Unit;
 	}
 
@@ -225,94 +225,94 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	/// In case of failure return the <paramref name="newError"/>.
 	/// </summary>
 	public Result<TValue> MapError(Error newError)
-		=> _value is null ? newError : this;
+		=> Value is null ? newError : this;
 
 	/// <summary>
 	/// In case of failure return the <paramref name="newErrorFunctor"/> result.
 	/// </summary>
 	public Result<TValue> MapError<TNewError>(Func<TNewError> newErrorFunctor)
 		where TNewError : Error
-		=> _value is null ? newErrorFunctor() : this;
+		=> Value is null ? newErrorFunctor() : this;
 
-	/// <inheritdoc cref="MapError(Error)"/>
+	/// <inheritdoc cref="MapError(Monads.Error)"/>
 	public Result<TValue> MapError<TNewError>(Func<Error, TNewError> newErrorFunctor)
 		where TNewError : Error
-		=> _value is null ? newErrorFunctor(_error!) : this;
+		=> Value is null ? newErrorFunctor(Error!) : this;
 
-	/// <inheritdoc cref="MapError(Error)"/>
+	/// <inheritdoc cref="MapError(Monads.Error)"/>
 	public async Task<Result<TValue>> MapError<TNewError>(Func<Task<TNewError>> newErrorFunctor)
 		where TNewError : Error
-		=> _value is null ? await newErrorFunctor() : this;
+		=> Value is null ? await newErrorFunctor() : this;
 
-	/// <inheritdoc cref="MapError(Error)"/>
+	/// <inheritdoc cref="MapError(Monads.Error)"/>
 	public async Task<Result<TValue>> MapError<TNewError>(Func<Error, Task<TNewError>> newErrorFunctor)
 		where TNewError : Error
-		=> _value is null ? await newErrorFunctor(_error!) : this;
+		=> Value is null ? await newErrorFunctor(Error!) : this;
 
 	/// <summary>
 	/// In case of success return the <paramref name="newResult"/>.
 	/// </summary>
 	public Result<TNewValue> Bind<TNewValue>(Result<TNewValue> newResult)
-		=> _value is null ? new(_error!) : newResult;
+		=> Value is null ? new(Error!) : newResult;
 
 	/// <summary>
 	/// In case of success return the <paramref name="functor"/> result.
 	/// </summary>
 	public Result<TNewValue> Bind<TNewValue>(Func<Result<TNewValue>> functor)
-		=> _value is null ? new(_error!) : functor();
+		=> Value is null ? new(Error!) : functor();
 
 	/// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
 	public Task<Result<TNewValue>> Bind<TNewValue>(Func<Task<Result<TNewValue>>> functor)
-		=> _value is null ? Task.FromResult(new Result<TNewValue>(_error!)) : functor();
+		=> Value is null ? Task.FromResult(new Result<TNewValue>(Error!)) : functor();
 
 	/// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
 	public Result<TNewValue> Bind<TNewValue>(Func<TValue, Result<TNewValue>> functor)
-		=> _value is null ? new(_error!) : functor(_value);
+		=> Value is null ? new(Error!) : functor(Value);
 
 	/// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
 	public Task<Result<TNewValue>> Bind<TNewValue>(Func<TValue, Task<Result<TNewValue>>> functor)
-		=> _value is null ? Task.FromResult(new Result<TNewValue>(_error!)) : functor(_value);
+		=> Value is null ? Task.FromResult(new Result<TNewValue>(Error!)) : functor(Value);
 
 	/// <summary>
 	/// In case of success evaluate the <paramref name="successful"/> functor,  otherwise returns <paramref name="failure"/>.
 	/// </summary>
 	public TResult Match<TResult>(Func<TValue, TResult> successful, TResult failure)
-		=> _value is not null ? successful(_value) : failure;
+		=> Value is not null ? successful(Value) : failure;
 
 	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
 	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, TResult failure)
-		=> _value is not null ? successful(_value) : Task.FromResult(failure);
+		=> Value is not null ? successful(Value) : Task.FromResult(failure);
 
 	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
 	public TResult Match<TResult>(Func<TValue, TResult> successful, Func<Error, TResult> failure)
-		=> _value is not null ? successful(_value) : failure(_error!);
+		=> Value is not null ? successful(Value) : failure(Error!);
 
 	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
 	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<Error, TResult> failure)
-		=> _value is not null ? successful(_value) : Task.FromResult(failure(_error!));
+		=> Value is not null ? successful(Value) : Task.FromResult(failure(Error!));
 
 	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
 	public Task<TResult> Match<TResult>(Func<TValue, TResult> successful, Func<Error, Task<TResult>> failure)
-		=> _value is not null ? Task.FromResult(successful(_value)) : failure(_error!);
+		=> Value is not null ? Task.FromResult(successful(Value)) : failure(Error!);
 
 	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
 	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<Error, Task<TResult>> failure)
-		=> _value is not null ? successful(_value) : failure(_error!);
+		=> Value is not null ? successful(Value) : failure(Error!);
 
 	public Result<TValue> RecoverWith(TValue newValue)
-		=> _error is not null ? new(newValue) : this;
+		=> Error is not null ? new(newValue) : this;
 
 	public Result<TValue> RecoverWith(Func<TValue> functor)
-		=> _error is not null ? new(functor()) : this;
+		=> Error is not null ? new(functor()) : this;
 
 	public Result<TValue> RecoverWith(Func<Error, TValue> functor)
-		=> _error is not null ? new(functor(_error)) : this;
+		=> Error is not null ? new(functor(Error)) : this;
 
 	public async Task<Result<TValue>> RecoverWith(Func<Task<TValue>> functor)
-		=> _error is not null ? new(await functor()) : this;
+		=> Error is not null ? new(await functor()) : this;
 
 	public async Task<Result<TValue>> RecoverWith(Func<Error, Task<TValue>> functor)
-		=> _error is not null ? new(await functor(_error)) : this;
+		=> Error is not null ? new(await functor(Error)) : this;
 
 	/// <summary>
 	/// If the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/> is true then evaluate the <paramref name="predicate"/>
@@ -321,46 +321,46 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	/// </summary>
 	public Result<TValue> Ensure(Func<TValue, bool> predicate, Error error)
 		=> IsFailure             ? this
-			: predicate(_value!) ? this : new(error);
+			: predicate(Value!) ? this : new(error);
 
-	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Error)"/>
+	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
 	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Error error)
 		=> IsFailure                   ? this
-			: await predicate(_value!) ? this : new(error);
+			: await predicate(Value!) ? this : new(error);
 
-	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Error)"/>
+	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
 	public Result<TValue> Ensure(Func<TValue, bool> predicate, Func<TValue, Error> error)
 		=> IsFailure             ? this
-			: predicate(_value!) ? this : new(error(_value!));
+			: predicate(Value!) ? this : new(error(Value!));
 
-	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Error)"/>
+	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
 	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Func<TValue, Error> error)
 		=> IsFailure                   ? this
-			: await predicate(_value!) ? this : new(error(_value!));
+			: await predicate(Value!) ? this : new(error(Value!));
 
-	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Error)"/>
+	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
 	public async Task<Result<TValue>> Ensure(Func<TValue, bool> predicate, Func<TValue, Task<Error>> error)
 		=> IsFailure             ? this
-			: predicate(_value!) ? this : new(await error(_value!));
+			: predicate(Value!) ? this : new(await error(Value!));
 
-	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Error)"/>
+	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
 	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Func<TValue, Task<Error>> error)
 		=> IsFailure                   ? this
-			: await predicate(_value!) ? this : new(await error(_value!));
+			: await predicate(Value!) ? this : new(await error(Value!));
 
 	/// <summary>
 	/// Execute the action if the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/> is true.
 	/// </summary>
 	public Result<TValue> ExecuteIfSuccess(Action<TValue> action)
 	{
-		if (_value is not null) action(_value);
+		if (Value is not null) action(Value);
 		return this;
 	}
 
 	/// <inheritdoc cref="ExecuteIfSuccess(System.Action{TValue})"/>
 	public async Task<Result<TValue>> ExecuteIfSuccess(Func<TValue, Task> action)
 	{
-		if (_value is not null) await action(_value);
+		if (Value is not null) await action(Value);
 		return this;
 	}
 
@@ -369,30 +369,30 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	/// </summary>
 	public Result<TValue> ExecuteIfFailure(Action<Error> action)
 	{
-		if (_error is not null) action(_error);
+		if (Error is not null) action(Error);
 		return this;
 	}
 
 
-	/// <inheritdoc cref="ExecuteIfFailure(System.Action{Error})"/>
+	/// <inheritdoc cref="ExecuteIfFailure(System.Action{Monads.Error})"/>
 	public async Task<Result<TValue>> ExecuteIfFailure(Func<Error, Task> action)
 	{
-		if (_error is not null) await action(_error);
+		if (Error is not null) await action(Error);
 		return this;
 	}
 
 	public bool Equals(Result<TValue> other)
-		=> EqualityComparer<TValue?>.Default.Equals(_value, other._value)
-		   && EqualityComparer<Error?>.Default.Equals(_error, other._error);
+		=> EqualityComparer<TValue?>.Default.Equals(Value, other.Value)
+		   && EqualityComparer<Error?>.Default.Equals(Error, other.Error);
 
 	public IEnumerator<TValue> GetEnumerator()
 	{
-		if (_value is not null) yield return _value;
+		if (Value is not null) yield return Value;
 	}
 
 	public override bool Equals(object? obj) => obj is Result<TValue> other && Equals(other);
 
-	public override int GetHashCode() => HashCode.Combine(_value, _error);
+	public override int GetHashCode() => HashCode.Combine(Value, Error);
 	IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
 	public static bool operator ==(Result<TValue> left, Result<TValue> right) => left.Equals(right);
