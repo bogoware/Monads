@@ -205,6 +205,21 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
 	public async Task<Result<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue>> functor)
 		=> _value is null ? new(_error!) : new(await functor(_value));
+	
+	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
+	public Result<Unit> Map<TNewValue>(Action<TValue> functor)
+	{
+		if (_value is null) return new(_error!);
+		functor(_value);
+		return Result.Unit;
+	}
+	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
+	public async Task<Result<Unit>> Map<TNewValue>(Func<TValue, Task> functor)
+	{
+		if (_value is null) return new(_error!);
+		await functor(_value);
+		return Result.Unit;
+	}
 
 	/// <summary>
 	/// In case of failure return the <paramref name="newError"/>.

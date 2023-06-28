@@ -31,4 +31,27 @@ public static class ResultMapAsyncExtensions
 		this Task<Result<TValue>> result,
 		Func<TValue, Task<TNewValue>> functor)
 		=> await (await result).Map(functor);
+	
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<Result<Unit>> Map<TValue>(
+		this Task<Result<TValue>> resultTask,
+		Action<TValue> functor)
+	{
+		var result = await resultTask;
+		if (result.IsFailure) return Result.Failure<Unit>(result.GetErrorOrThrow());
+		functor(result.GetValueOrThrow());
+		return Result.Unit;
+	}
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<Result<Unit>> Map<TValue>(
+		this Task<Result<TValue>> resultTask,
+		Func<TValue, Task> functor)
+	{
+		var result = await resultTask;
+		if (result.IsFailure) return Result.Failure<Unit>(result.GetErrorOrThrow());
+		await functor(result.GetValueOrThrow());
+		return Result.Unit;
+	}
 }
