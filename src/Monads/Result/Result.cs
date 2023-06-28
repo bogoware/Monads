@@ -246,30 +246,41 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
 	public Result<TNewValue> Bind<TNewValue>(Func<Result<TNewValue>> functor)
 		=> _value is null ? new(_error!) : functor();
 
+	/// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
 	public Task<Result<TNewValue>> Bind<TNewValue>(Func<Task<Result<TNewValue>>> functor)
 		=> _value is null ? Task.FromResult(new Result<TNewValue>(_error!)) : functor();
 
+	/// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
 	public Result<TNewValue> Bind<TNewValue>(Func<TValue, Result<TNewValue>> functor)
 		=> _value is null ? new(_error!) : functor(_value);
 
+	/// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
 	public Task<Result<TNewValue>> Bind<TNewValue>(Func<TValue, Task<Result<TNewValue>>> functor)
 		=> _value is null ? Task.FromResult(new Result<TNewValue>(_error!)) : functor(_value);
 
+	/// <summary>
+	/// In case of success evaluate the <paramref name="successful"/> functor,  otherwise returns <paramref name="failure"/>.
+	/// </summary>
 	public TResult Match<TResult>(Func<TValue, TResult> successful, TResult failure)
 		=> _value is not null ? successful(_value) : failure;
 
+	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
 	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, TResult failure)
 		=> _value is not null ? successful(_value) : Task.FromResult(failure);
 
+	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
 	public TResult Match<TResult>(Func<TValue, TResult> successful, Func<Error, TResult> failure)
 		=> _value is not null ? successful(_value) : failure(_error!);
 
+	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
 	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<Error, TResult> failure)
 		=> _value is not null ? successful(_value) : Task.FromResult(failure(_error!));
 
+	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
 	public Task<TResult> Match<TResult>(Func<TValue, TResult> successful, Func<Error, Task<TResult>> failure)
 		=> _value is not null ? Task.FromResult(successful(_value)) : failure(_error!);
 
+	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
 	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<Error, Task<TResult>> failure)
 		=> _value is not null ? successful(_value) : failure(_error!);
 
