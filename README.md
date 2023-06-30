@@ -205,16 +205,3 @@ values and utilizing `Maybe<T>` methods for chaining operations.
 > **Practical rule**: Use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and
 > method paramethers.
 
-```mermaid
-flowchart LR
-    subgraph Server
-    Grace.Server-->Grace.Actors
-    Grace.Server-->CosmosJsonSerializer
-    end
-
-    subgraph Clients
-    Grace.CLI-->Grace.SDK
-    Grace.SDK-.->|HTTPS|Grace.Server
-    MAUI["(future) Grace.MAUI"]-->|"(just started)"|Grace.SDK
-    Blazor["(future) Grace.Blazor"]-->|"(not yet started)"|Grace.SDK
-    end
