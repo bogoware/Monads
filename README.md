@@ -52,6 +52,8 @@ It is a generic type, with `T` representing the type of the value returned by th
 
 `Result<T>` provides a set of methods that facilitate chaining operations in a functional manner:
 * `Map`: Allows transformation of the value returned by the operation, representing the "happy" flow.
+  * `Map` to void functor will map to `Result<Unit>`
+  * `MapToUnit()` is just a shortcut for `Map(_ => { })`
 * `MapError`: Allows transformation of the error returned by the operation, representing the "unhappy" flow.
 * `Bind`: Enables chaining of operations that return a `Result<T>`.
 * `Match`: Facilitates handling of the operation's result by providing separate paths for the "happy" and "unhappy" flows.
@@ -203,3 +205,16 @@ values and utilizing `Maybe<T>` methods for chaining operations.
 > **Practical rule**: Use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and
 > method paramethers.
 
+```mermaid
+flowchart LR
+    subgraph Server
+    Grace.Server-->Grace.Actors
+    Grace.Server-->CosmosJsonSerializer
+    end
+
+    subgraph Clients
+    Grace.CLI-->Grace.SDK
+    Grace.SDK-.->|HTTPS|Grace.Server
+    MAUI["(future) Grace.MAUI"]-->|"(just started)"|Grace.SDK
+    Blazor["(future) Grace.Blazor"]-->|"(not yet started)"|Grace.SDK
+    end

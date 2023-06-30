@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Bogoware.Monads;
 
-public static class ResultMapAsyncExtensions
+public static class ResultMapExtensions
 {
 	/*
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -12,6 +12,14 @@ public static class ResultMapAsyncExtensions
 		this Task<Result<TValue>> result, TNewValue newValue)
 		=> (await result).Map(newValue);
 	*/
+
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Result<Unit> MapToUnit<TValue>(this Result<TValue> result)
+		=> result.Map(_ => { });
+	
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<Result<Unit>> MapToUnit<TValue>(this Task<Result<TValue>> result)
+		=> (await result).Map(_ => { });
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Result<TNewValue>> Map<TValue, TNewValue>(
