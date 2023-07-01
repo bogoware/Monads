@@ -6,7 +6,7 @@ namespace Bogoware.Monads;
 /// <summary>
 /// The Unit type is used to represent the absence of a specific value
 /// </summary>
-public sealed class Unit
+public sealed class Unit: IEquatable<Unit>
 {
 	public static readonly Unit Instance = new();
 
@@ -15,7 +15,7 @@ public sealed class Unit
 	}
 
 	public override bool Equals(object? obj) => obj is Unit;
-	private bool Equals(Unit other) => true;
+	public bool Equals(Unit? other) => other is not null;
 
 	public override int GetHashCode() => 0;
 

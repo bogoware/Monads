@@ -55,12 +55,13 @@ It is a generic type, with `T` representing the type of the value returned by th
   * `Map` to void functor will map to `Result<Unit>`
   * `MapToUnit()` is just a shortcut for `Map(_ => { })`
 * `MapError`: Allows transformation of the error returned by the operation, representing the "unhappy" flow.
-* `Bind`: Enables chaining of operations that return a `Result<T>`.
+* `Bind`: Enables chaining of operations providing a fluent syntax that allows
+ to capture the values on the "happy" path and use them in subsequent steps.
 * `Match`: Facilitates handling of the operation's result by providing separate paths for the "happy" and "unhappy" flows.
 * `RecoverWith`: Provides a way to recover from an error by returning a `Result<T>`
 * `Ensure`: Allows asserting a condition on the value returned by the operation.
-* `ExecuteIfSuccess`: Executes an action if the operation succeeds.
-* `ExecuteIfFailure`: Executes an action if the operation fails.
+* `ExecuteIfSuccess`: Executes if the operation succeeds. It is typically used for side effects.
+* `ExecuteIfFailure`: Executes if the operation fails. It is typically used for side effects.
 
 There are also some unsafe methods intended to support developers who are less familiar with the functional approach
 and may need to resort to a procedural style to achieve their goals.
