@@ -47,10 +47,22 @@ public static class Maybe
 public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>, IEnumerable<TValue>
 {
 	private readonly TValue? _value = default;
+	/// <summary>
+	/// Is <c>true</c> if the maybe is some, otherwise <c>false</c>.
+	/// </summary>
 	public bool IsSome => _value is not null;
+	/// <summary>
+	/// Is <c>true</c> if the maybe is none, otherwise <c>false</c>.
+	/// </summary>
 	public bool IsNone => _value is null;
+	/// <summary>
+	/// Returns the singleton instance of <see cref="Maybe{T}"/> representing the none state.
+	/// </summary>
 	public static readonly Maybe<TValue> None = default;
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Maybe{T}"/>.
+	/// </summary>
 	public Maybe(TValue? value)
 	{
 		if (value is not null)
@@ -59,6 +71,9 @@ public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>
 		}
 	}
 
+	/// <summary>
+	/// Initializes a new instance of the <see cref="Maybe{T}"/>.
+	/// </summary>
 	public Maybe(Maybe<TValue> maybe) => _value = maybe._value;
 	
 	/// <summary>

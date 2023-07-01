@@ -144,19 +144,36 @@ public static class Result
 	}
 }
 
+/// <summary>
+/// Represents the result of an operation that may fail.
+/// </summary>
+/// <typeparam name="TValue"></typeparam>
 public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValue>>, IEnumerable<TValue>
 {
 	internal readonly TValue? Value;
 	internal readonly Error? Error;
 	private readonly bool _isSuccess;
 
+	/// <summary>
+	/// Initializes a successful instance of the <see cref="Result{TValue}"/> with the given <paramref name="value"/>.
+	/// </summary>
 	public Result(TValue value) => (Value, _isSuccess) = (value, true);
+	/// <summary>
+	/// Initializes a failed instance of the <see cref="Result{TValue}"/> with the given <paramref name="error"/>.
+	/// </summary>
+	/// <param name="error"></param>
 	public Result(Error error) => (Error, _isSuccess) = (error, false);
 
 	public Result(Result<TValue> result) =>
 		(Value, Error, _isSuccess) = (result.Value, result.Error, result._isSuccess);
 
+	/// <summary>
+	/// Is <c>true</c> if the <see cref="Result{TValue}"/> is successful, otherwise <c>false</c>.
+	/// </summary>
 	public bool IsSuccess => _isSuccess;
+	/// <summary>
+	/// Is <c>true</c> if the <see cref="Result{TValue}"/> is failed, otherwise <c>false</c>.
+	/// </summary>
 	public bool IsFailure => !_isSuccess;
 
 	public static implicit operator Result<TValue>(TValue value) => new(value);
