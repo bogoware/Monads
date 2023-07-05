@@ -62,6 +62,8 @@ It is a generic type, with `T` representing the type of the value returned by th
 * `Ensure`: Allows asserting a condition on the value returned by the operation.
 * `ExecuteIfSuccess`: Executes if the operation succeeds. It is typically used for side effects.
 * `ExecuteIfFailure`: Executes if the operation fails. It is typically used for side effects.
+* `ThrowIfFailure`: Throws an exception if the operation fails. It is typically used to terminate the execution of the pipeline
+discarding the result of the operation.
 
 There are also some unsafe methods intended to support developers who are less familiar with the functional approach
 and may need to resort to a procedural style to achieve their goals.
