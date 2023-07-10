@@ -1,6 +1,7 @@
 # Bogoware Monads
 
-![Nuget](https://img.shields.io/nuget/dt/Bogoware.Monads?logo=nuget&style=plastic)
+![Nuget](https://img.shields.io/nuget/dt/Bogoware.Monads?logo=nuget&style=plastic) ![Nuget](https://img.shields.io/nuget/v/Bogoware.Monads?style=plastic)
+
 
 _Yet another functional library for C#_
 
