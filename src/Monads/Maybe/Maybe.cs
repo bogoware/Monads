@@ -86,11 +86,11 @@ public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>
 	/// <summary>
 	/// Map the value to a new one.
 	/// </summary>
-	public Maybe<TNewValue> Map<TNewValue>(Func<TValue, TNewValue> map) where TNewValue : class
+	public Maybe<TNewValue> Map<TNewValue>(Func<TValue, TNewValue?> map) where TNewValue : class
 		=> _value is not null ? new Maybe<TNewValue>(map(_value)) : Maybe<TNewValue>.None;
 
 	/// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.Map``1(System.Func{`0,``0})"/>
-	public async Task<Maybe<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue>> map) where TNewValue : class
+	public async Task<Maybe<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue?>> map) where TNewValue : class
 		=> _value is not null ? new(await map(_value)) : Maybe<TNewValue>.None;
 	
 	/// <summary>

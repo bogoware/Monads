@@ -10,17 +10,17 @@ public static class MaybeExtensions
 	/// <summary>
 	/// Map the value to a new one.
 	/// </summary>
-	public static Maybe<TNewValue> Map<TValue, TNewValue>(this Maybe<TValue> maybe, TNewValue value)
+	public static Maybe<TNewValue> Map<TValue, TNewValue>(this Maybe<TValue> maybe, TNewValue? value)
 		where TNewValue : class where TValue : class
 		=> maybe.IsSome ? new(value) : Maybe<TNewValue>.None;
 
 	/// <inheritdoc cref="Map{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult)"/>
-	public static Maybe<TNewValue> Map<TValue, TNewValue>(this Maybe<TValue> maybe, Func<TNewValue> map)
+	public static Maybe<TNewValue> Map<TValue, TNewValue>(this Maybe<TValue> maybe, Func<TNewValue?> map)
 		where TNewValue : class where TValue : class
 		=> maybe.IsSome ? new(map()) : Maybe<TNewValue>.None;
 
 	/// <inheritdoc cref="Map{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult)"/>
-	public static async Task<Maybe<TNewValue>> Map<TValue, TNewValue>(this Maybe<TValue> maybe, Func<Task<TNewValue>> map)
+	public static async Task<Maybe<TNewValue>> Map<TValue, TNewValue>(this Maybe<TValue> maybe, Func<Task<TNewValue?>> map)
 		where TNewValue : class where TValue : class
 		=> maybe.IsSome ? new(await map()) : Maybe<TNewValue>.None;
 
@@ -39,39 +39,39 @@ public static class MaybeExtensions
 	/// <summary>
 	/// Maps a new value for both state of a <see cref="Maybe{T}"/> 
 	/// </summary>
-	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, TResult newValue, TResult none)
+	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, TResult resultOnValue, TResult resultOnNone)
 		where TValue : class
-		=> maybe.IsSome ? newValue : none;
+		=> maybe.IsSome ? resultOnValue : resultOnNone;
 
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, Func<TResult> newValue, TResult none)
+	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, Func<TResult> resultOnValue, TResult resultOnNone)
 		where TValue : class
-		=> maybe.IsSome ? newValue() : none;
+		=> maybe.IsSome ? resultOnValue() : resultOnNone;
 
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, TResult newValue, Func<TResult> none)
+	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, TResult resultOnValue, Func<TResult> resultOnNone)
 		where TValue : class
-		=> maybe.IsSome ? newValue : none();
+		=> maybe.IsSome ? resultOnValue : resultOnNone();
 
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, Func<TResult> newValue, Func<TResult> none)
+	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, Func<TResult> resultOnValue, Func<TResult> resultOnNone)
 		where TValue : class
-		=> maybe.IsSome ? newValue() : none();
+		=> maybe.IsSome ? resultOnValue() : resultOnNone();
 	
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static Task<TResult> Match<TValue, TResult>(this Maybe<TValue> maybe, Func<Task<TResult>> newValue, TResult none)
+	public static Task<TResult> Match<TValue, TResult>(this Maybe<TValue> maybe, Func<Task<TResult>> resultOnValue, TResult resultOnNone)
 		where TValue : class
-		=> maybe.IsSome ? newValue() : Task.FromResult(none);
+		=> maybe.IsSome ? resultOnValue() : Task.FromResult(resultOnNone);
 
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static Task<TResult> Match<TValue, TResult>(this Maybe<TValue> maybe, TResult newValue, Func<Task<TResult>> none)
+	public static Task<TResult> Match<TValue, TResult>(this Maybe<TValue> maybe, TResult resultOnValue, Func<Task<TResult>> resultOnNone)
 		where TValue : class
-		=> maybe.IsSome ? Task.FromResult(newValue) : none();
+		=> maybe.IsSome ? Task.FromResult(resultOnValue) : resultOnNone();
 
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static Task<TResult> Match<TValue, TResult>(this Maybe<TValue> maybe, Func<Task<TResult>> newValue, Func<Task<TResult>> none)
+	public static Task<TResult> Match<TValue, TResult>(this Maybe<TValue> maybe, Func<Task<TResult>> resultOnValue, Func<Task<TResult>> resultOnNone)
 		where TValue : class
-		=> maybe.IsSome ? newValue() : none();
+		=> maybe.IsSome ? resultOnValue() : resultOnNone();
 
 	/// <summary>
 	/// Returns a <see cref="Maybe{T}"/> with <c>Some(first)</c> in case of non empty list. 

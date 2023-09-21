@@ -1,6 +1,7 @@
 // ReSharper disable ArrangeObjectCreationWhenTypeEvident
 
 using Moq;
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
 
 // ReSharper disable UnusedParameter.Local
 
@@ -13,8 +14,8 @@ public class MaybeAsyncTests
 	private static Maybe<AnotherValue> BindFunctionSome() => Maybe.Some(new AnotherValue(0));
 	private static Maybe<AnotherValue> BindFunctionSome(Value value) => Maybe.Some(new AnotherValue(value.Val));
 
-	private static Task<AnotherValue> AsyncFunction() => Task.FromResult(new AnotherValue(0));
-	private static Task<AnotherValue> AsyncFunction(Value value) => Task.FromResult(new AnotherValue(value.Val));
+	private static Task<AnotherValue?> AsyncFunction() => Task.FromResult(new AnotherValue(0));
+	private static Task<AnotherValue?> AsyncFunction(Value value) => Task.FromResult(new AnotherValue(value.Val));
 	private static Task<Maybe<AnotherValue>> AsyncBindFunctionSome() => Task.FromResult(Maybe.Some(new AnotherValue(0)));
 	private static Task<Maybe<AnotherValue>> AsyncBindFunctionSome(Value value) => Task.FromResult(Maybe.Some(new AnotherValue(value.Val)));
 	private static Task<Maybe<AnotherValue>> AsyncBindFunctionNone() => Task.FromResult(Maybe.None<AnotherValue>());

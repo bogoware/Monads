@@ -20,14 +20,14 @@ public static class MaybeAsyncExtensions
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Maybe<TNewValue>> Map<TValue, TNewValue>(
-		this Task<Maybe<TValue>> maybeTask, Func<Task<TNewValue>> map)
+		this Task<Maybe<TValue>> maybeTask, Func<Task<TNewValue?>> map)
 		where TNewValue : class
 		where TValue : class
 		=> await (await maybeTask).Map(map);
 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Maybe<TNewValue>> Map<TValue, TNewValue>(
-		this Task<Maybe<TValue>> maybeTask, Func<TValue, Task<TNewValue>> map)
+		this Task<Maybe<TValue>> maybeTask, Func<TValue, Task<TNewValue?>> map)
 		where TNewValue : class
 		where TValue : class
 		=> await (await maybeTask).Map(map);
