@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+
 // ReSharper disable UnusedMethodReturnValue.Global
 
 namespace Bogoware.Monads;
@@ -6,7 +7,8 @@ namespace Bogoware.Monads;
 public static class MaybeAsyncExtensions
 {
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<TNewValue>> Map<TValue, TNewValue>(this Task<Maybe<TValue>> maybeTask, Func<TNewValue> map)
+	public static async Task<Maybe<TNewValue>> Map<TValue, TNewValue>(
+		this Task<Maybe<TValue>> maybeTask, Func<TNewValue> map)
 		where TNewValue : class
 		where TValue : class
 		=> (await maybeTask).Map(map);
@@ -149,45 +151,59 @@ public static class MaybeAsyncExtensions
 		this Task<Maybe<TValue>> maybeTask,
 		Func<TValue, Task> action) where TValue : class
 		=> await (await maybeTask).ExecuteIfSome(action);
-	
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Maybe<TValue>> ExecuteIfNone<TValue>(
 		this Task<Maybe<TValue>> maybeTask,
 		Action action) where TValue : class
 		=> (await maybeTask).ExecuteIfNone(action);
-	
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Maybe<TValue>> ExecuteIfNone<TValue>(
 		this Task<Maybe<TValue>> maybeTask,
 		Func<Task> action) where TValue : class
 		=> await (await maybeTask).ExecuteIfNone(action);
-	
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Maybe<TValue>> Execute<TValue>(
 		this Task<Maybe<TValue>> maybeTask,
 		Action<Maybe<TValue>> action) where TValue : class
 		=> (await maybeTask).Execute(action);
-	
+
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static async Task<Maybe<TValue>> Execute<TValue>(
 		this Task<Maybe<TValue>> maybeTask,
 		Func<Maybe<TValue>, Task> action) where TValue : class
 		=> await (await maybeTask).Execute(action);
-	
-	
-	
+
 	/// <summary>
 	/// Evaluate the <c>predicate</c> applied to the value if present.
 	/// Return <c>false</c> in case of <c>None</c>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<bool> Satisfy<TValue>(
-		this Task<Maybe<TValue>> maybe, Func<TValue, bool> predicate) where TValue : class
+	public static Task<bool> Satisfy<TValue>(this Task<Maybe<TValue>> maybe, Func<TValue, bool> predicate)
+		where TValue : class
 		=> maybe.Match(predicate, false);
 
 	/// <inheritdoc cref="Satisfy{TValue}(System.Threading.Tasks.Task{Bogoware.Monads.Maybe{TValue}},System.Func{TValue,bool})"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<bool> Satisfy<TValue>(
-		this Task<Maybe<TValue>> maybe, Func<TValue, Task<bool>> predicate) where TValue : class
+	public static Task<bool> Satisfy<TValue>(this Task<Maybe<TValue>> maybe, Func<TValue, Task<bool>> predicate)
+		where TValue : class
 		=> maybe.Match(predicate, false);
+	
+	/// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<Result<TValue>> ToResult<TValue>(this Task<Maybe<TValue>> maybeTask, Func<Error> errorFunc) where TValue : class
+	{
+		var maybe = await maybeTask;
+		return maybe.ToResult(errorFunc);
+	}
+	
+	/// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static async Task<Result<TValue>> ToResult<TValue>(this Task<Maybe<TValue>> maybeTask, Func<Task<Error>> errorFunc) where TValue : class
+	{
+		var maybe = await maybeTask;
+		return await maybe.ToResult(errorFunc);
+	}
 }

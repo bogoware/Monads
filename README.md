@@ -209,3 +209,10 @@ values and utilizing `Maybe<T>` methods for chaining operations.
 > **Practical rule**: Use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and
 > method paramethers.
 
+## Converting `Maybe<T>` to `Result<T>`
+
+It is common to implement a pipeline of operations where an empty `Maybe<T>` instance should be interpreted as a failure,
+in this case the `Maybe<T>` instance can be converted to a `Result<T>` instance by using the `ToResult` method.
+
+The `ToResult` method accepts an error as a parameter and returns a `Result<T>` instance with the specified error
+in case the `Maybe<T>` instance is empty.

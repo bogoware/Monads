@@ -1,4 +1,5 @@
 using System.Runtime.CompilerServices;
+
 // ReSharper disable UnusedMember.Global
 
 // ReSharper disable PossibleMultipleEnumeration
@@ -20,7 +21,8 @@ public static class MaybeExtensions
 		=> maybe.IsSome ? new(map()) : Maybe<TNewValue>.None;
 
 	/// <inheritdoc cref="Map{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult)"/>
-	public static async Task<Maybe<TNewValue>> Map<TValue, TNewValue>(this Maybe<TValue> maybe, Func<Task<TNewValue?>> map)
+	public static async Task<Maybe<TNewValue>> Map<TValue, TNewValue>(
+		this Maybe<TValue> maybe, Func<Task<TNewValue?>> map)
 		where TNewValue : class where TValue : class
 		=> maybe.IsSome ? new(await map()) : Maybe<TNewValue>.None;
 
@@ -32,7 +34,8 @@ public static class MaybeExtensions
 		=> maybe.IsSome ? map() : Maybe<TNewValue>.None;
 
 	/// <inheritdoc cref="Bind{TValue,TResult}(Bogoware.Monads.Maybe{TValue},System.Func{Bogoware.Monads.Maybe{TResult}})"/>
-	public static Task<Maybe<TNewValue>> Bind<TValue, TNewValue>(this Maybe<TValue> maybe, Func<Task<Maybe<TNewValue>>> map)
+	public static Task<Maybe<TNewValue>> Bind<TValue, TNewValue>(
+		this Maybe<TValue> maybe, Func<Task<Maybe<TNewValue>>> map)
 		where TNewValue : class where TValue : class
 		=> maybe.IsSome ? map() : Task.FromResult(Maybe<TNewValue>.None);
 
@@ -44,32 +47,38 @@ public static class MaybeExtensions
 		=> maybe.IsSome ? resultOnValue : resultOnNone;
 
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, Func<TResult> resultOnValue, TResult resultOnNone)
+	public static TResult Match<TValue, TResult>(
+		this Maybe<TValue> maybe, Func<TResult> resultOnValue, TResult resultOnNone)
 		where TValue : class
 		=> maybe.IsSome ? resultOnValue() : resultOnNone;
 
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, TResult resultOnValue, Func<TResult> resultOnNone)
+	public static TResult Match<TValue, TResult>(
+		this Maybe<TValue> maybe, TResult resultOnValue, Func<TResult> resultOnNone)
 		where TValue : class
 		=> maybe.IsSome ? resultOnValue : resultOnNone();
 
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static TResult Match<TValue, TResult>(this Maybe<TValue> maybe, Func<TResult> resultOnValue, Func<TResult> resultOnNone)
+	public static TResult Match<TValue, TResult>(
+		this Maybe<TValue> maybe, Func<TResult> resultOnValue, Func<TResult> resultOnNone)
 		where TValue : class
 		=> maybe.IsSome ? resultOnValue() : resultOnNone();
-	
+
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static Task<TResult> Match<TValue, TResult>(this Maybe<TValue> maybe, Func<Task<TResult>> resultOnValue, TResult resultOnNone)
+	public static Task<TResult> Match<TValue, TResult>(
+		this Maybe<TValue> maybe, Func<Task<TResult>> resultOnValue, TResult resultOnNone)
 		where TValue : class
 		=> maybe.IsSome ? resultOnValue() : Task.FromResult(resultOnNone);
 
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static Task<TResult> Match<TValue, TResult>(this Maybe<TValue> maybe, TResult resultOnValue, Func<Task<TResult>> resultOnNone)
+	public static Task<TResult> Match<TValue, TResult>(
+		this Maybe<TValue> maybe, TResult resultOnValue, Func<Task<TResult>> resultOnNone)
 		where TValue : class
 		=> maybe.IsSome ? Task.FromResult(resultOnValue) : resultOnNone();
 
 	/// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
-	public static Task<TResult> Match<TValue, TResult>(this Maybe<TValue> maybe, Func<Task<TResult>> resultOnValue, Func<Task<TResult>> resultOnNone)
+	public static Task<TResult> Match<TValue, TResult>(
+		this Maybe<TValue> maybe, Func<Task<TResult>> resultOnValue, Func<Task<TResult>> resultOnNone)
 		where TValue : class
 		=> maybe.IsSome ? resultOnValue() : resultOnNone();
 
@@ -110,14 +119,16 @@ public static class MaybeExtensions
 
 	/// <inheritdoc cref="Satisfy{TValue}(Bogoware.Monads.Maybe{TValue},System.Func{TValue,System.Threading.Tasks.Task{bool}})"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<bool> Satisfy<TValue>(this Maybe<TValue> maybe, Func<TValue, Task<bool>> predicate) where TValue : class
+	public static async Task<bool> Satisfy<TValue>(this Maybe<TValue> maybe, Func<TValue, Task<bool>> predicate)
+		where TValue : class
 		=> await maybe.Match(predicate, false);
 
 	/// <summary>
 	/// Execute the action.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static ref readonly Maybe<TValue> Execute<TValue>(in this Maybe<TValue> maybe, Action<Maybe<TValue>> action) where TValue : class
+	public static ref readonly Maybe<TValue> Execute<TValue>(in this Maybe<TValue> maybe, Action<Maybe<TValue>> action)
+		where TValue : class
 	{
 		action(maybe);
 		return ref maybe;
@@ -125,7 +136,8 @@ public static class MaybeExtensions
 
 	/// <inheritdoc cref="T:Bogoware.Monads.Maybe`1"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<TValue>> Execute<TValue>(this Maybe<TValue> maybe, Func<Maybe<TValue>, Task> action) where TValue : class
+	public static async Task<Maybe<TValue>> Execute<TValue>(this Maybe<TValue> maybe, Func<Maybe<TValue>, Task> action)
+		where TValue : class
 	{
 		await action(maybe);
 		return maybe;
@@ -135,7 +147,8 @@ public static class MaybeExtensions
 	/// Execute the action if the <see cref="Maybe{T}"/> is <c>Some</c>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static ref readonly Maybe<TValue> ExecuteIfSome<TValue>(in this Maybe<TValue> maybe, Action action) where TValue : class
+	public static ref readonly Maybe<TValue> ExecuteIfSome<TValue>(in this Maybe<TValue> maybe, Action action)
+		where TValue : class
 	{
 		if (maybe.IsSome) action();
 		return ref maybe;
@@ -143,7 +156,8 @@ public static class MaybeExtensions
 
 	/// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ExecuteIfSome``1(Bogoware.Monads.Maybe{``0}@,System.Action)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<TNewValue>> ExecuteIfSome<TNewValue>(this Maybe<TNewValue> maybe, Func<Task> action) where TNewValue : class
+	public static async Task<Maybe<TNewValue>> ExecuteIfSome<TNewValue>(this Maybe<TNewValue> maybe, Func<Task> action)
+		where TNewValue : class
 	{
 		if (maybe.IsSome) await action();
 		return maybe;
@@ -153,7 +167,8 @@ public static class MaybeExtensions
 	/// Execute the action if the <see cref="Maybe{T}"/> is <c>None</c>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static ref readonly Maybe<TNewValue> ExecuteIfNone<TNewValue>(in this Maybe<TNewValue> maybe, Action action) where TNewValue : class
+	public static ref readonly Maybe<TNewValue> ExecuteIfNone<TNewValue>(in this Maybe<TNewValue> maybe, Action action)
+		where TNewValue : class
 	{
 		if (maybe.IsNone) action();
 		return ref maybe;
@@ -161,7 +176,8 @@ public static class MaybeExtensions
 
 	/// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ExecuteIfNone``1(Bogoware.Monads.Maybe{``0}@,System.Action)"/> 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<TNewValue>> ExecuteIfNone<TNewValue>(this Maybe<TNewValue> maybe, Func<Task> action) where TNewValue : class
+	public static async Task<Maybe<TNewValue>> ExecuteIfNone<TNewValue>(this Maybe<TNewValue> maybe, Func<Task> action)
+		where TNewValue : class
 	{
 		if (maybe.IsNone) await action();
 		return maybe;
@@ -169,16 +185,39 @@ public static class MaybeExtensions
 
 	/// Map a default value if the current <see cref="Maybe{T}"/> is <c>None</c>. 
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Maybe<TNewValue> WithDefault<TNewValue>(this Maybe<TNewValue> maybe, TNewValue value) where TNewValue : class
+	public static Maybe<TNewValue> WithDefault<TNewValue>(this Maybe<TNewValue> maybe, TNewValue value)
+		where TNewValue : class
 		=> maybe.IsSome ? maybe : new(value);
 
 	/// <inheritdoc cref="WithDefault{T}(Bogoware.Monads.Maybe{T},T)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Maybe<TNewValue> WithDefault<TNewValue>(this Maybe<TNewValue> maybe, Func<TNewValue> value) where TNewValue : class
+	public static Maybe<TNewValue> WithDefault<TNewValue>(this Maybe<TNewValue> maybe, Func<TNewValue> value)
+		where TNewValue : class
 		=> maybe.IsSome ? maybe : new(value());
 
 	/// <inheritdoc cref="WithDefault{T}(Bogoware.Monads.Maybe{T},T)"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Maybe<TNewValue>> WithDefault<TNewValue>(this Maybe<TNewValue> maybe, Func<Task<TNewValue>> value) where TNewValue : class
+	public static async Task<Maybe<TNewValue>> WithDefault<TNewValue>(
+		this Maybe<TNewValue> maybe, Func<Task<TNewValue>> value) where TNewValue : class
 		=> maybe.IsSome ? maybe : new(await value());
+
+	/// <summary>
+	/// Convert a <see cref="Maybe{T}"/> to a <see cref="Result{TValue}"/> with a default error in case of <c>None</c>.
+	/// </summary>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Result<TValue> ToResult<TValue>(this Maybe<TValue> maybe, Func<Error> errorFunc)
+		where TValue : class
+		=> maybe.Match(
+			value => Result.Success(value),
+			() => Result.Failure<TValue>(errorFunc())
+		);
+	
+	/// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
+	[MethodImpl(MethodImplOptions.AggressiveInlining)]
+	public static Task<Result<TValue>> ToResult<TValue>(this Maybe<TValue> maybe, Func<Task<Error>> errorFunc)
+		where TValue : class
+		=> maybe.Match(
+			value => Result.Success(value),
+			async () => Result.Failure<TValue>(await errorFunc())
+		);
 }
