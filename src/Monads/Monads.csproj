@@ -18,7 +18,7 @@
         <Title>Bogoware C# Monads</Title>
         <Description>Provides Maybe and Result Monads suitable to support functional stye in C#.</Description>
         <Summary>Provides Maybe and Result Monads suitable to support functional stye in C#.</Summary>
-        <PackageTags>c# fucntional maybe result success failure error some none map bind flatmap linq option either monad async</PackageTags>
+        <PackageTags>c# functional maybe result success failure error some none map bind flatmap linq option either monad async</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <!-- <PackageIcon>packageIcon.png</PackageIcon> -->
         <!-- <PackageIconUrl></PackageIconUrl> -->
