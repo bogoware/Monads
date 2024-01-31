@@ -48,7 +48,7 @@ public class ResultCreationTests
 		Result<Unit> sut = new LogicError("Something went wrong");
 
 		sut
-			.Invoking(_ => _.GetValueOrThrow())
+			.Invoking(u => u.GetValueOrThrow())
 			.Should().ThrowExactly<ResultFailedException>();
 	}
 
@@ -66,7 +66,7 @@ public class ResultCreationTests
 		var sut = Result.Unit;
 
 		sut
-			.Invoking(_ => _.GetErrorOrThrow())
+			.Invoking(u => u.GetErrorOrThrow())
 			.Should().ThrowExactly<ResultSuccessException>();
 	}
 

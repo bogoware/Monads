@@ -11,47 +11,47 @@ public static class EnumerableMaybeExtensions
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool AllSome(this IEnumerable<IMaybe> maybes)
-		=> maybes.All(_ => _.IsSome);
+		=> maybes.All(m => m.IsSome);
 
 	/// <inheritdoc cref="AllSome"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool AllSome<TValue>(this IEnumerable<Maybe<TValue>> maybes) where TValue : class
-		=> maybes.All(_ => _.IsSome);
+		=> maybes.All(m => m.IsSome);
 
 	/// <summary>
 	/// Determines if all <see cref="Maybe{T}"/>s of a sequence are <c>None</c>s.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool AllNone(this IEnumerable<IMaybe> maybes)
-		=> maybes.All(_ => _.IsNone);
+		=> maybes.All(m => m.IsNone);
 
 	/// <inheritdoc cref="AllNone"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool AllNone<TValue>(this IEnumerable<Maybe<TValue>> maybes) where TValue : class
-		=> maybes.All(_ => _.IsNone);
+		=> maybes.All(m => m.IsNone);
 
 	/// <summary>
 	/// Determines if any <see cref="Maybe{T}"/> of a sequence is <c>Some</c>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool AnySome(this IEnumerable<IMaybe> maybes)
-		=> maybes.Any(_ => _.IsSome);
+		=> maybes.Any(m => m.IsSome);
 
 	/// <inheritdoc cref="AnySome"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool AnySome<TValue>(this IEnumerable<Maybe<TValue>> maybes) where TValue : class
-		=> maybes.Any(_ => _.IsSome);
+		=> maybes.Any(m => m.IsSome);
 
 	/// <summary>
 	/// Determines if any <see cref="Maybe{T}"/> of a sequence is <c>None</c>.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static bool AnyNone(this IEnumerable<IMaybe> maybes)
-		=> maybes.Any(_ => _.IsNone);
+		=> maybes.Any(m => m.IsNone);
 
 	/// <inheritdoc cref="AnyNone"/>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static bool AnyNone<TValue>(this IEnumerable<Maybe<TValue>> maybes) where TValue : class => maybes.Any(_ => _.IsNone);
+	public static bool AnyNone<TValue>(this IEnumerable<Maybe<TValue>> maybes) where TValue : class => maybes.Any(m => m.IsNone);
 
 	/// <summary>
 	/// Extract values from <see cref="Maybe{T}"/>s.
@@ -60,7 +60,7 @@ public static class EnumerableMaybeExtensions
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static IEnumerable<TValue> SelectValues<TValue>(this IEnumerable<Maybe<TValue>> maybes)
 		where TValue : class
-		=> maybes.SelectMany(_ => _);
+		=> maybes.SelectMany(m => m);
 
 	/// <summary>
 	/// Bind values via the functor.

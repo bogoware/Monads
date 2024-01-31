@@ -11,7 +11,7 @@ public class MaybeExecuteTests
 	{
 		var sut = Maybe.Some(new Value(0));
 		sut.ExecuteIfSome(_inspector.Object.MethodVoid);
-		_inspector.Verify(_ => _.MethodVoid());
+		_inspector.Verify(i => i.MethodVoid());
 	}
 
 	[Fact]
@@ -27,7 +27,7 @@ public class MaybeExecuteTests
 	{
 		var sut = Maybe.None<Value>();
 		sut.ExecuteIfNone(_inspector.Object.MethodVoid);
-		_inspector.Verify(_ => _.MethodVoid());
+		_inspector.Verify(i => i.MethodVoid());
 	}
 
 	[Fact]
@@ -43,7 +43,7 @@ public class MaybeExecuteTests
 	{
 		var sut = Maybe.Some(new Value(0));
 		sut.ExecuteIfSome(_inspector.Object.MethodWithValueArg);
-		_inspector.Verify(_ => _.MethodWithValueArg(It.IsAny<Value>()));
+		_inspector.Verify(i => i.MethodWithValueArg(It.IsAny<Value>()));
 	}
 
 	[Fact]
@@ -59,7 +59,7 @@ public class MaybeExecuteTests
 	{
 		var sut = Maybe.Some(new Value(0));
 		await sut.ExecuteIfSome(_inspector.Object.MethodVoidAsync);
-		_inspector.Verify(_ => _.MethodVoidAsync());
+		_inspector.Verify(i => i.MethodVoidAsync());
 	}
 
 	[Fact]
@@ -75,7 +75,7 @@ public class MaybeExecuteTests
 	{
 		var sut = Maybe.None<Value>();
 		await sut.ExecuteIfNone(_inspector.Object.MethodVoidAsync);
-		_inspector.Verify(_ => _.MethodVoidAsync());
+		_inspector.Verify(i => i.MethodVoidAsync());
 	}
 
 	[Fact]
@@ -91,7 +91,7 @@ public class MaybeExecuteTests
 	{
 		var sut = Maybe.Some(new Value(0));
 		await sut.ExecuteIfSome(_inspector.Object.MethodWithValueArgAsync);
-		_inspector.Verify(_ => _.MethodWithValueArgAsync(It.IsAny<Value>()));
+		_inspector.Verify(i => i.MethodWithValueArgAsync(It.IsAny<Value>()));
 	}
 
 	[Fact]
@@ -107,7 +107,7 @@ public class MaybeExecuteTests
 	{
 		var sut = Maybe.None<Value>();
 		sut.Execute(_inspector.Object.MethodWithMaybeArg);
-		_inspector.Verify(_ => _.MethodWithMaybeArg(It.IsAny<Maybe<Value>>()));
+		_inspector.Verify(i => i.MethodWithMaybeArg(It.IsAny<Maybe<Value>>()));
 	}
 
 	[Fact]
@@ -115,6 +115,6 @@ public class MaybeExecuteTests
 	{
 		var sut = Maybe.None<Value>();
 		await sut.Execute(_inspector.Object.MethodWithMaybeArgAsync);
-		_inspector.Verify(_ => _.MethodWithMaybeArgAsync(It.IsAny<Maybe<Value>>()));
+		_inspector.Verify(i => i.MethodWithMaybeArgAsync(It.IsAny<Maybe<Value>>()));
 	}
 }

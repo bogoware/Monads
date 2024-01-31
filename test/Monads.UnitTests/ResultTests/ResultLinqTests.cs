@@ -43,7 +43,7 @@ public class ResultLinqTests
 		// style 1: filter over monads
 		var values =
 			from result in results
-			where result.Satisfy(_ => _.Val % 2 == 0)
+			where result.Satisfy(v => v.Val % 2 == 0)
 			from v in result
 			select v.Val;
 

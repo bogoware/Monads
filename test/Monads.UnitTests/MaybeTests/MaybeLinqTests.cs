@@ -104,7 +104,7 @@ public class MaybeLinqTests
 		// filter over monads
 		var values3 =
 			from maybe in maybes
-			where maybe.Satisfy(_ => _.Val % 2 == 0)
+			where maybe.Satisfy(v => v.Val % 2 == 0)
 			from v in maybe
 			select v.Val;
 		values3.Sum().Should().Be(6);

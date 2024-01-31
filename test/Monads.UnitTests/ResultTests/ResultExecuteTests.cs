@@ -12,7 +12,7 @@ public class ResultExecuteTests
 	public void Successful_executeIfSuccess_calls_voidFunction()
 	{
 		_success.ExecuteIfSuccess(_inspector.Object.MethodVoid);
-		_inspector.Verify(_ => _.MethodVoid());
+		_inspector.Verify(i => i.MethodVoid());
 	}
 
 	[Fact]
@@ -33,14 +33,14 @@ public class ResultExecuteTests
 	public void Failure_executeIfFailure_calls_voidFunction()
 	{
 		_failed.ExecuteIfFailure(_inspector.Object.MethodVoid);
-		_inspector.Verify(_ => _.MethodVoid());
+		_inspector.Verify(i => i.MethodVoid());
 	}
 
 	[Fact]
 	public async Task Successful_executeIfSuccess_calls_asyncVoidFunction()
 	{
 		await _success.ExecuteIfSuccess(_inspector.Object.MethodVoidAsync);
-		_inspector.Verify(_ => _.MethodVoidAsync());
+		_inspector.Verify(i => i.MethodVoidAsync());
 	}
 
 	[Fact]
@@ -61,14 +61,14 @@ public class ResultExecuteTests
 	public async Task Failure_executeIfFailure_calls_asyncVoidFunction()
 	{
 		await _failed.ExecuteIfFailure(_inspector.Object.MethodVoidAsync);
-		_inspector.Verify(_ => _.MethodVoidAsync());
+		_inspector.Verify(i => i.MethodVoidAsync());
 	}
 
 	[Fact]
 	public void Successful_executeIfSuccess_calls_function()
 	{
 		_success.ExecuteIfSuccess(_inspector.Object.MethodWithValueArg);
-		_inspector.Verify(_ => _.MethodWithValueArg(It.IsAny<Value>()));
+		_inspector.Verify(i => i.MethodWithValueArg(It.IsAny<Value>()));
 	}
 
 	[Fact]
@@ -89,14 +89,14 @@ public class ResultExecuteTests
 	public void Failure_executeIfFailure_calls_function()
 	{
 		_failed.ExecuteIfFailure(_inspector.Object.MethodWithErrorArg);
-		_inspector.Verify(_ => _.MethodWithErrorArg(It.IsAny<LogicError>()));
+		_inspector.Verify(i => i.MethodWithErrorArg(It.IsAny<LogicError>()));
 	}
 
 	[Fact]
 	public async Task Successful_executeIfSuccess_calls_asyncFunction()
 	{
 		await _success.ExecuteIfSuccess(_inspector.Object.MethodWithValueArgAsync);
-		_inspector.Verify(_ => _.MethodWithValueArgAsync(It.IsAny<Value>()));
+		_inspector.Verify(i => i.MethodWithValueArgAsync(It.IsAny<Value>()));
 	}
 
 	[Fact]
@@ -117,62 +117,62 @@ public class ResultExecuteTests
 	public async Task Failure_executeIfFailure_calls_asyncFunction()
 	{
 		await _failed.ExecuteIfFailure(_inspector.Object.MethodWithErrorArgAsync);
-		_inspector.Verify(_ => _.MethodWithErrorArgAsync(It.IsAny<LogicError>()));
+		_inspector.Verify(i => i.MethodWithErrorArgAsync(It.IsAny<LogicError>()));
 	}
 
 	[Fact]
 	public void Successful_execute_calls_voidFunction()
 	{
 		_success.Execute(_inspector.Object.MethodVoid);
-		_inspector.Verify(_ => _.MethodVoid());
+		_inspector.Verify(i => i.MethodVoid());
 	}
 
 	[Fact]
 	public void Failure_execute_calls_voidFunction()
 	{
 		_failed.Execute(_inspector.Object.MethodVoid);
-		_inspector.Verify(_ => _.MethodVoid());
+		_inspector.Verify(i => i.MethodVoid());
 	}
 
 	[Fact]
 	public async Task Successful_execute_calls_asyncVoidFunction()
 	{
 		await _success.Execute(_inspector.Object.MethodVoidAsync);
-		_inspector.Verify(_ => _.MethodVoidAsync());
+		_inspector.Verify(i => i.MethodVoidAsync());
 	}
 
 	[Fact]
 	public async Task Failure_execute_calls_asyncVoidFunction()
 	{
 		await _failed.Execute(_inspector.Object.MethodVoidAsync);
-		_inspector.Verify(_ => _.MethodVoidAsync());
+		_inspector.Verify(i => i.MethodVoidAsync());
 	}
 
 	[Fact]
 	public void Successful_execute_calls_function()
 	{
 		_success.Execute(_inspector.Object.MethodWithResultArg);
-		_inspector.Verify(_ => _.MethodWithResultArg(It.IsAny<Result<Value>>()));
+		_inspector.Verify(i => i.MethodWithResultArg(It.IsAny<Result<Value>>()));
 	}
 
 	[Fact]
 	public void Failure_execute_calls_function()
 	{
 		_failed.Execute(_inspector.Object.MethodWithResultArg);
-		_inspector.Verify(_ => _.MethodWithResultArg(It.IsAny<Result<Value>>()));
+		_inspector.Verify(i => i.MethodWithResultArg(It.IsAny<Result<Value>>()));
 	}
 	
 	[Fact]
 	public async Task Successful_execute_calls_asyncFunction()
 	{
 		await _success.Execute(_inspector.Object.MethodWithResultArgAsync);
-		_inspector.Verify(_ => _.MethodWithResultArgAsync(It.IsAny<Result<Value>>()));
+		_inspector.Verify(i => i.MethodWithResultArgAsync(It.IsAny<Result<Value>>()));
 	}
 
 	[Fact]
 	public async Task Failure_execute_calls_asyncFunction()
 	{
 		await _failed.Execute(_inspector.Object.MethodWithResultArgAsync);
-		_inspector.Verify(_ => _.MethodWithResultArgAsync(It.IsAny<Result<Value>>()));
+		_inspector.Verify(i => i.MethodWithResultArgAsync(It.IsAny<Result<Value>>()));
 	}
 }
