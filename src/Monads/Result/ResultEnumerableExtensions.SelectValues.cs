@@ -56,6 +56,6 @@ public static partial class ResultEnumerableExtensions
 	/// <typeparam name="TValue"></typeparam>
 	/// <returns></returns>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Result<IEnumerable<TValue?>> AggregateResult<TValue>(this IEnumerable<Result<TValue>> results)
+	public static Result<IEnumerable<TValue?>> AggregateResults<TValue>(this IEnumerable<Result<TValue>> results)
 		=> new ResultCollection<TValue>(results).ToResult();
 }

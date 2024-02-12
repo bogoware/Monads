@@ -174,7 +174,7 @@ public class ResultEnumerableExtensionsTests
 			Result.Success(new Value(5))
 		};
 		
-		var actual = results.AggregateResult();
+		var actual = results.AggregateResults();
 		
 		actual.Should().BeOfType<Result<IEnumerable<Value>>>();
 		actual.IsSuccess.Should().BeTrue();
@@ -194,7 +194,7 @@ public class ResultEnumerableExtensionsTests
 			Result.Failure<Value>("Error 5")
 		};
 		
-		var actual = results.AggregateResult();
+		var actual = results.AggregateResults();
 		var expectedError = new AggregateError(results.Select(r => r.GetErrorOrThrow()));
 		
 		actual.Should().BeOfType<Result<IEnumerable<Value>>>();
@@ -215,7 +215,7 @@ public class ResultEnumerableExtensionsTests
 			Result.Success(new Value(5))
 		};
 		
-		var actual = results.AggregateResult();
+		var actual = results.AggregateResults();
 		var expectedError = new AggregateError(results.Where(r => r.IsFailure).Select(r => r.GetErrorOrThrow()));
 		
 		actual.Should().BeOfType<Result<IEnumerable<Value>>>();

@@ -122,7 +122,7 @@ The library provide a set of extension methods that enable manipulation of seque
 * `MapEach`: Maps each `Result` in the sequence, preserving the failed `Result`s
 * `BindEach`: Binds each `Result` in the sequence, preserving the failed `Result`s
 * `MatchEach`: Matches each `Result` in the sequence
-* `AggregateResult`: Transforms a sequence of `Result`s into a single `Result` that contains a sequence of the successful values. If the original sequence contains any `Error` then will return a failed `Result` with an `AggregateError` containing all the errors found.
+* `AggregateResults`: Transforms a sequence of `Result`s into a single `Result` that contains a sequence of the successful values. If the original sequence contains any `Error` then will return a failed `Result` with an `AggregateError` containing all the errors found.
 
 ## Design Goals for `Error`
 
