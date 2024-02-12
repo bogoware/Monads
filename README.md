@@ -115,6 +115,14 @@ public Result<Unit> Publish() => Result
     .ExecuteIfSuccess(() => PublishingStatus = PublishingStatus.Published);
 ```
 
+## Manipulating `IEnumerable<Maybe<T>>`
+
+The library provides a set of extension methods that enable manipulation of sequences of `Maybe<T>` instances.
+
+* `MapEach`: Maps each `Maybe` in the sequence, preserving the `None` values
+* `BindEach`: Binds each `Maybe` in the sequence, preserving the `None` values
+* `MatchEach`: Matches each `Maybe` in the sequence
+
 ## Manipulating `IEnumerable<Result<T>>`
 
 The library provide a set of extension methods that enable manipulation of sequences of `Result<T>` instances.
