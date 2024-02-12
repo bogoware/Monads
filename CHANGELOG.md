@@ -1,5 +1,12 @@
 # Bogoware Monads Changelog
 
+## 9.0.1
+
+Added support for:
+- netstandard2.1
+- NET 6.0
+- NET 7.0
+
 ## 9.0.0
 
 ### New Features
