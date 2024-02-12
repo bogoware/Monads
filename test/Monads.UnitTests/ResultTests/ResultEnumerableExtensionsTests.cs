@@ -2,7 +2,7 @@
 
 namespace Bogoware.Monads.UnitTests.ResultTests;
 
-public class EnumerableResultExtensionsTests
+public class ResultEnumerableExtensionsTests
 {
 	private static readonly List<Result<Value>> _allResultSuccess = new()
 	{
@@ -114,17 +114,21 @@ public class EnumerableResultExtensionsTests
 	}
 
 	[Fact]
-	public void Map_remap_values_to_new_Some()
+	public void MapEach_remap_values_to_new_Some()
 	{
-		IEnumerable<Result<AnotherValue>> actual = _resultMixed.Map(v => new AnotherValue(v.Val));
-		actual.Should().HaveCount(2);
+		IEnumerable<Result<AnotherValue>> actual = _resultMixed.MapEach(v => new AnotherValue(v.Val));
+		actual.Should().HaveCount(3);
+		actual.Count(r => r.IsSuccess).Should().Be(2);
+		actual.Count(r => r.IsFailure).Should().Be(1);
 	}
 
 	[Fact]
-	public void Bind_remap_values_to_new_Some()
+	public void BindEach_remap_values_to_new_Some()
 	{
-		IEnumerable<Result<AnotherValue>> actual = _resultMixed.Bind(v => Result.Success(new AnotherValue(v.Val)));
-		actual.Should().HaveCount(2);
+		IEnumerable<Result<AnotherValue>> actual = _resultMixed.BindEach(v => Result.Success(new AnotherValue(v.Val)));
+		actual.Should().HaveCount(3);
+		actual.Count(r => r.IsSuccess).Should().Be(2);
+		actual.Count(r => r.IsFailure).Should().Be(1);
 	}
 
 	[Fact]
@@ -156,5 +160,67 @@ public class EnumerableResultExtensionsTests
 
 		IEnumerable<Result<Value>> even = results.WhereNot(v => v.Val % 2 == 0);
 		even.Should().HaveCount(3);
+	}
+
+	[Fact]
+	public void AggregateResult_AllSuccess_Returns_a_Success()
+	{
+		IEnumerable<Result<Value>> results = new List<Result<Value>>
+		{
+			Result.Success(new Value(0)),
+			Result.Success(new Value(1)),
+			Result.Success(new Value(2)),
+			Result.Success(new Value(3)),
+			Result.Success(new Value(5))
+		};
+		
+		var actual = results.AggregateResult();
+		
+		actual.Should().BeOfType<Result<IEnumerable<Value>>>();
+		actual.IsSuccess.Should().BeTrue();
+		actual.IsFailure.Should().BeFalse();
+		actual.GetValueOrThrow().Should().BeEquivalentTo(results.Select(r => r.GetValueOrThrow()));
+	}
+	
+	[Fact]
+	public void AggregateResult_AllFailures_Returns_a_Failure()
+	{
+		IEnumerable<Result<Value>> results = new List<Result<Value>>
+		{
+			Result.Failure<Value>("Error 1"),
+			Result.Failure<Value>("Error 2"),
+			Result.Failure<Value>("Error 3"),
+			Result.Failure<Value>("Error 4"),
+			Result.Failure<Value>("Error 5")
+		};
+		
+		var actual = results.AggregateResult();
+		var expectedError = new AggregateError(results.Select(r => r.GetErrorOrThrow()));
+		
+		actual.Should().BeOfType<Result<IEnumerable<Value>>>();
+		actual.IsFailure.Should().BeTrue();
+		actual.IsSuccess.Should().BeFalse();
+		actual.GetErrorOrThrow().Should().BeEquivalentTo(expectedError);
+	}
+	
+	[Fact]
+	public void AggregateResult_SomeFailures_Returns_a_Failure()
+	{
+		var results = new List<Result<Value>>
+		{
+			Result.Success(new Value(0)),
+			Result.Failure<Value>("Error 1"),
+			Result.Success(new Value(2)),
+			Result.Failure<Value>("Error 3"),
+			Result.Success(new Value(5))
+		};
+		
+		var actual = results.AggregateResult();
+		var expectedError = new AggregateError(results.Where(r => r.IsFailure).Select(r => r.GetErrorOrThrow()));
+		
+		actual.Should().BeOfType<Result<IEnumerable<Value>>>();
+		actual.IsFailure.Should().BeTrue();
+		actual.IsSuccess.Should().BeFalse();
+		actual.GetErrorOrThrow().Should().BeEquivalentTo(expectedError);
 	}
 }

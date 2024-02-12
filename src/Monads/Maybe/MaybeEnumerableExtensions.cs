@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace Bogoware.Monads;
 
-public static class EnumerableMaybeExtensions
+public static class MaybeEnumerableExtensions
 {
 	/// <summary>
 	/// Determines if all <see cref="Maybe{T}"/>s of a sequence are <c>Some</c>s.

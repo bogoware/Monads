@@ -2,7 +2,7 @@
 
 namespace Bogoware.Monads.UnitTests.MaybeTests;
 
-public class EnumerableMaybeExtensionsTests
+public class MaybeEnumerableExtensionsTests
 {
 	private static readonly List<IMaybe> _allIMaybeSome = new()
 	{
