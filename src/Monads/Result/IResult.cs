@@ -1,5 +1,5 @@
 // ReSharper disable UnusedMemberInSuper.Global
-// ReSharper disable TypeParameterCanBeVariant
+// ReSharper disable UnusedTypeParameter
 
 namespace Bogoware.Monads;
 
@@ -10,7 +10,7 @@ public interface IResult
 	public Error GetErrorOrThrow();
 }
 
-public interface IResult<TValue> : IResult
+public interface IResult<in TValue> : IResult
 {
-	public TValue GetValueOrThrow();
+	//public TValue GetValueOrThrow();
 }

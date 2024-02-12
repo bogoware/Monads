@@ -34,7 +34,7 @@ public static class GamblingPipeline
 
 		var attempts = attemptsTasks.Select(task => task.Result);
 
-		var messages = attempts.Match(
+		var messages = attempts.MatchEach(
 			win => $"You won {win.Value}",
 			$"You lost {initialAmount}");
 		
