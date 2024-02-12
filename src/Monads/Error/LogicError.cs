@@ -37,7 +37,7 @@ public class LogicError: Error, IEquatable<LogicError>
 	public override string Message { get; }
 	public LogicError(string message)
 	{
-		ArgumentNullException.ThrowIfNull(message);
+		if (message is null) throw new ArgumentNullException(nameof(message));
 		Message = message;
 	}
 

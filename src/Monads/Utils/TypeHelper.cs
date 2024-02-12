@@ -5,7 +5,8 @@ internal static class TypeHelper
 {
 	public static string GetFriendlyTypeName(this Type type)
 	{
-		ArgumentNullException.ThrowIfNull(type);
+		if (type is null) throw new ArgumentNullException(nameof(type));
+		
 		if (!type.IsGenericType) return type.Name;
 		var genericTypes = string.Join(",",
 			type.GetGenericArguments().Select(t => t.GetFriendlyTypeName()).ToArray());

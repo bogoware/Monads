@@ -21,7 +21,7 @@ public static class Maybe
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Maybe<T> Some<T>(T value)
 	{
-		ArgumentNullException.ThrowIfNull(value);
+		if (value is null) throw new ArgumentNullException(nameof(value));
 		return new(value);
 	}
 
@@ -150,21 +150,23 @@ public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>
 	/// </summary>
 	public TValue GetValue(TValue defaultValue)
 	{
-		ArgumentNullException.ThrowIfNull(defaultValue);
+		if (defaultValue is null) throw new ArgumentNullException(nameof(defaultValue));
+		
 		return _value ?? defaultValue;
 	}
 
 	/// <inheritdoc cref="GetValue(TValue)"/>
 	public TValue GetValue(Func<TValue> defaultValue)
 	{
-		ArgumentNullException.ThrowIfNull(defaultValue);
+		if (defaultValue is null) throw new ArgumentNullException(nameof(defaultValue));
+		
 		return _value ?? defaultValue();
 	}
 
 	/// <inheritdoc cref="GetValue(TValue)"/>
 	public async Task<TValue> GetValue(Func<Task<TValue>> defaultValue)
 	{
-		ArgumentNullException.ThrowIfNull(defaultValue);
+		if (defaultValue is null) throw new ArgumentNullException(nameof(defaultValue));
 		return _value ?? await defaultValue();
 	}
 

@@ -10,7 +10,7 @@ public sealed class RuntimeError : Error
 	public Exception Exception { get; }
 	public RuntimeError(Exception exception)
 	{
-		ArgumentNullException.ThrowIfNull(exception);
+		if (exception is null) throw new ArgumentNullException(nameof(exception));
 		Exception = exception;
 	}
 

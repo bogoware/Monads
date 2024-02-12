@@ -22,8 +22,8 @@ public class AggregateError : Error
 	/// <param name="innerErrors">The inner errors</param>
 	public AggregateError(string message, IEnumerable<Error> innerErrors)
 	{
-		ArgumentNullException.ThrowIfNull(message);
-		ArgumentNullException.ThrowIfNull(innerErrors);
+		if (message is null) throw new ArgumentNullException(nameof(message));
+		if (innerErrors is null) throw new ArgumentNullException(nameof(innerErrors));
 		Message = message;
 		_innerErrors = [..innerErrors];
 	}
