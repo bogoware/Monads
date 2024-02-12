@@ -26,7 +26,7 @@ internal class ResultCollection<TValue>
 
 	internal Result<IEnumerable<TValue?>> ToResult()
 	{
-		if (IsFailure) return Result.Failure<IEnumerable<TValue?>>(_error);
+		if (IsFailure) return Result.Failure<IEnumerable<TValue?>>(_error!);
 		if (_results.Count == 0) return Result.Success(Enumerable.Empty<TValue?>());
 		var values = _results.Select(r => r.Value);
 		return Result.Success(values);

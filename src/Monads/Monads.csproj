@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <Sdk Name="DotNet.ReproducibleBuilds.Isolated" Version="1.1.1" />
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFrameworks>net8.0;net7.0;net6.0</TargetFrameworks>
+        <LangVersion>12.0</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>Bogoware.Monads</AssemblyName>
