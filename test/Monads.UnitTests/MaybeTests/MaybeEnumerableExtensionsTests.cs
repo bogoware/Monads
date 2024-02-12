@@ -114,17 +114,21 @@ public class MaybeEnumerableExtensionsTests
 	}
 
 	[Fact]
-	public void Map_remap_values_to_new_Some()
+	public void MapEach_remap_values_to_new_Some()
 	{
-		IEnumerable<Maybe<AnotherValue>> actual = _maybeMixed.Map(v => new AnotherValue(v.Val));
-		actual.Should().HaveCount(2);
+		IEnumerable<Maybe<AnotherValue>> actual = _maybeMixed.MapEach(v => new AnotherValue(v.Val));
+		actual.Should().HaveCount(3);
+		actual.Count(m => m.IsSome).Should().Be(2);
+		actual.Count(m => m.IsNone).Should().Be(1);
 	}
 
 	[Fact]
-	public void Bind_remap_values_to_new_Some()
+	public void BindEach_remap_values_to_new_Some()
 	{
-		IEnumerable<Maybe<AnotherValue>> actual = _maybeMixed.Bind(v => Maybe.Some(new AnotherValue(v.Val)));
-		actual.Should().HaveCount(2);
+		IEnumerable<Maybe<AnotherValue>> actual = _maybeMixed.BindEach(v => Maybe.Some(new AnotherValue(v.Val)));
+		actual.Should().HaveCount(3);
+		actual.Count(m => m.IsSome).Should().Be(2);
+		actual.Count(m => m.IsNone).Should().Be(1);
 	}
 
 	[Fact]

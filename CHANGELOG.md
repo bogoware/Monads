@@ -1,5 +1,21 @@
 # Bogoware Monads Changelog
 
+## 9.0.3
+
+### New Features
+
+- The following extension methods on `IEnumerable<Maybe<T>>` have been introduced:
+- `MapEach`: maps each `Maybe` in the sequence, preserving the `None` values
+- `BindEach`: binds each `Maybe` in the sequence, preserving the `None` values
+- `MatchEach`: matches each `Maybe` in the sequence
+
+### Breaking Changes
+
+- The following extension methods on `IEnumerable<Maybe<T>>` have been removed:
+  - `Map`: use `MapEach` instead. The latter will preserve the `None` values
+  - `Bind`: use `BindEach` instead. The latter will preserve the `None` values
+  - `Macth` renamed to `MatchEach`.
+
 ## 9.0.1
 
 Added support for:

@@ -64,32 +64,29 @@ public static class MaybeEnumerableExtensions
 
 	/// <summary>
 	/// Bind values via the functor.
-	/// <c>None</c>s are discarded but new <c>None</c>s can be produced
-	/// by the functor.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static IEnumerable<Maybe<TNewValue>> Bind<TValue, TNewValue>(
+	public static IEnumerable<Maybe<TNewValue>> BindEach<TValue, TNewValue>(
 		this IEnumerable<Maybe<TValue>> maybes, Func<TValue, Maybe<TNewValue>> functor)
 		where TValue : class
 		where TNewValue : class
-		=> maybes.SelectValues().Select(functor);
+		=> maybes.Select(m => m.Bind(functor));
 
 	/// <summary>
 	/// Maps values via the functor.
-	/// <c>None</c>s are discarded.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static IEnumerable<Maybe<TNewValue>> Map<TValue, TNewValue>(
+	public static IEnumerable<Maybe<TNewValue>> MapEach<TValue, TNewValue>(
 		this IEnumerable<Maybe<TValue>> maybes, Func<TValue, TNewValue> functor)
 		where TValue : class
 		where TNewValue : class
-		=> maybes.Bind(v => Maybe.Some(v).Map(functor));
+		=> maybes.Select(m => m.Map(functor));
 	
 	/// <summary>
 	/// Matches maybes via the two functors.
 	/// </summary>
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static IEnumerable<TResult> Match<TValue, TResult>(
+	public static IEnumerable<TResult> MatchEach<TValue, TResult>(
 		this IEnumerable<Maybe<TValue>> maybes,
 		Func<TValue, TResult> mapSuccesses,
 		TResult none)

@@ -54,13 +54,12 @@ public static class Books
 		}
 
 		var validAuthors = books
-			.Bind(x => x.Author)
+			.BindEach(x => x.Author)
 			.WhereNot(a => a.Name.StartsWith("Xulu"))
 			.WhereNot(a => a.Surname.Satisfy(x => x.StartsWith("Fugu")))
 			.SelectValues();
 
-		var bookDescriptions = books.Map(
-				b => $"Title: {b.Title}, Author: {b.Author.Map( // Include the Author
+		var bookDescriptions = books.MapEach(b => $"Title: {b.Title}, Author: {b.Author.Map( // Include the Author
 						a => $"{a.Name}{a.Surname.Map(
 								s => $" {s}") // Append the surname
 							.GetValue("")}")  // or nothing
