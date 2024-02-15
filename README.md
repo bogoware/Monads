@@ -29,11 +29,6 @@ By employing monads, code can be protected from further processing in case of er
 Adopting a functional approach offers benefits such as increased readability, improved reasoning capabilities,
 and more robust and error-resistant code.
 
-## Functional Challenges in C#
-
-C# offers good support for functional programming, but there are certain limitations that necessitate 
-careful design decisions.
-
 ## Bogoware Monads
 
 This library provides two well-known monads: `Result` and `Maybe` monads (also referred to as `Either`, 
