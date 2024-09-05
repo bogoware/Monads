@@ -9,7 +9,7 @@ public class ResultValueTypeTests
         result.IsSuccess.Should().BeTrue();
         result.GetValueOrThrow().Should().Be(1);
     }
-    
+
     [Fact]
     public void Result_with_value_type_should_be_failed()
     {

@@ -17,10 +17,10 @@ var error = invalidProductNameResult.GetErrorOrThrow();
 
 switch (error)
 {
-	case ValidationError validationError:
-		foreach (var f in validationError.Failures)
-		{
-			Console.WriteLine($"Property [{f.PropertyName}] failed with message: {f.ErrorMessage}");
-		}
-		break;
+    case ValidationError validationError:
+        foreach (var f in validationError.Failures)
+        {
+            Console.WriteLine($"Property [{f.PropertyName}] failed with message: {f.ErrorMessage}");
+        }
+        break;
 }

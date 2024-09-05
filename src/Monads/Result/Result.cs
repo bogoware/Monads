@@ -322,7 +322,7 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
         => IsSuccess ? this : newValue;
 
     public Result<TValue> RecoverWith(Func<TValue> functor)
-        => IsSuccess ? this: functor();
+        => IsSuccess ? this : functor();
 
     public Result<TValue> RecoverWith(Func<Error, TValue> functor)
         => IsSuccess ? this : functor(Error!);
