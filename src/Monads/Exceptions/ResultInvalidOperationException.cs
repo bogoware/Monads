@@ -5,8 +5,8 @@ namespace Bogoware.Monads;
 /// </summary>
 public class ResultInvalidOperationException : InvalidOperationException
 {
-	protected ResultInvalidOperationException(string message)
-		: base(message)
-	{
-	}
+    protected ResultInvalidOperationException(string message)
+        : base(message)
+    {
+    }
 }

@@ -7,12 +7,12 @@ namespace Bogoware.Monads;
 /// </summary>
 public sealed class RuntimeError : Error
 {
-	public Exception Exception { get; }
-	public RuntimeError(Exception exception)
-	{
-		if (exception is null) throw new ArgumentNullException(nameof(exception));
-		Exception = exception;
-	}
+    public Exception Exception { get; }
+    public RuntimeError(Exception exception)
+    {
+        if (exception is null) throw new ArgumentNullException(nameof(exception));
+        Exception = exception;
+    }
 
-	public override string Message => Exception.Message;
+    public override string Message => Exception.Message;
 }

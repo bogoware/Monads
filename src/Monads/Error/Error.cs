@@ -5,8 +5,8 @@ namespace Bogoware.Monads;
 /// </summary>
 public abstract class Error
 {
-	/// <summary>
-	/// The error message.
-	/// </summary>
-	public abstract string Message { get; }
+    /// <summary>
+    /// The error message.
+    /// </summary>
+    public abstract string Message { get; }
 }

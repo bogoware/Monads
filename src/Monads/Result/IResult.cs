@@ -5,12 +5,12 @@ namespace Bogoware.Monads;
 
 public interface IResult
 {
-	bool IsSuccess { get; }
-	bool IsFailure { get; }
-	public Error GetErrorOrThrow();
+    bool IsSuccess { get; }
+    bool IsFailure { get; }
+    public Error GetErrorOrThrow();
 }
 
 public interface IResult<in TValue> : IResult
 {
-	//public TValue GetValueOrThrow();
+    //public TValue GetValueOrThrow();
 }
