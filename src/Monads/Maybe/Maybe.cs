@@ -92,6 +92,9 @@ public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>
     /// </summary>
     public Maybe<TNewValue> Map<TNewValue>(Func<TValue, TNewValue?> map) where TNewValue : class
         => Value is not null ? new Maybe<TNewValue>(map(Value)) : Maybe<TNewValue>.None;
+    
+    public Result<TValue> MapToResult() => 
+        Value is not null ? Result.Success(Value) : Result.Failure<TValue>(MaybeNoneError.Default);
 
     /// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.Map``1(System.Func{`0,``0})"/>
     public async Task<Maybe<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue?>> map) where TNewValue : class

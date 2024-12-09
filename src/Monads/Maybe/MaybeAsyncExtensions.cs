@@ -196,7 +196,7 @@ public static class MaybeAsyncExtensions
     public static async Task<Result<TValue>> ToResult<TValue>(this Task<Maybe<TValue>> maybeTask, Func<Error> errorFunc) where TValue : class
     {
         var maybe = await maybeTask;
-        return maybe.ToResult(errorFunc);
+        return maybe.MapToResult(errorFunc);
     }
 
     /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
@@ -204,6 +204,6 @@ public static class MaybeAsyncExtensions
     public static async Task<Result<TValue>> ToResult<TValue>(this Task<Maybe<TValue>> maybeTask, Func<Task<Error>> errorFunc) where TValue : class
     {
         var maybe = await maybeTask;
-        return await maybe.ToResult(errorFunc);
+        return await maybe.MapToResult(errorFunc);
     }
 }

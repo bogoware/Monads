@@ -22,7 +22,9 @@ public static class MaybeExtensions
 
     /// <inheritdoc cref="Map{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult)"/>
     public static async Task<Maybe<TNewValue>> Map<TValue, TNewValue>(
-        this Maybe<TValue> maybe, Func<Task<TNewValue?>> map)
+        this Maybe<TValue> maybe,
+        Func<Task<TNewValue?>> map
+    )
         where TNewValue : class where TValue : class
         => maybe.IsSome ? new(await map()) : Maybe<TNewValue>.None;
 
@@ -35,7 +37,9 @@ public static class MaybeExtensions
 
     /// <inheritdoc cref="Bind{TValue,TResult}(Bogoware.Monads.Maybe{TValue},System.Func{Bogoware.Monads.Maybe{TResult}})"/>
     public static Task<Maybe<TNewValue>> Bind<TValue, TNewValue>(
-        this Maybe<TValue> maybe, Func<Task<Maybe<TNewValue>>> map)
+        this Maybe<TValue> maybe,
+        Func<Task<Maybe<TNewValue>>> map
+    )
         where TNewValue : class where TValue : class
         => maybe.IsSome ? map() : Task.FromResult(Maybe<TNewValue>.None);
 
@@ -48,37 +52,55 @@ public static class MaybeExtensions
 
     /// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
     public static TResult Match<TValue, TResult>(
-        this Maybe<TValue> maybe, Func<TResult> resultOnValue, TResult resultOnNone)
+        this Maybe<TValue> maybe,
+        Func<TResult> resultOnValue,
+        TResult resultOnNone
+    )
         where TValue : class
         => maybe.IsSome ? resultOnValue() : resultOnNone;
 
     /// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
     public static TResult Match<TValue, TResult>(
-        this Maybe<TValue> maybe, TResult resultOnValue, Func<TResult> resultOnNone)
+        this Maybe<TValue> maybe,
+        TResult resultOnValue,
+        Func<TResult> resultOnNone
+    )
         where TValue : class
         => maybe.IsSome ? resultOnValue : resultOnNone();
 
     /// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
     public static TResult Match<TValue, TResult>(
-        this Maybe<TValue> maybe, Func<TResult> resultOnValue, Func<TResult> resultOnNone)
+        this Maybe<TValue> maybe,
+        Func<TResult> resultOnValue,
+        Func<TResult> resultOnNone
+    )
         where TValue : class
         => maybe.IsSome ? resultOnValue() : resultOnNone();
 
     /// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
     public static Task<TResult> Match<TValue, TResult>(
-        this Maybe<TValue> maybe, Func<Task<TResult>> resultOnValue, TResult resultOnNone)
+        this Maybe<TValue> maybe,
+        Func<Task<TResult>> resultOnValue,
+        TResult resultOnNone
+    )
         where TValue : class
         => maybe.IsSome ? resultOnValue() : Task.FromResult(resultOnNone);
 
     /// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
     public static Task<TResult> Match<TValue, TResult>(
-        this Maybe<TValue> maybe, TResult resultOnValue, Func<Task<TResult>> resultOnNone)
+        this Maybe<TValue> maybe,
+        TResult resultOnValue,
+        Func<Task<TResult>> resultOnNone
+    )
         where TValue : class
         => maybe.IsSome ? Task.FromResult(resultOnValue) : resultOnNone();
 
     /// <inheritdoc cref="Match{TValue,TResult}(Bogoware.Monads.Maybe{TValue},TResult,TResult)"/>
     public static Task<TResult> Match<TValue, TResult>(
-        this Maybe<TValue> maybe, Func<Task<TResult>> resultOnValue, Func<Task<TResult>> resultOnNone)
+        this Maybe<TValue> maybe,
+        Func<Task<TResult>> resultOnValue,
+        Func<Task<TResult>> resultOnNone
+    )
         where TValue : class
         => maybe.IsSome ? resultOnValue() : resultOnNone();
 
@@ -198,26 +220,40 @@ public static class MaybeExtensions
     /// <inheritdoc cref="WithDefault{T}(Bogoware.Monads.Maybe{T},T)"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static async Task<Maybe<TNewValue>> WithDefault<TNewValue>(
-        this Maybe<TNewValue> maybe, Func<Task<TNewValue>> value) where TNewValue : class
+        this Maybe<TNewValue> maybe,
+        Func<Task<TNewValue>> value
+    ) where TNewValue : class
         => maybe.IsSome ? maybe : new(await value());
 
     /// <summary>
     /// Convert a <see cref="Maybe{T}"/> to a <see cref="Result{TValue}"/> with a default error in case of <c>None</c>.
     /// </summary>
+    /// <param name="maybe"></param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Result<TValue> ToResult<TValue>(this Maybe<TValue> maybe, Func<Error> errorFunc)
+    public static Result<TValue> MapToResult<TValue>(this Maybe<TValue> maybe)
         where TValue : class
         => maybe.Match(
-            value => Result.Success(value),
+            Result.Success,
+            () => Result.Failure<TValue>(MaybeNoneError.Default)
+        );
+
+    /// <summary>
+    /// Convert a <see cref="Maybe{T}"/> to a <see cref="Result{TValue}"/> with a default error in case of <c>None</c>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Result<TValue> MapToResult<TValue>(this Maybe<TValue> maybe, Func<Error> errorFunc)
+        where TValue : class
+        => maybe.Match(
+            Result.Success,
             () => Result.Failure<TValue>(errorFunc())
         );
 
-    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
+    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.MapToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Task<Result<TValue>> ToResult<TValue>(this Maybe<TValue> maybe, Func<Task<Error>> errorFunc)
+    public static Task<Result<TValue>> MapToResult<TValue>(this Maybe<TValue> maybe, Func<Task<Error>> errorFunc)
         where TValue : class
         => maybe.Match(
-            value => Result.Success(value),
+            Result.Success,
             async () => Result.Failure<TValue>(await errorFunc())
         );
 }
