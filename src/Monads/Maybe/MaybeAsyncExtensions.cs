@@ -191,7 +191,16 @@ public static class MaybeAsyncExtensions
         where TValue : class
         => maybe.Match(predicate, false);
 
-    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
+    
+    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.MapToResult``1(Bogoware.Monads.Maybe{``0})"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static async Task<Result<TValue>> ToResult<TValue>(this Task<Maybe<TValue>> maybeTask) where TValue : class
+    {
+        var maybe = await maybeTask;
+        return maybe.MapToResult();
+    }
+    
+    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.MapToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static async Task<Result<TValue>> ToResult<TValue>(this Task<Maybe<TValue>> maybeTask, Func<Error> errorFunc) where TValue : class
     {
@@ -199,7 +208,8 @@ public static class MaybeAsyncExtensions
         return maybe.MapToResult(errorFunc);
     }
 
-    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
+
+    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.MapToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static async Task<Result<TValue>> ToResult<TValue>(this Task<Maybe<TValue>> maybeTask, Func<Task<Error>> errorFunc) where TValue : class
     {

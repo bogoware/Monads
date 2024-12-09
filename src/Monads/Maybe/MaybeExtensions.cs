@@ -228,7 +228,6 @@ public static class MaybeExtensions
     /// <summary>
     /// Convert a <see cref="Maybe{T}"/> to a <see cref="Result{TValue}"/> with a default error in case of <c>None</c>.
     /// </summary>
-    /// <param name="maybe"></param>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static Result<TValue> MapToResult<TValue>(this Maybe<TValue> maybe)
         where TValue : class
