@@ -148,7 +148,7 @@ public static class Result
 /// Represents the result of an operation that may fail.
 /// </summary>
 /// <typeparam name="TValue"></typeparam>
-public struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValue>>, IEnumerable<TValue>
+public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValue>>, IEnumerable<TValue>
 {
     internal readonly TValue? Value;
     internal readonly Error? Error;
