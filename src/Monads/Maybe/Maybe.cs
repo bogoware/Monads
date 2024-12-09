@@ -44,7 +44,7 @@ public static class Maybe
 /// <summary>
 /// Represents an optional value.
 /// </summary>
-public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>, IEnumerable<TValue>
+public struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>, IEnumerable<TValue>
 {
     private readonly TValue? _value = default;
     /// <summary>
