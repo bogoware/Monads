@@ -41,7 +41,9 @@ public static class CreateUserPipeline
 
     private static Result<User> CreateUser(User user)
     {
+#pragma warning disable CS0162 // Unreachable code detected
         if (false) return Result.Failure<User>("Error creating user");
+#pragma warning restore CS0162 // Unreachable code detected
         return new(user);
     }
     private static void NotifyCreation(User user)

@@ -150,8 +150,15 @@ public static class Result
 /// <typeparam name="TValue"></typeparam>
 public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValue>>, IEnumerable<TValue>
 {
-    internal readonly TValue? Value;
-    internal readonly Error? Error;
+    /// <summary>
+    /// The value of the <see cref="Result{TValue}"/> if the <see cref="IsSuccess"/> is <c>true</c>.
+    /// </summary>
+    public TValue? Value { get; }
+    
+    /// <summary>
+    /// The error of the <see cref="Result{TValue}"/> if the <see cref="IsFailure"/> is <c>true</c>.
+    /// </summary>
+    public Error? Error { get; }
 
     /// <summary>
     /// Initializes a successful instance of the <see cref="Result{TValue}"/> with the given <paramref name="value"/>.
