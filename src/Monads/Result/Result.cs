@@ -370,14 +370,14 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
     /// <summary>
     /// Execute the action if the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/> is true.
     /// </summary>
-    public Result<TValue> ExecuteIfSuccess(Action<TValue> action)
+    public Result<TValue> IfSuccess(Action<TValue> action)
     {
         if (IsSuccess) action(Value!);
         return this;
     }
 
-    /// <inheritdoc cref="ExecuteIfSuccess(System.Action{TValue})"/>
-    public async Task<Result<TValue>> ExecuteIfSuccess(Func<TValue, Task> action)
+    /// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.IfSome(System.Action{`0})"/>
+    public async Task<Result<TValue>> IfSuccess(Func<TValue, Task> action)
     {
         if (IsSuccess) await action(Value!);
         return this;
@@ -386,15 +386,15 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
     /// <summary>
     /// Execute the action if the <see cref="Result{TValue}"/>.<see cref="IsFailure"/> is true.
     /// </summary>
-    public Result<TValue> ExecuteIfFailure(Action<Error> action)
+    public Result<TValue> IfFailure(Action<Error> action)
     {
         if (IsFailure) action(Error!);
         return this;
     }
 
 
-    /// <inheritdoc cref="ExecuteIfFailure(System.Action{Monads.Error})"/>
-    public async Task<Result<TValue>> ExecuteIfFailure(Func<Error, Task> action)
+    /// <inheritdoc cref="M:Bogoware.Monads.Result`1.IfFailure(System.Action{Bogoware.Monads.Error})"/>
+    public async Task<Result<TValue>> IfFailure(Func<Error, Task> action)
     {
         if (IsFailure) await action(Error!);
         return this;

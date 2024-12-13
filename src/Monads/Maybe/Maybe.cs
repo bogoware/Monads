@@ -138,14 +138,14 @@ public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>
     /// <summary>
     /// Execute the action if the <see cref="Maybe{T}"/> is <c>Some</c>.
     /// </summary>
-    public Maybe<TValue> ExecuteIfSome(Action<TValue> action)
+    public Maybe<TValue> IfSome(Action<TValue> action)
     {
         if (Value is not null) action(Value);
         return this;
     }
 
-    /// <inheritdoc cref="ExecuteIfSome(System.Action{TValue})"/>
-    public async Task<Maybe<TValue>> ExecuteIfSome(Func<TValue, Task> action)
+    /// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.IfSome(System.Action{`0})"/>
+    public async Task<Maybe<TValue>> IfSome(Func<TValue, Task> action)
     {
         if (Value is not null) await action(Value);
         return this;

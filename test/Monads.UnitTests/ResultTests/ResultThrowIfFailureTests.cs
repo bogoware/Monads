@@ -63,7 +63,7 @@ public class ResultThrowIfFailureTests
         try
         {
             await result
-                .ExecuteIfFailure(() => { })
+                .IfFailure(() => { })
                 .ThrowIfFailure();
         }
         catch (ResultFailedException)

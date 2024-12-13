@@ -56,8 +56,8 @@ It is a generic type, with `T` representing the type of the value returned by th
 * `Match`: Facilitates handling of the operation's result by providing separate paths for the "happy" and "unhappy" flows.
 * `RecoverWith`: Provides a way to recover from an error by returning a `Result<T>`
 * `Ensure`: Allows asserting a condition on the value returned by the operation.
-* `ExecuteIfSuccess`: Executes if the operation succeeds. It is typically used to generate side effects.
-* `ExecuteIfFailure`: Executes if the operation fails. It is typically used to generate side effects.
+* `IfSuccess`: Executes if the operation succeeds. It is typically used to generate side effects.
+* `IfFailure`: Executes if the operation fails. It is typically used to generate side effects.
 
 There are also some unsafe methods intended to support developers who are less familiar with the functional approach
 and may need to resort to a procedural style to achieve their goals.
@@ -95,7 +95,7 @@ public Result<Unit> Publish() {
     return ValidateCostComponents() // Note the explicit invocation of the method
         .Bind(ValidateTimingComponents)
         // ... more binding to validation methods
-        .ExecuteIfSuccess(() => PublishingStatus = PublishingStatus.Published);
+        .IfSuccess(() => PublishingStatus = PublishingStatus.Published);
 }
 ```
 
@@ -107,7 +107,7 @@ public Result<Unit> Publish() => Result
     .Bind(ValidateCostComponents)
     .Bind(ValidateTimingComponents)
     // ... more binding to validation methods
-    .ExecuteIfSuccess(() => PublishingStatus = PublishingStatus.Published);
+    .IfSuccess(() => PublishingStatus = PublishingStatus.Published);
 ```
 
 ## Manipulating `IEnumerable<Maybe<T>>`

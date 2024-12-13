@@ -16,7 +16,7 @@ public static class CreateUserPipeline
             .Ensure(u => LookupUser(u).IsNone, new LogicError("User already exists"))
             .Map(u => new User(u, "FirstName", "LastName"))
             .Bind(CreateUser)
-            .ExecuteIfSuccess(NotifyCreation)
+            .IfSuccess(NotifyCreation)
             .Match(u => "User created.", e => $"The following error occurred: {e.Message}");
 
         // In a real example the final Match would return a specific model, for example, an IActionResult
