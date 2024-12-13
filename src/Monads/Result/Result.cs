@@ -65,6 +65,16 @@ public static class Result
     public static Task<Result<TValue>> Bind<TValue>(Func<Task<Result<TValue>>> result) => result();
 
     /// <summary>
+    /// Initializes a new instance of the <see cref="Result{TValue}"/> with the value.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Result<T> From<T>(T value)
+    {
+        if (value is Error error) return Result.Failure<T>(error);
+        return Result.Success(value);
+    } 
+
+    /// <summary>
     /// Wraps the execution of the given <paramref name="action"/> in a <see cref="Result{TValue}"/>
     /// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
     /// </summary>
