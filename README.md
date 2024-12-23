@@ -64,10 +64,10 @@ and may need to resort to a procedural style to achieve their goals.
 These methods should be used sparingly, as they deviate from the functional paradigm and make the code less
 robust, potentially leading to unexpected exceptions:
 
-* `ThrowIfFailure`: Throws an exception if the operation fails. It is typically used to terminate the execution of the pipeline
+* `ThrowIfFailure()`: Throws an exception if the operation fails. It is typically used to terminate the execution of the pipeline
   discarding the result of the operation.
-* `GetValueOrThrow`: Extracts the value from the `Result<T>` monad.
-* `GetErrorOrThrow`: Extracts the error from the `Result<T>` monad. 
+* `Value` or `GetValueOrThrow()`: Extracts the value from the `Result<T>` monad.
+* `Error` or `GetErrorOrThrow()`: Extracts the error from the `Result<T>` monad. 
 
 By adhering to the `Result<T>` monad, code can be modeled in a more readable and reasoned manner.
 It also contributes to writing more robust code with reduced error-proneness.
