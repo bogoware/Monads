@@ -56,8 +56,8 @@ It is a generic type, with `T` representing the type of the value returned by th
 * `Match`: Facilitates handling of the operation's result by providing separate paths for the "happy" and "unhappy" flows.
 * `RecoverWith`: Provides a way to recover from an error by returning a `Result<T>`
 * `Ensure`: Allows asserting a condition on the value returned by the operation.
-* `ExecuteIfSuccess`: Executes if the operation succeeds. It is typically used to generate side effects.
-* `ExecuteIfFailure`: Executes if the operation fails. It is typically used to generate side effects.
+* `IfSuccess`: Executes if the operation succeeds. It is typically used to generate side effects.
+* `IfFailure`: Executes if the operation fails. It is typically used to generate side effects.
 
 There are also some unsafe methods intended to support developers who are less familiar with the functional approach
 and may need to resort to a procedural style to achieve their goals.
@@ -95,7 +95,7 @@ public Result<Unit> Publish() {
     return ValidateCostComponents() // Note the explicit invocation of the method
         .Bind(ValidateTimingComponents)
         // ... more binding to validation methods
-        .ExecuteIfSuccess(() => PublishingStatus = PublishingStatus.Published);
+        .IfSuccess(() => PublishingStatus = PublishingStatus.Published);
 }
 ```
 
@@ -107,7 +107,7 @@ public Result<Unit> Publish() => Result
     .Bind(ValidateCostComponents)
     .Bind(ValidateTimingComponents)
     // ... more binding to validation methods
-    .ExecuteIfSuccess(() => PublishingStatus = PublishingStatus.Published);
+    .IfSuccess(() => PublishingStatus = PublishingStatus.Published);
 ```
 
 ## Manipulating `IEnumerable<Maybe<T>>`
@@ -222,10 +222,32 @@ values and utilizing `Maybe<T>` methods for chaining operations.
 > **Practical rule**: Use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and
 > method paramethers.
 
-## Converting `Maybe<T>` to `Result<T>`
+### Recovering from `Maybe.None` with `WithDefault`
+
+The `WithDefault` method allows recovering from a `Maybe.None` instance by providing a default value.
+
+For example, consider the following code snippet:
+
+```csharp
+var maybeValue = Maybe.None<int>();
+var value = maybeValue.WithDefault(42);
+```
+
+### Converting `Maybe<T>` to `Result<T>`
 
 It is common to implement a pipeline of operations where an empty `Maybe<T>` instance should be interpreted as a failure,
-in this case the `Maybe<T>` instance can be converted to a `Result<T>` instance by using the `ToResult` method.
+in this case the `Maybe<T>` instance can be converted to a `Result<T>` instance by using the `MapToResult` method.
 
-The `ToResult` method accepts an error as a parameter and returns a `Result<T>` instance with the specified error
+The `MapToResult` methods can accepts an error as a parameter and returns a `Result<T>` instance with the specified error
 in case the `Maybe<T>` instance is empty.
+
+For example, consider the following code snippet:
+
+```csharp
+var result = Maybe
+    .From(someFactoryMethod())
+    .MapToResult(new NotFoundError("Value not found"))
+    .Bind(ValidateValue)
+    .Bind(UpdateValue);
+
+```

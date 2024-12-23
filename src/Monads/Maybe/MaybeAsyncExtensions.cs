@@ -129,40 +129,40 @@ public static class MaybeAsyncExtensions
         => await (await maybeTask).Match(value, none);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Maybe<TValue>> ExecuteIfSome<TValue>(
+    public static async Task<Maybe<TValue>> IfSome<TValue>(
         this Task<Maybe<TValue>> maybeTask,
         Action action) where TValue : class
-        => (await maybeTask).ExecuteIfSome(action);
+        => (await maybeTask).IfSome(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Maybe<TValue>> ExecuteIfSome<TValue>(
+    public static async Task<Maybe<TValue>> IfSome<TValue>(
         this Task<Maybe<TValue>> maybeTask,
         Action<TValue> action) where TValue : class
-        => (await maybeTask).ExecuteIfSome(action);
+        => (await maybeTask).IfSome(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Maybe<TValue>> ExecuteIfSome<TValue>(
+    public static async Task<Maybe<TValue>> IfSome<TValue>(
         this Task<Maybe<TValue>> maybeTask,
         Func<Task> action) where TValue : class
-        => await (await maybeTask).ExecuteIfSome(action);
+        => await (await maybeTask).IfSome(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Maybe<TValue>> ExecuteIfSome<TValue>(
+    public static async Task<Maybe<TValue>> IfSome<TValue>(
         this Task<Maybe<TValue>> maybeTask,
         Func<TValue, Task> action) where TValue : class
-        => await (await maybeTask).ExecuteIfSome(action);
+        => await (await maybeTask).IfSome(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Maybe<TValue>> ExecuteIfNone<TValue>(
+    public static async Task<Maybe<TValue>> IfNone<TValue>(
         this Task<Maybe<TValue>> maybeTask,
         Action action) where TValue : class
-        => (await maybeTask).ExecuteIfNone(action);
+        => (await maybeTask).IfNone(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Maybe<TValue>> ExecuteIfNone<TValue>(
+    public static async Task<Maybe<TValue>> IfNone<TValue>(
         this Task<Maybe<TValue>> maybeTask,
         Func<Task> action) where TValue : class
-        => await (await maybeTask).ExecuteIfNone(action);
+        => await (await maybeTask).IfNone(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static async Task<Maybe<TValue>> Execute<TValue>(
@@ -191,19 +191,29 @@ public static class MaybeAsyncExtensions
         where TValue : class
         => maybe.Match(predicate, false);
 
-    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
+    
+    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.MapToResult``1(Bogoware.Monads.Maybe{``0})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ToResult<TValue>(this Task<Maybe<TValue>> maybeTask, Func<Error> errorFunc) where TValue : class
+    public static async Task<Result<TValue>> MapToResult<TValue>(this Task<Maybe<TValue>> maybeTask) where TValue : class
     {
         var maybe = await maybeTask;
-        return maybe.ToResult(errorFunc);
+        return maybe.MapToResult();
+    }
+    
+    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.MapToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static async Task<Result<TValue>> MapToResult<TValue>(this Task<Maybe<TValue>> maybeTask, Func<Error> errorFunc) where TValue : class
+    {
+        var maybe = await maybeTask;
+        return maybe.MapToResult(errorFunc);
     }
 
-    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.ToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
+
+    /// <inheritdoc cref="M:Bogoware.Monads.MaybeExtensions.MapToResult``1(Bogoware.Monads.Maybe{``0},System.Func{Bogoware.Monads.Error})"/>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ToResult<TValue>(this Task<Maybe<TValue>> maybeTask, Func<Task<Error>> errorFunc) where TValue : class
+    public static async Task<Result<TValue>> MapToResult<TValue>(this Task<Maybe<TValue>> maybeTask, Func<Task<Error>> errorFunc) where TValue : class
     {
         var maybe = await maybeTask;
-        return await maybe.ToResult(errorFunc);
+        return await maybe.MapToResult(errorFunc);
     }
 }

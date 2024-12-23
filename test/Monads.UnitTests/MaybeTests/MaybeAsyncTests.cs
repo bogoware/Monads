@@ -256,7 +256,7 @@ public class MaybeAsyncTests
     {
         var inspector = new Mock<ICallInspector>();
         var sut = Task.FromResult(Maybe.Some(new Value(0)));
-        await sut.ExecuteIfSome(inspector.Object.MethodVoid);
+        await sut.IfSome(inspector.Object.MethodVoid);
         inspector.Verify(c => c.MethodVoid());
     }
 
@@ -265,7 +265,7 @@ public class MaybeAsyncTests
     {
         var inspector = new Mock<ICallInspector>();
         var sut = Task.FromResult(Maybe.Some(new Value(0)));
-        await sut.ExecuteIfSome(inspector.Object.MethodWithValueArg);
+        await sut.IfSome(inspector.Object.MethodWithValueArg);
         inspector.Verify(c => c.MethodWithValueArg(It.IsAny<Value>()));
     }
 
@@ -274,7 +274,7 @@ public class MaybeAsyncTests
     {
         var inspector = new Mock<ICallInspector>();
         var sut = Task.FromResult(Maybe.Some(new Value(0)));
-        await sut.ExecuteIfSome(inspector.Object.MethodVoidAsync);
+        await sut.IfSome(inspector.Object.MethodVoidAsync);
         inspector.Verify(c => c.MethodVoidAsync());
     }
 
@@ -283,7 +283,7 @@ public class MaybeAsyncTests
     {
         var inspector = new Mock<ICallInspector>();
         var sut = Task.FromResult(Maybe.Some(new Value(0)));
-        await sut.ExecuteIfSome(inspector.Object.MethodWithValueArgAsync);
+        await sut.IfSome(inspector.Object.MethodWithValueArgAsync);
         inspector.Verify(c => c.MethodWithValueArgAsync(It.IsAny<Value>()));
     }
 
@@ -292,7 +292,7 @@ public class MaybeAsyncTests
     {
         var inspector = new Mock<ICallInspector>();
         var sut = Task.FromResult(Maybe.None<Value>());
-        await sut.ExecuteIfNone(inspector.Object.MethodVoid);
+        await sut.IfNone(inspector.Object.MethodVoid);
         inspector.Verify(c => c.MethodVoid());
     }
     [Fact]
@@ -300,7 +300,7 @@ public class MaybeAsyncTests
     {
         var inspector = new Mock<ICallInspector>();
         var sut = Task.FromResult(Maybe.None<Value>());
-        await sut.ExecuteIfNone(inspector.Object.MethodVoidAsync);
+        await sut.IfNone(inspector.Object.MethodVoidAsync);
         inspector.Verify(c => c.MethodVoidAsync());
     }
 

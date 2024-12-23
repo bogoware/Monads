@@ -11,7 +11,7 @@ public static class ResultExecuteExtensions
     #region Functional Closure Extensions
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Result<TValue> ExecuteIfSuccess<TValue>(
+    public static Result<TValue> IfSuccess<TValue>(
         this Result<TValue> result, Action action)
     {
         if (result.IsSuccess) action();
@@ -19,7 +19,7 @@ public static class ResultExecuteExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ExecuteIfSuccess<TValue>(
+    public static async Task<Result<TValue>> IfSuccess<TValue>(
         this Result<TValue> result, Func<Task> action)
     {
         if (result.IsSuccess) await action();
@@ -27,7 +27,7 @@ public static class ResultExecuteExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static Result<TValue> ExecuteIfFailure<TValue>(
+    public static Result<TValue> IfFailure<TValue>(
         this Result<TValue> result, Action action)
     {
         if (result.IsFailure) action();
@@ -35,7 +35,7 @@ public static class ResultExecuteExtensions
     }
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ExecuteIfFailure<TValue>(
+    public static async Task<Result<TValue>> IfFailure<TValue>(
         this Result<TValue> result, Func<Task> action)
     {
         if (result.IsFailure) await action();
@@ -78,44 +78,44 @@ public static class ResultExecuteExtensions
     #region Left Async Extensions
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ExecuteIfSuccess<TValue>(
+    public static async Task<Result<TValue>> IfSuccess<TValue>(
         this Task<Result<TValue>> result, Action<TValue> action)
-        => (await result).ExecuteIfSuccess(action);
+        => (await result).IfSuccess(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ExecuteIfSuccess<TValue>(
+    public static async Task<Result<TValue>> IfSuccess<TValue>(
         this Task<Result<TValue>> result, Func<TValue, Task> action)
-        => await (await result).ExecuteIfSuccess(action);
+        => await (await result).IfSuccess(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ExecuteIfSuccess<TValue>(
+    public static async Task<Result<TValue>> IfSuccess<TValue>(
         this Task<Result<TValue>> result, Action action)
-        => (await result).ExecuteIfSuccess(action);
+        => (await result).IfSuccess(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ExecuteIfSuccess<TValue>(
+    public static async Task<Result<TValue>> IfSuccess<TValue>(
         this Task<Result<TValue>> result, Func<Task> action)
-        => await (await result).ExecuteIfSuccess(action);
+        => await (await result).IfSuccess(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ExecuteIfFailure<TValue>(
+    public static async Task<Result<TValue>> IfFailure<TValue>(
         this Task<Result<TValue>> result, Action<Error> action)
-        => (await result).ExecuteIfFailure(action);
+        => (await result).IfFailure(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ExecuteIfFailure<TValue>(
+    public static async Task<Result<TValue>> IfFailure<TValue>(
         this Task<Result<TValue>> result, Func<Error, Task> action)
-        => await (await result).ExecuteIfFailure(action);
+        => await (await result).IfFailure(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ExecuteIfFailure<TValue>(
+    public static async Task<Result<TValue>> IfFailure<TValue>(
         this Task<Result<TValue>> result, Action action)
-        => (await result).ExecuteIfFailure(action);
+        => (await result).IfFailure(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static async Task<Result<TValue>> ExecuteIfFailure<TValue>(
+    public static async Task<Result<TValue>> IfFailure<TValue>(
         this Task<Result<TValue>> result, Func<Task> action)
-        => await (await result).ExecuteIfFailure(action);
+        => await (await result).IfFailure(action);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public static async Task<Result<TValue>> Execute<TValue>(

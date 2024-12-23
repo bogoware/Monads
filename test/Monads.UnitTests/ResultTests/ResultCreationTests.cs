@@ -125,4 +125,18 @@ public class ResultCreationTests
         result1.IsFailure.Should().Be(result2.IsFailure);
         result1.GetValueOrThrow().Should().Be(result2.GetValueOrThrow());
     }
+    
+    [Fact]
+    public void Create_successfulResult_via_From()
+    {
+        var result = Result.From("value");
+        result.IsSuccess.Should().BeTrue();
+    }
+    
+    [Fact]
+    public void Create_failedResult_via_From()
+    {
+        var result = Result.From(new LogicError("error"));
+        result.IsFailure.Should().BeTrue();
+    }
 }

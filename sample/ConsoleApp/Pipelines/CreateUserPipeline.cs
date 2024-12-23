@@ -16,7 +16,7 @@ public static class CreateUserPipeline
             .Ensure(u => LookupUser(u).IsNone, new LogicError("User already exists"))
             .Map(u => new User(u, "FirstName", "LastName"))
             .Bind(CreateUser)
-            .ExecuteIfSuccess(NotifyCreation)
+            .IfSuccess(NotifyCreation)
             .Match(u => "User created.", e => $"The following error occurred: {e.Message}");
 
         // In a real example the final Match would return a specific model, for example, an IActionResult
@@ -41,7 +41,9 @@ public static class CreateUserPipeline
 
     private static Result<User> CreateUser(User user)
     {
+#pragma warning disable CS0162 // Unreachable code detected
         if (false) return Result.Failure<User>("Error creating user");
+#pragma warning restore CS0162 // Unreachable code detected
         return new(user);
     }
     private static void NotifyCreation(User user)
