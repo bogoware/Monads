@@ -79,6 +79,8 @@ make the code more readable.
 
 * `Result.Success`: Creates a successful `Result<T>` instance with the specified value.
 * `Result.Failure`: Creates a failed `Result<T>` instance with the specified error.
+* `Result.From`: Creates a successful or a failed `Result<T>` instance depending by the argument.
+* `Result.Execute`: Encapsulate the execution of the code within a guard block that catches exceptions producing a `Result<T>`
 * `Result.Ensure`: Creates a successful `Result<Unit>` instance if the specified condition is true, otherwise creates 
 a failed instance with the specified error.
 * `Result.Bind`: Creates a `Result<T>` instance from a delegate. This method is particularly useful
