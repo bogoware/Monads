@@ -76,7 +76,7 @@ public class ResultMapErrorTests
     }
 
     [Fact]
-    public async Task Failure_map_asyncFunction()
+    public async Task Failure_mapError_asyncFunction()
     {
         Result<Value> actual = await _failed.MapError(error => Task.FromResult(new LogicError($"New error")));
         actual.IsFailure.Should().BeTrue();

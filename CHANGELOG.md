@@ -14,7 +14,7 @@
 - The following extension methods on `IEnumerable<Maybe<T>>` have been removed:
   - `Map`: use `MapEach` instead. The latter will preserve the `None` values
   - `Bind`: use `BindEach` instead. The latter will preserve the `None` values
-  - `Macth` renamed to `MatchEach`.
+  - `Match` renamed to `MatchEach`.
 
 ## 9.0.1
 
@@ -37,4 +37,4 @@ Added support for:
 - The following extension methods on `IEnumerable<Result<T>>` have been removed:
   - `Map`: use `MapEach` instead. The latter will preserve the failed `Result`s
   - `Bind`: use `BindEach` instead. The latter will preserve the failed `Result`s
-  - `Macth` renamed to `MatchEach`.
+  - `Match` renamed to `MatchEach`.
