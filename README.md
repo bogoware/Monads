@@ -229,20 +229,167 @@ robust, potentially leading to unexpected exceptions:
 By adhering to the `Result<T>` monad, code can be modeled in a more readable and reasoned manner.
 It also contributes to writing more robust code with reduced error-proneness.
 
-### `Result` Helper Methods
+### Complete `Result<T>` API Reference
 
-The `Result` class provides a set of helper methods that facilitate the creation of `Result<T>` instances or
-make the code more readable.
+#### Core Methods
 
-* `Result.Success`: Creates a successful `Result<T>` instance with the specified value.
-* `Result.Failure`: Creates a failed `Result<T>` instance with the specified error.
-* `Result.From`: Creates a successful or a failed `Result<T>` instance depending by the argument.
-* `Result.Execute`: Encapsulate the execution of the code within a guard block that catches exceptions producing a `Result<T>`
-* `Result.Ensure`: Creates a successful `Result<Unit>` instance if the specified condition is true, otherwise creates 
-a failed instance with the specified error.
-* `Result.Bind`: Creates a `Result<T>` instance from a delegate. This method is particularly useful
-when you need to start a chain of operations with a `Result<T>` instance and you like to have a consistent
-syntax for all the steps of the chain.
+##### Map
+Transforms the value if the result is successful:
+
+```csharp
+var result = Result.Success(42);
+var doubled = result.Map(x => x * 2); // Result<int> with value 84
+
+// Map to different type
+var text = result.Map(x => $"Value: {x}"); // Result<string>
+
+// Map to Unit (void operations)
+var unit = result.Map(x => Console.WriteLine(x)); // Result<Unit>
+var unit2 = result.MapToUnit(); // Shortcut for discarding the value
+```
+
+##### Bind
+Chains operations that return `Result<T>`:
+
+```csharp
+public Result<int> ParseNumber(string text) => 
+    int.TryParse(text, out var num) ? Result.Success(num) : Result.Failure<int>("Invalid number");
+
+public Result<string> FormatNumber(int number) =>
+    number >= 0 ? Result.Success($"#{number:D4}") : Result.Failure<string>("Negative numbers not allowed");
+
+// Chain operations
+var result = ParseNumber("42")
+    .Bind(FormatNumber); // Result<string> with "#0042"
+```
+
+##### Match
+Handles both success and failure cases:
+
+```csharp
+var result = CreateUser("john@example.com");
+var message = result.Match(
+    user => $"Created user: {user.Email}",
+    error => $"Failed: {error.Message}"
+);
+```
+
+##### MapError
+Transforms error types:
+
+```csharp
+var result = Result.Failure<string>("Database connection failed");
+var mappedError = result.MapError(err => new CustomError($"Service Error: {err.Message}"));
+```
+
+##### RecoverWith
+Provides fallback values on failure:
+
+```csharp
+var result = Result.Failure<string>("Network error");
+var recovered = result.RecoverWith("Default value"); // Result<string> with "Default value"
+
+// Using function for lazy evaluation
+var recovered2 = result.RecoverWith(() => GetFallbackValue());
+```
+
+##### Ensure
+Validates conditions and fails if not met:
+
+```csharp
+var result = Result.Success("john@example.com")
+    .Ensure(email => email.Contains("@"), new ValidationError("Invalid email format"));
+```
+
+##### Side Effects: IfSuccess and IfFailure
+Execute actions without changing the result:
+
+```csharp
+var result = CreateUser("john@example.com")
+    .IfSuccess(user => Logger.Info($"User created: {user.Id}"))
+    .IfFailure(error => Logger.Error($"Creation failed: {error.Message}"));
+```
+
+#### Unsafe Methods (Use Sparingly)
+
+```csharp
+var result = Result.Success(42);
+
+// Extract value or throw exception
+var value = result.GetValueOrThrow(); // Returns 42
+var value2 = result.Value; // Same as above
+
+// Extract error or throw exception  
+var failedResult = Result.Failure<int>("Error message");
+var error = failedResult.GetErrorOrThrow(); // Returns Error
+var error2 = failedResult.Error; // Same as above
+
+// Throw if result is failure
+result.ThrowIfFailure(); // No exception thrown for success
+failedResult.ThrowIfFailure(); // Throws ResultFailedException
+```
+
+### `Result` Static Helper Methods
+
+The `Result` class provides a comprehensive set of helper methods that facilitate the creation of `Result<T>` instances and
+make the code more readable and functional.
+
+#### Factory Methods
+
+```csharp
+// Create successful results
+var success = Result.Success(42); // Result<int>
+var unitSuccess = Result.Unit; // Result<Unit> for void operations
+
+// Create failed results
+var failure1 = Result.Failure<int>("Something went wrong"); // Uses LogicError
+var failure2 = Result.Failure<int>(new CustomError("Custom error")); // Uses custom error
+
+// Create from values (smart constructor)
+var fromValue = Result.From(42); // Result<int> - Success
+var fromError = Result.From<int>(new LogicError("Error")); // Result<int> - Failure
+```
+
+#### Safe Execution
+
+```csharp
+// Execute actions safely (catches exceptions as RuntimeError)
+var result1 = Result.Execute(() => RiskyOperation()); // Result<Unit>
+var result2 = Result.Execute(() => ComputeValue()); // Result<T>
+
+// Async execution
+var asyncResult = await Result.Execute(async () => await RiskyAsyncOperation());
+```
+
+#### Conditional Results
+
+```csharp
+// Create results based on conditions
+var result1 = Result.Ensure(userAge >= 18, () => new ValidationError("Must be 18+"));
+var result2 = Result.Ensure(() => IsValidOperation(), () => new LogicError("Invalid state"));
+
+// Async conditions
+var asyncResult = await Result.Ensure(async () => await ValidateAsync(), 
+                                     () => new ValidationError("Validation failed"));
+```
+
+#### Functional Composition
+
+```csharp
+// Start chains with Result.Bind for consistent syntax
+var result = Result.Bind(() => GetInitialValue())
+    .Bind(ValidateValue)
+    .Bind(ProcessValue)
+    .Map(FormatOutput);
+
+// Instead of:
+var result2 = GetInitialValue() // Direct call breaks the chain style
+    .Bind(ValidateValue)
+    .Bind(ProcessValue)
+    .Map(FormatOutput);
+```
+
+#### Complete Example
 
 For example, instead of writing:
 ```csharp
@@ -269,24 +416,113 @@ public Result<Unit> Publish() => Result
     .IfSuccess(() => PublishingStatus = PublishingStatus.Published);
 ```
 
-## Manipulating `IEnumerable<Maybe<T>>`
+## Working with Collections
 
-The library provides a set of extension methods that enable manipulation of sequences of `Maybe<T>` instances.
+### Manipulating `IEnumerable<Maybe<T>>`
 
-* `MapEach`: Maps each `Maybe` in the sequence, preserving the `None` values
-* `BindEach`: Binds each `Maybe` in the sequence, preserving the `None` values
-* `MatchEach`: Matches each `Maybe` in the sequence
+The library provides a comprehensive set of extension methods for working with sequences of `Maybe<T>` instances:
 
-## Manipulating `IEnumerable<Result<T>>`
+#### Core Collection Methods
 
-The library provide a set of extension methods that enable manipulation of sequences of `Result<T>` instances.
+```csharp
+var books = new List<Maybe<Book>> { 
+    Maybe.Some(new Book("1984", "Orwell")), 
+    Maybe.None<Book>(), 
+    Maybe.Some(new Book("Brave New World", "Huxley")) 
+};
 
-* `MapEach`: Maps each `Result` in the sequence, preserving the failed `Result`s
-* `BindEach`: Binds each `Result` in the sequence, preserving the failed `Result`s
-* `MatchEach`: Matches each `Result` in the sequence
-* `AggregateResults`: Transforms a sequence of `Result`s into a single `Result` that contains a sequence of the successful values. If the original sequence contains any `Error` then will return a failed `Result` with an `AggregateError` containing all the errors found.
+// SelectValues: Extract all Some values, discard None values
+var validBooks = books.SelectValues(); // IEnumerable<Book> with 2 books
 
-## Design Goals for `Error`
+// MapEach: Transform each Maybe, preserving None values
+var upperTitles = books.MapEach(book => book.Title.ToUpper()); 
+// IEnumerable<Maybe<string>> with 2 Some values and 1 None
+
+// BindEach: Chain operations on each Maybe, preserving None values  
+var authors = books.BindEach(book => book.Author); 
+// IEnumerable<Maybe<Author>>
+
+// MatchEach: Transform all Maybes to a common type
+var descriptions = books.MatchEach(
+    book => $"Book: {book.Title}",
+    "No book"
+); // IEnumerable<string>
+```
+
+#### Filtering and Predicates
+
+```csharp
+var numbers = new[] { 
+    Maybe.Some(1), Maybe.None<int>(), Maybe.Some(2), Maybe.Some(3) 
+};
+
+// Where: Filter Some values based on predicate, None values are discarded
+var evenNumbers = numbers.Where(n => n % 2 == 0); // Maybe<int>[] with Some(2)
+
+// WhereNot: Filter Some values with negated predicate
+var oddNumbers = numbers.WhereNot(n => n % 2 == 0); // Maybe<int>[] with Some(1), Some(3)
+
+// Predicate methods
+var allHaveValues = numbers.AllSome(); // false (contains None)
+var allEmpty = numbers.AllNone(); // false (contains Some values)
+```
+
+### Manipulating `IEnumerable<Result<T>>`
+
+The library provides powerful extension methods for working with sequences of `Result<T>` instances:
+
+#### Core Collection Methods
+
+```csharp
+var operations = new[] {
+    Result.Success("file1.txt"),
+    Result.Failure<string>("Access denied"),
+    Result.Success("file3.txt")
+};
+
+// SelectValues: Extract all successful values, discard failures
+var successfulFiles = operations.SelectValues(); // IEnumerable<string> with 2 files
+
+// MapEach: Transform each Result, preserving failures
+var processedFiles = operations.MapEach(file => file.ToUpper());
+// IEnumerable<Result<string>> with 2 successes and 1 failure
+
+// BindEach: Chain operations on each Result, preserving failures
+var fileContents = operations.BindEach(ReadFileContent);
+// IEnumerable<Result<string>>
+
+// MatchEach: Transform all Results to a common type
+var messages = operations.MatchEach(
+    file => $"Processed: {file}",
+    error => $"Error: {error.Message}"
+); // IEnumerable<string>
+```
+
+#### Aggregation
+
+```csharp
+var userOperations = new[] {
+    CreateUser("john@example.com"),
+    CreateUser("jane@example.com"),
+    CreateUser("invalid-email") // This will fail
+};
+
+// AggregateResults: Combine all results into a single Result
+var aggregated = userOperations.AggregateResults();
+// Result<IEnumerable<User>> - fails with AggregateError containing all errors
+
+// If all operations succeed:
+var allSuccess = new[] {
+    Result.Success(1),
+    Result.Success(2),
+    Result.Success(3)
+};
+var combined = allSuccess.AggregateResults(); // Result<IEnumerable<int>> with [1, 2, 3]
+```
+
+## Error Types and Management
+
+### Design Goals for `Error`
 
 The `Error` class is used for modeling errors and works in conjunction with the `Result<T>` monad.
 
@@ -296,7 +532,6 @@ Examples include `InvalidEmailError`, `InvalidPasswordError`, `InvalidUsernameEr
 * `RuntimeError`: These errors are caused by external sources and are unrelated to domain logic.
 Examples include `DatabaseError`, `NetworkError`, `FileSystemError`, etc.
 
-
 Distinguishing between `LogicError`s and `RuntimeError`s is important, as they require different handling approaches:
 * `LogicError`s should be programmatically handled and can be safely reported to the user in case of a malformed request.
 * `RuntimeError`s should be handled by the infrastructure and should not be reported to the user.
@@ -304,7 +539,70 @@ Distinguishing between `LogicError`s and `RuntimeError`s is important, as they r
 For example, in a typical ASP.NET Core application, `LogicErrors` can be handled by returning a `BadRequest`
 response to the client, while `RuntimeErrors` can be handled by returning an `InternalServerError` response.
 
-### `Error` Hierarchy Best Practices
+### Built-in Error Types
+
+#### LogicError
+Base class for application logic errors:
+
+```csharp
+// Simple logic error
+var error = new LogicError("Invalid input provided");
+var result = Result.Failure<string>(error);
+```
+
+#### RuntimeError  
+Wraps exceptions that occur during execution:
+
+```csharp
+try 
+{
+    // Some risky operation
+    var data = await riskOperation();
+    return Result.Success(data);
+}
+catch (Exception ex)
+{
+    return Result.Failure<string>(new RuntimeError(ex));
+}
+
+// Or use Result.Execute to handle this automatically:
+var result = Result.Execute(() => riskyOperation());
+```
+
+#### AggregateError
+Contains multiple errors, typically from `AggregateResults`:
+
+```csharp
+var operations = new[] {
+    Result.Failure<int>("Error 1"),
+    Result.Failure<int>("Error 2"), 
+    Result.Success(42)
+};
+
+var aggregated = operations.AggregateResults();
+// Result fails with AggregateError containing "Error 1" and "Error 2"
+
+if (aggregated.IsFailure && aggregated.Error is AggregateError aggError)
+{
+    foreach (var error in aggError.Errors)
+    {
+        Console.WriteLine($"Individual error: {error.Message}");
+    }
+}
+```
+
+#### MaybeNoneError
+Default error when converting `Maybe.None` to `Result`:
+
+```csharp
+var maybe = Maybe.None<string>();
+var result = maybe.MapToResult(); // Result<string> fails with MaybeNoneError
+
+// Custom error instead:
+var result2 = maybe.MapToResult(() => new LogicError("Value was not found"));
+```
+
+### Error Hierarchy Best Practices
 Each application should model its own logic errors by deriving from a root class that represents the base class
 for all logic errors. The root class should derive from the `LogicError` class.
 
@@ -360,6 +658,149 @@ can be used to model validation errors.
 In contrast to `LogicError`s, `RuntimeError`s are generated by the `Result.Execute()` methods to encapsulate exceptions 
 thrown by the application.
 
+## Async Programming with Monads
+
+Both `Result<T>` and `Maybe<T>` provide full async support for all major operations:
+
+### Async Result Operations
+
+```csharp
+// Async Map
+var result = await Result.Success("file.txt")
+    .Map(async fileName => await File.ReadAllTextAsync(fileName));
+
+// Async Bind
+public async Task<Result<User>> GetUserAsync(int id) => 
+    await ValidateId(id)
+        .Bind(async validId => await database.GetUserAsync(validId));
+
+// Async side effects
+var result = await CreateUserAsync(email)
+    .IfSuccess(async user => await SendWelcomeEmailAsync(user))
+    .IfFailure(async error => await LogErrorAsync(error));
+
+// Async Match
+var message = await result.Match(
+    async user => await FormatUserDetailsAsync(user),
+    async error => await FormatErrorMessageAsync(error)
+);
+
+// Async Ensure
+var validated = await result
+    .Ensure(async user => await IsUserActiveAsync(user), 
+            new LogicError("User is not active"));
+```
+
+### Async Maybe Operations
+
+```csharp
+// Async Map
+var maybe = await Maybe.Some("data")
+    .Map(async data => await ProcessDataAsync(data));
+
+// Async Bind  
+var result = await Maybe.Some(userId)
+    .Bind(async id => await FindUserAsync(id));
+
+// Async side effects
+await maybe
+    .IfSome(async value => await ProcessValueAsync(value))
+    .IfNone(async () => await HandleMissingValueAsync());
+
+// Async WithDefault
+var withDefault = await Maybe.None<string>()
+    .WithDefault(async () => await GetDefaultValueAsync());
+```
+
+### Task<Result<T>> and Task<Maybe<T>> Extensions
+
+All methods work seamlessly with `Task<Result<T>>` and `Task<Maybe<T>>`:
+
+```csharp
+// Chain async operations
+public async Task<Result<ProcessedData>> ProcessUserDataAsync(int userId)
+{
+    return await GetUserAsync(userId)          // Task<Result<User>>
+        .Bind(async user => await GetUserDataAsync(user.Id))  // Chain with async
+        .Map(async data => await ProcessDataAsync(data))      // Async transform
+        .IfSuccess(async result => await CacheResultAsync(result)); // Async side effect
+}
+
+// Using Result.Execute for async operations
+var result = await Result.Execute(async () => await RiskyAsyncOperation());
+```
+
+## Advanced Patterns and Best Practices
+
+### Railway-Oriented Programming
+
+Chain operations to create robust data processing pipelines:
+
+```csharp
+public async Task<Result<ProcessedOrder>> ProcessOrderAsync(OrderRequest request)
+{
+    return await ValidateOrderRequest(request)
+        .Bind(ValidateCustomer)
+        .Bind(ValidateInventory)
+        .Bind(CalculatePricing)
+        .Bind(async order => await SaveOrderAsync(order))
+        .Bind(async order => await ProcessPaymentAsync(order))
+        .IfSuccess(async order => await SendConfirmationAsync(order))
+        .Match(
+            order => Result.Success(order),
+            async error => await HandleOrderErrorAsync(error)
+        );
+}
+```
+
+### Combining Maybe and Result
+
+Convert between `Maybe<T>` and `Result<T>` as needed:
+
+```csharp
+public Result<UserProfile> GetUserProfile(int userId)
+{
+    return FindUser(userId)                    // Maybe<User>
+        .MapToResult(() => new NotFoundError("User not found"))  // Result<User>
+        .Bind(user => LoadUserProfile(user))   // Result<UserProfile>
+        .Map(profile => EnrichProfile(profile)); // Result<UserProfile>
+}
+```
+
+### Error Recovery Patterns
+
+```csharp
+// Fallback to default values
+var config = LoadConfigFromFile()
+    .RecoverWith(() => LoadConfigFromEnvironment())
+    .RecoverWith(GetDefaultConfig());
+
+// Retry with different strategies  
+var result = await TryPrimaryService()
+    .RecoverWith(async () => await TrySecondaryService())
+    .RecoverWith(async () => await TryFallbackService());
+```
+
+### Validation Patterns
+
+```csharp
+public Result<ValidatedUser> ValidateUser(UserInput input)
+{
+    return ValidateEmail(input.Email)
+        .Bind(() => ValidatePassword(input.Password))
+        .Bind(() => ValidateAge(input.Age))
+        .Map(() => new ValidatedUser(input));
+}
+
+// Or using Result.Ensure for inline validation
+public Result<User> CreateUser(string email, string password)
+{
+    return Result.Success(new User(email, password))
+        .Ensure(user => user.Email.Contains("@"), new ValidationError("Invalid email"))
+        .Ensure(user => user.Password.Length >= 8, new ValidationError("Password too short"));
+}
+```
+
 ## Design Goals for `Maybe<T>`
 
 Before discussing what can be achieved with the `Maybe<T>` monad, let's clarify that it is not intended as a 
@@ -392,6 +833,132 @@ var maybeValue = Maybe.None<int>();
 var value = maybeValue.WithDefault(42);
 ```
 
+### Complete `Maybe<T>` API Reference
+
+#### Core Methods
+
+##### Map
+Transforms the value if present:
+
+```csharp
+var maybe = Maybe.Some("hello");
+var upper = maybe.Map(s => s.ToUpper()); // Maybe<string> with "HELLO"
+
+var none = Maybe.None<string>();
+var result = none.Map(s => s.ToUpper()); // Still None
+```
+
+##### Bind
+Chains operations that return `Maybe<T>`:
+
+```csharp
+public Maybe<int> ParseNumber(string text) => 
+    int.TryParse(text, out var num) ? Maybe.Some(num) : Maybe.None<int>();
+
+var result = Maybe.Some("42")
+    .Bind(ParseNumber); // Maybe<int> with 42
+```
+
+##### Match
+Handles both Some and None cases:
+
+```csharp
+var maybe = Maybe.Some("John");
+var greeting = maybe.Match(
+    name => $"Hello, {name}!",
+    "Hello, stranger!"
+);
+```
+
+##### GetValue
+Retrieves value with fallback:
+
+```csharp
+var maybe = Maybe.None<string>();
+var value = maybe.GetValue("default"); // Returns "default"
+var value2 = maybe.GetValue(() => GetDefaultValue()); // Lazy evaluation
+```
+
+##### OfType
+Safe type casting (note: both types must be reference types due to class constraints):
+
+```csharp
+Maybe<object> maybe = Maybe.Some("hello" as object);
+var stringMaybe = maybe.OfType<string>(); // Maybe<string> with "hello"
+
+// Note: OfType has type constraints that limit its use with value types
+```
+
+##### Side Effects: IfSome and IfNone
+
+```csharp
+var maybe = Maybe.Some("important data");
+maybe
+    .IfSome(data => Logger.Info($"Processing: {data}"))
+    .IfNone(() => Logger.Warn("No data to process"));
+```
+
+##### Execute
+Perform actions on the entire Maybe:
+
+```csharp
+var maybe = Maybe.Some(42);
+maybe.Execute(m => Console.WriteLine($"Maybe contains: {m.IsSome}"));
+```
+
+##### Predicates and Filtering (class types only)
+
+```csharp
+var maybe = Maybe.Some("42");
+
+// Check conditions (Satisfy works with class types)
+var isNumeric = maybe.Satisfy(x => int.TryParse(x, out _)); // Returns true
+
+// Filter with Where (works on nullable value types)
+var evenNumber = (42 as int?).Where(x => x % 2 == 0); // Maybe<int> with 42
+var oddNumber = (42 as int?).Where(x => x % 2 == 1); // Maybe<int> as None
+
+// WhereNot (inverse filter)
+var notEven = (42 as int?).WhereNot(x => x % 2 == 0); // Maybe<int> as None
+```
+
+##### WithDefault
+Provide fallback values:
+
+```csharp
+var none = Maybe.None<string>();
+var withDefault = none.WithDefault("fallback"); // Maybe<string> with "fallback"
+var withLazyDefault = none.WithDefault(() => ExpensiveOperation());
+```
+
+#### Factory Methods
+
+```csharp
+// Create Some value
+var some1 = Maybe.Some("value");
+var some2 = new Maybe<string>("value"); // Equivalent
+
+// Create None
+var none1 = Maybe.None<string>();
+var none2 = new Maybe<string>(); // Equivalent
+
+// Create from nullable
+string? nullable = null;
+var maybe1 = Maybe.From(nullable); // Maybe<string> as None
+var maybe2 = (Maybe<string>)nullable; // Implicit conversion
+```
+
+#### Collection Extensions
+
+```csharp
+// Convert IEnumerable to Maybe (first element or None)
+var numbers = new[] { 1, 2, 3 };
+var firstNumber = numbers.ToMaybe(); // Maybe<int> with 1
+
+var empty = new int[0];
+var noNumber = empty.ToMaybe(); // Maybe<int> as None
+```
+
 ### Converting `Maybe<T>` to `Result<T>`
 
 It is common to implement a pipeline of operations where an empty `Maybe<T>` instance should be interpreted as a failure,
@@ -408,4 +975,7 @@ var result = Maybe
     .MapToResult(() => new LogicError("Value not found"))
     .Bind(ValidateValue)
     .Bind(UpdateValue);
+
+// Without custom error (uses default MaybeNoneError)
+var result2 = Maybe.Some("value").MapToResult();
 ```
