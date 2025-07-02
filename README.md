@@ -5,13 +5,170 @@
 
 _Yet another functional library for C#_
 
-## Quickstart
+## Getting Started
 
-Install from Nuget and enjoy it!
+Install from NuGet and start using the monads in your C# projects:
 
 ```shell
 dotnet add package Bogoware.Monads
 ```
+
+### Your First Maybe Example
+
+Let's start with a simple example using `Maybe<T>` to handle optional values safely:
+
+```csharp
+using Bogoware.Monads;
+
+// Traditional approach with null checks
+public string GetFullName(string firstName, string? lastName)
+{
+    if (lastName != null)
+        return $"{firstName} {lastName}";
+    return firstName;
+}
+
+// Using Maybe<T> for safer optional handling
+public record Person(string FirstName, Maybe<string> LastName);
+
+public string GetFullNameSafe(Person person)
+{
+    return person.LastName
+        .Map(last => $"{person.FirstName} {last}")
+        .GetValue(() => person.FirstName);
+}
+
+// Usage
+var personWithLastName = new Person("John", Maybe.Some("Doe"));
+var personWithoutLastName = new Person("Jane", Maybe.None<string>());
+
+Console.WriteLine(GetFullNameSafe(personWithLastName));   // "John Doe"
+Console.WriteLine(GetFullNameSafe(personWithoutLastName)); // "Jane"
+```
+
+### Your First Result Example
+
+Now let's see how `Result<T>` handles operations that can fail:
+
+```csharp
+using Bogoware.Monads;
+
+// Traditional approach with exceptions
+public User CreateUserUnsafe(string email, string password)
+{
+    if (string.IsNullOrEmpty(email) || !email.Contains("@"))
+        throw new ArgumentException("Invalid email");
+    
+    if (password.Length < 8)
+        throw new ArgumentException("Password too short");
+    
+    return new User(email, password);
+}
+
+// Using Result<T> for explicit error handling
+public Result<User> CreateUserSafe(string email, string password)
+{
+    return ValidateEmail(email)
+        .Bind(() => ValidatePassword(password))
+        .Map(() => new User(email, password));
+}
+
+public Result<Unit> ValidateEmail(string email)
+{
+    if (string.IsNullOrEmpty(email) || !email.Contains("@"))
+        return Result.Failure<Unit>("Invalid email address");
+    
+    return Result.Unit;
+}
+
+public Result<Unit> ValidatePassword(string password)
+{
+    if (password.Length < 8)
+        return Result.Failure<Unit>("Password must be at least 8 characters");
+    
+    return Result.Unit;
+}
+
+// Usage
+var successResult = CreateUserSafe("john@example.com", "secure123");
+var failureResult = CreateUserSafe("invalid-email", "short");
+
+successResult.Match(
+    user => $"User created: {user.Email}",
+    error => $"Error: {error.Message}"
+);
+```
+
+### Combining Maybe and Result
+
+Here's a practical example that combines both monads:
+
+```csharp
+using Bogoware.Monads;
+
+public record Book(string Title, Maybe<Person> Author);
+
+public class BookService
+{
+    private readonly List<Book> _books = new();
+
+    public Maybe<Book> FindBookByTitle(string title)
+    {
+        var book = _books.FirstOrDefault(b => b.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+        return book != null ? Maybe.Some(book) : Maybe.None<Book>();
+    }
+
+    public Result<string> GetBookDescription(string title)
+    {
+        return FindBookByTitle(title)
+            .MapToResult(() => new LogicError($"Book '{title}' not found"))
+            .Map(book => FormatBookDescription(book));
+    }
+
+    private string FormatBookDescription(Book book)
+    {
+        return book.Author
+            .Map(author => $"'{book.Title}' by {author.GetFullName()}")
+            .GetValue(() => $"'{book.Title}' (Author unknown)");
+    }
+}
+
+// Usage
+var bookService = new BookService();
+var result = bookService.GetBookDescription("Clean Code");
+
+result.Match(
+    description => Console.WriteLine(description),
+    error => Console.WriteLine($"Error: {error.Message}")
+);
+```
+
+### Advanced Pipeline Example
+
+For more complex scenarios, you can chain multiple operations:
+
+```csharp
+public Result<User> ProcessUserRegistration(string email, string password, string confirmPassword)
+{
+    return ValidateEmail(email)
+        .Bind(() => ValidatePassword(password))
+        .Bind(() => ValidatePasswordMatch(password, confirmPassword))
+        .Bind(() => CheckEmailNotExists(email))
+        .Map(() => new User(email, password))
+        .Bind(SaveUser)
+        .IfSuccess(user => SendWelcomeEmail(user))
+        .Match(
+            user => Result.Success(user),
+            error => LogError(error)
+        );
+}
+```
+
+This approach ensures that:
+- Operations only proceed if the previous step succeeded
+- Errors are captured and handled explicitly
+- The code is more readable and maintainable
+- No exceptions are thrown for expected failure cases
 
 
 ## Introduction to Monads
@@ -21,7 +178,7 @@ of functional programming. While we won't delve into a detailed explanation of m
 workings, there are numerous resources available online that approach the topic 
 from different perspectives.
 
-For the purpose of this introduction, we can consider monads as am abstraction of _safe container_ that encapsulates
+For the purpose of this introduction, we can consider monads as an abstraction of _safe container_ that encapsulates
 the result of an operation. They provide methods that enable manipulation of the result in a safe manner,
 ensuring that the execution flow follows the "happy" path in case of success and the "unhappy" path in case of failure. This model is also known as _railway-oriented programming_.
 
@@ -105,7 +262,7 @@ You can write:
 ```csharp
 /// Publishes the project
 public Result<Unit> Publish() => Result
-    .Ensure(PublishingStatus != PublishingStatus.Published, () => new InvalidOperationError("Already published")
+    .Ensure(PublishingStatus != PublishingStatus.Published, () => new InvalidOperationError("Already published"))
     .Bind(ValidateCostComponents)
     .Bind(ValidateTimingComponents)
     // ... more binding to validation methods
@@ -222,7 +379,7 @@ The implicit conversion from `Nullable<T>` to `Maybe<T>` allows for lifting `Nul
 values and utilizing `Maybe<T>` methods for chaining operations.
 
 > **Practical rule**: Use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and
-> method paramethers.
+> method parameters.
 
 ### Recovering from `Maybe.None` with `WithDefault`
 
@@ -248,8 +405,7 @@ For example, consider the following code snippet:
 ```csharp
 var result = Maybe
     .From(someFactoryMethod())
-    .MapToResult(new NotFoundError("Value not found"))
+    .MapToResult(() => new LogicError("Value not found"))
     .Bind(ValidateValue)
     .Bind(UpdateValue);
-
 ```
