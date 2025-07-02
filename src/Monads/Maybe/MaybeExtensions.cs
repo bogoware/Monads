@@ -11,6 +11,7 @@ public static class MaybeExtensions
     /// <summary>
     /// Map the value to a new one.
     /// </summary>
+    [Obsolete("Consider using Map(() => value) instead to benefit from lazy evaluation. Direct values are always evaluated, even when the Maybe is None.", false)]
     public static Maybe<TNewValue> Map<TValue, TNewValue>(this Maybe<TValue> maybe, TNewValue? value)
         where TNewValue : class where TValue : class
         => maybe.IsSome ? new(value) : Maybe<TNewValue>.None;
@@ -207,6 +208,7 @@ public static class MaybeExtensions
 
     /// Map a default value if the current <see cref="Maybe{T}"/> is <c>None</c>. 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Consider using WithDefault(() => value) instead to benefit from lazy evaluation. Direct values are always evaluated, even when the Maybe is Some.", false)]
     public static Maybe<TNewValue> WithDefault<TNewValue>(this Maybe<TNewValue> maybe, TNewValue value)
         where TNewValue : class
         => maybe.IsSome ? maybe : new(value);
