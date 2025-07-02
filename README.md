@@ -22,6 +22,7 @@ _Yet another functional library for C#_
   - [IEnumerable&lt;Result&lt;T&gt;&gt; Extensions](#manipulating-ienumerableresultt)
 - [Error Types and Management](#error-types-and-management)
   - [Built-in Error Types](#built-in-error-types)
+  - [IEnumerable&lt;Error&gt; Extensions](#ienumerableerror-extensions)
   - [Error Hierarchy Best Practices](#error-hierarchy-best-practices)
 - [Async Programming with Monads](#async-programming-with-monads)
 - [Advanced Patterns and Best Practices](#advanced-patterns-and-best-practices)
@@ -648,6 +649,28 @@ if (aggregated.IsFailure && aggregated.Error is AggregateError aggError)
 }
 ```
 
+You can also create `AggregateError` instances directly from collections of errors using extension methods:
+
+```csharp
+// Create AggregateError from a collection of errors
+var errors = new[] {
+    new LogicError("Validation failed"),
+    new RuntimeError(new Exception("Database connection failed")),
+    new LogicError("Business rule violated")
+};
+
+// Using default message
+var aggregateError = errors.ToAggregateError();
+// Creates AggregateError with message "Multiple errors occurred"
+
+// Using custom message
+var customAggregateError = errors.ToAggregateError("Operation failed due to multiple issues");
+// Creates AggregateError with custom message
+
+// Usage in Result context
+var result = Result.Failure<string>(errors.ToAggregateError("User validation failed"));
+```
+
 #### MaybeNoneError
 Default error when converting `Maybe.None` to `Result`:
 
@@ -657,6 +680,70 @@ var result = maybe.MapToResult(); // Result<string> fails with MaybeNoneError
 
 // Custom error instead:
 var result2 = maybe.MapToResult(() => new LogicError("Value was not found"));
+```
+
+### IEnumerable&lt;Error&gt; Extensions
+
+The library provides convenient extension methods for working with collections of errors to create `AggregateError` instances:
+
+#### ToAggregateError()
+
+Converts a collection of errors into an `AggregateError` with the default message:
+
+```csharp
+var validationErrors = new[]
+{
+    new LogicError("Name is required"),
+    new LogicError("Email format is invalid"),
+    new LogicError("Age must be positive")
+};
+
+var aggregateError = validationErrors.ToAggregateError();
+// Creates AggregateError with message "Multiple errors occurred"
+
+// Use in validation scenarios
+public Result<User> ValidateUser(UserInput input)
+{
+    var errors = new List<Error>();
+    
+    if (string.IsNullOrEmpty(input.Name))
+        errors.Add(new LogicError("Name is required"));
+        
+    if (!IsValidEmail(input.Email))
+        errors.Add(new LogicError("Email format is invalid"));
+    
+    if (errors.Any())
+        return Result.Failure<User>(errors.ToAggregateError());
+        
+    return Result.Success(new User(input.Name, input.Email));
+}
+```
+
+#### ToAggregateError(string message)
+
+Converts a collection of errors into an `AggregateError` with a custom message:
+
+```csharp
+var businessRuleErrors = new[]
+{
+    new LogicError("Insufficient balance"),
+    new LogicError("Account is suspended"),
+    new LogicError("Transaction limit exceeded")
+};
+
+var aggregateError = businessRuleErrors.ToAggregateError("Transaction failed");
+// Creates AggregateError with custom message "Transaction failed"
+
+// Use in business logic
+public Result<Transaction> ProcessPayment(PaymentRequest request)
+{
+    var errors = ValidatePaymentRequest(request);
+    
+    if (errors.Any())
+        return Result.Failure<Transaction>(errors.ToAggregateError("Payment validation failed"));
+        
+    return ProcessTransaction(request);
+}
 ```
 
 ### Error Hierarchy Best Practices
