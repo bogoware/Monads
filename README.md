@@ -2,8 +2,29 @@
 
 ![Nuget](https://img.shields.io/nuget/dt/Bogoware.Monads?logo=nuget&style=plastic) ![Nuget](https://img.shields.io/nuget/v/Bogoware.Monads?style=plastic)
 
-
 _Yet another functional library for C#_
+
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Introduction to Monads](#introduction-to-monads)
+- [Library Overview](#library-overview)
+- [Result&lt;T&gt; Monad](#resultt-monad)
+  - [Design Goals](#design-goals-for-resultt)
+  - [Complete API Reference](#complete-resultt-api-reference)
+  - [Static Helper Methods](#result-static-helper-methods)
+- [Maybe&lt;T&gt; Monad](#maybet-monad)
+  - [Design Goals](#design-goals-for-maybet)
+  - [Complete API Reference](#complete-maybet-api-reference)
+  - [Converting to Result&lt;T&gt;](#converting-maybet-to-resultt)
+- [Working with Collections](#working-with-collections)
+  - [IEnumerable&lt;Maybe&lt;T&gt;&gt; Extensions](#manipulating-ienumerablemaybet)
+  - [IEnumerable&lt;Result&lt;T&gt;&gt; Extensions](#manipulating-ienumerableresultt)
+- [Error Types and Management](#error-types-and-management)
+  - [Built-in Error Types](#built-in-error-types)
+  - [Error Hierarchy Best Practices](#error-hierarchy-best-practices)
+- [Async Programming with Monads](#async-programming-with-monads)
+- [Advanced Patterns and Best Practices](#advanced-patterns-and-best-practices)
 
 ## Getting Started
 
@@ -186,7 +207,7 @@ By employing monads, code can be protected from further processing in case of er
 Adopting a functional approach offers benefits such as increased readability, improved reasoning capabilities,
 and more robust and error-resistant code.
 
-## Bogoware Monads
+## Library Overview
 
 This library provides two well-known monads: `Result` and `Maybe` monads (also referred to as `Either`, 
 `Optional`, `Option` in other contexts):
@@ -197,6 +218,8 @@ This library provides two well-known monads: `Result` and `Maybe` monads (also r
 
 Additionally, the library provides the `Error` abstract class, which complements the `Result<T>` monad and
 offers an ergonomic approach to error management at an application-wide scale.
+
+## Result&lt;T&gt; Monad
 
 ## Design Goals for `Result<T>`
 
@@ -308,6 +331,17 @@ Execute actions without changing the result:
 var result = CreateUser("john@example.com")
     .IfSuccess(user => Logger.Info($"User created: {user.Id}"))
     .IfFailure(error => Logger.Error($"Creation failed: {error.Message}"));
+```
+
+##### Satisfy
+Check conditions on the result value (class types only):
+
+```csharp
+var result = Result.Success("john@example.com");
+var isValidEmail = result.Satisfy(email => email.Contains("@")); // Returns true
+
+var failedResult = Result.Failure<string>("Error");
+var check = failedResult.Satisfy(email => email.Contains("@")); // Returns false
 ```
 
 #### Unsafe Methods (Use Sparingly)
@@ -496,6 +530,29 @@ var messages = operations.MatchEach(
     file => $"Processed: {file}",
     error => $"Error: {error.Message}"
 ); // IEnumerable<string>
+```
+
+#### Predicate Methods
+
+```csharp
+var results = new[] {
+    Result.Success(1),
+    Result.Failure<int>("Error 1"), 
+    Result.Success(2),
+    Result.Failure<int>("Error 2")
+};
+
+// Check if all results are successful
+var allSucceeded = results.AllSuccess(); // false
+
+// Check if all results failed
+var allFailed = results.AllFailure(); // false
+
+// Check if any result succeeded
+var anySucceeded = results.AnySuccess(); // true
+
+// Check if any result failed  
+var anyFailed = results.AnyFailure(); // true
 ```
 
 #### Aggregation
@@ -832,6 +889,29 @@ For example, consider the following code snippet:
 var maybeValue = Maybe.None<int>();
 var value = maybeValue.WithDefault(42);
 ```
+
+## Maybe&lt;T&gt; Monad
+
+### Design Goals for `Maybe<T>`
+
+Before discussing what can be achieved with the `Maybe<T>` monad, let's clarify that it is not intended as a 
+replacement for `Nullable<T>`.
+This is mainly due to fundamental libraries, such as Entity Framework, relying on `Nullable<T>` to model class
+attributes, while support for structural types remains limited.
+
+A pragmatic approach involves using `Nullable<T>` for modeling class attributes and `Maybe<T>` for modeling
+return values and method parameters.
+
+The advantage of using `Maybe<T>` over `Nullable<T>` is that `Maybe<T>` provides a set of methods that enable
+chaining operations in a functional manner.
+This becomes particularly useful when dealing with operations that can optionally return a value,
+such as querying a database.
+
+The implicit conversion from `Nullable<T>` to `Maybe<T>` allows for lifting `Nullable<T>` values to `Maybe<T>`
+values and utilizing `Maybe<T>` methods for chaining operations.
+
+> **Practical rule**: Use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and
+> method parameters.
 
 ### Complete `Maybe<T>` API Reference
 
