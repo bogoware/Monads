@@ -35,7 +35,7 @@ public string GetFullNameSafe(Person person)
 {
     return person.LastName
         .Map(last => $"{person.FirstName} {last}")
-        .GetValue(() => person.FirstName);
+        .GetValue(person.FirstName);
 }
 
 // Usage
