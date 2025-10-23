@@ -50,21 +50,19 @@ public string GetFullName(string firstName, string? lastName)
 }
 
 // Using Maybe<T> for safer optional handling
-public record Person(string FirstName, Maybe<string> LastName);
-
-public string GetFullNameSafe(Person person)
+public record Person(string FirstName, Maybe<string> LastName)
 {
-    return person.LastName
-        .Map(last => $"{person.FirstName} {last}")
-        .GetValue(person.FirstName);
+    public string GetFullName() => LastName
+        .Map(last => $"{FirstName} {last}")
+        .GetValue(FirstName);
 }
 
 // Usage
 var personWithLastName = new Person("John", Maybe.Some("Doe"));
 var personWithoutLastName = new Person("Jane", Maybe.None<string>());
 
-Console.WriteLine(GetFullNameSafe(personWithLastName));   // "John Doe"
-Console.WriteLine(GetFullNameSafe(personWithoutLastName)); // "Jane"
+Console.WriteLine(personWithLastName.GetFullName());   // "John Doe"
+Console.WriteLine(personWithoutLastName.GetFullName()); // "Jane"
 ```
 
 ### Your First Result Example
@@ -127,6 +125,7 @@ Here's a practical example that combines both monads:
 ```csharp
 using Bogoware.Monads;
 
+// Person record defined in the previous example
 public record Book(string Title, Maybe<Person> Author);
 
 public class BookService
@@ -459,21 +458,25 @@ The library provides a comprehensive set of extension methods for working with s
 #### Core Collection Methods
 
 ```csharp
-var books = new List<Maybe<Book>> { 
-    Maybe.Some(new Book("1984", "Orwell")), 
-    Maybe.None<Book>(), 
-    Maybe.Some(new Book("Brave New World", "Huxley")) 
+public record Author(string Name);
+public record Book(string Title, Maybe<Author> Author);
+
+var books = new List<Maybe<Book>>
+{
+    Maybe.Some(new Book("1984", Maybe.Some(new Author("Orwell")))),
+    Maybe.None<Book>(),
+    Maybe.Some(new Book("Brave New World", Maybe.Some(new Author("Huxley"))))
 };
 
 // SelectValues: Extract all Some values, discard None values
 var validBooks = books.SelectValues(); // IEnumerable<Book> with 2 books
 
 // MapEach: Transform each Maybe, preserving None values
-var upperTitles = books.MapEach(book => book.Title.ToUpper()); 
+var upperTitles = books.MapEach(book => book.Title.ToUpperInvariant());
 // IEnumerable<Maybe<string>> with 2 Some values and 1 None
 
-// BindEach: Chain operations on each Maybe, preserving None values  
-var authors = books.BindEach(book => book.Author); 
+// BindEach: Chain operations on each Maybe, preserving None values
+var authors = books.BindEach(book => book.Author);
 // IEnumerable<Maybe<Author>>
 
 // MatchEach: Transform all Maybes to a common type
@@ -485,20 +488,26 @@ var descriptions = books.MatchEach(
 
 #### Filtering and Predicates
 
+Using the `Author` record from above:
+
 ```csharp
-var numbers = new[] { 
-    Maybe.Some(1), Maybe.None<int>(), Maybe.Some(2), Maybe.Some(3) 
+var authors = new[]
+{
+    Maybe.Some(new Author("Orwell")),
+    Maybe.None<Author>(),
+    Maybe.Some(new Author("Atwood")),
+    Maybe.Some(new Author("Le Guin"))
 };
 
 // Where: Filter Some values based on predicate, None values are discarded
-var evenNumbers = numbers.Where(n => n % 2 == 0); // Maybe<int>[] with Some(2)
+var longNames = authors.Where(a => a.Name.Length > 6); // IEnumerable<Maybe<Author>> with filtered Some values
 
 // WhereNot: Filter Some values with negated predicate
-var oddNumbers = numbers.WhereNot(n => n % 2 == 0); // Maybe<int>[] with Some(1), Some(3)
+var shortNames = authors.WhereNot(a => a.Name.Length > 6); // IEnumerable<Maybe<Author>>
 
 // Predicate methods
-var allHaveValues = numbers.AllSome(); // false (contains None)
-var allEmpty = numbers.AllNone(); // false (contains Some values)
+var allHaveValues = authors.AllSome(); // false (contains None)
+var allEmpty = authors.AllNone();     // false (contains Some values)
 ```
 
 ### Manipulating `IEnumerable<Result<T>>`
@@ -566,7 +575,7 @@ var userOperations = new[] {
 
 // AggregateResults: Combine all results into a single Result
 var aggregated = userOperations.AggregateResults();
-// Result<IEnumerable<User>> - fails with AggregateError containing all errors
+// Result<IEnumerable<User?>> - fails with AggregateError containing all errors
 
 // If all operations succeed:
 var allSuccess = new[] {
@@ -574,7 +583,7 @@ var allSuccess = new[] {
     Result.Success(2),
     Result.Success(3)
 };
-var combined = allSuccess.AggregateResults(); // Result<IEnumerable<int>> with [1, 2, 3]
+var combined = allSuccess.AggregateResults(); // Result<IEnumerable<int?>> with [1, 2, 3]
 ```
 
 ## Error Types and Management
@@ -858,9 +867,11 @@ public Result<User> CreateUser(string email, string password)
 }
 ```
 
-## Design Goals for `Maybe<T>`
+## Maybe&lt;T&gt; Monad
 
-Before discussing what can be achieved with the `Maybe<T>` monad, let's clarify that it is not intended as a 
+### Design Goals for `Maybe<T>`
+
+Before discussing what can be achieved with the `Maybe<T>` monad, let's clarify that it is not intended as a
 replacement for `Nullable<T>`.
 This is mainly due to fundamental libraries, such as Entity Framework, relying on `Nullable<T>` to model class
 attributes, while support for structural types remains limited.
@@ -872,6 +883,10 @@ The advantage of using `Maybe<T>` over `Nullable<T>` is that `Maybe<T>` provides
 chaining operations in a functional manner.
 This becomes particularly useful when dealing with operations that can optionally return a value,
 such as querying a database.
+
+Because `Maybe<T>` models the presence or absence of reference values, most of its fluent APIs are constrained
+to `class` types. Value types can be wrapped in a `Maybe<T>` when the flow eventually maps to a reference type,
+but composition across value types is intentionally limited to keep null-safety semantics predictable.
 
 The implicit conversion from `Nullable<T>` to `Maybe<T>` allows for lifting `Nullable<T>` values to `Maybe<T>`
 values and utilizing `Maybe<T>` methods for chaining operations.
@@ -881,37 +896,15 @@ values and utilizing `Maybe<T>` methods for chaining operations.
 
 ### Recovering from `Maybe.None` with `WithDefault`
 
-The `WithDefault` method allows recovering from a `Maybe.None` instance by providing a default value.
-
-For example, consider the following code snippet:
+The `WithDefault` helpers provide an easy way to recover from a `None` case by supplying an alternative value.
 
 ```csharp
-var maybeValue = Maybe.None<int>();
-var value = maybeValue.WithDefault(42);
+var missingTitle = Maybe.None<string>();
+var fallback = missingTitle.WithDefault("Untitled");               // Maybe<string> with "Untitled"
+var lazyFallback = missingTitle.WithDefault(() => BuildTitle());    // Lazy evaluation when None
 ```
 
-## Maybe&lt;T&gt; Monad
-
-### Design Goals for `Maybe<T>`
-
-Before discussing what can be achieved with the `Maybe<T>` monad, let's clarify that it is not intended as a 
-replacement for `Nullable<T>`.
-This is mainly due to fundamental libraries, such as Entity Framework, relying on `Nullable<T>` to model class
-attributes, while support for structural types remains limited.
-
-A pragmatic approach involves using `Nullable<T>` for modeling class attributes and `Maybe<T>` for modeling
-return values and method parameters.
-
-The advantage of using `Maybe<T>` over `Nullable<T>` is that `Maybe<T>` provides a set of methods that enable
-chaining operations in a functional manner.
-This becomes particularly useful when dealing with operations that can optionally return a value,
-such as querying a database.
-
-The implicit conversion from `Nullable<T>` to `Maybe<T>` allows for lifting `Nullable<T>` values to `Maybe<T>`
-values and utilizing `Maybe<T>` methods for chaining operations.
-
-> **Practical rule**: Use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and
-> method parameters.
+`BuildTitle` in the example represents any factory method that returns a `string`.
 
 ### Complete `Maybe<T>` API Reference
 
@@ -932,11 +925,25 @@ var result = none.Map(s => s.ToUpper()); // Still None
 Chains operations that return `Maybe<T>`:
 
 ```csharp
-public Maybe<int> ParseNumber(string text) => 
-    int.TryParse(text, out var num) ? Maybe.Some(num) : Maybe.None<int>();
+public record User(string Email);
+public record UserProfile(string Email, string DisplayName);
 
-var result = Maybe.Some("42")
-    .Bind(ParseNumber); // Maybe<int> with 42
+public class UserRepository
+{
+    private readonly Dictionary<string, User> _users = new();
+    private readonly Dictionary<string, UserProfile> _profiles = new();
+
+    public Maybe<User> FindUser(string email) =>
+        _users.TryGetValue(email, out var user) ? Maybe.Some(user) : Maybe.None<User>();
+
+    public Maybe<UserProfile> LoadProfile(User user) =>
+        _profiles.TryGetValue(user.Email, out var profile) ? Maybe.Some(profile) : Maybe.None<UserProfile>();
+}
+
+var repository = new UserRepository();
+var profile = Maybe.Some("john@example.com")
+    .Bind(repository.FindUser)     // Maybe<User>
+    .Bind(repository.LoadProfile); // Maybe<UserProfile>
 ```
 
 ##### Match
@@ -982,8 +989,8 @@ maybe
 Perform actions on the entire Maybe:
 
 ```csharp
-var maybe = Maybe.Some(42);
-maybe.Execute(m => Console.WriteLine($"Maybe contains: {m.IsSome}"));
+var maybe = Maybe.Some("payload");
+maybe.Execute(m => Console.WriteLine($"Maybe contains value: {m.IsSome}"));
 ```
 
 ##### Predicates and Filtering (class types only)
@@ -994,12 +1001,13 @@ var maybe = Maybe.Some("42");
 // Check conditions (Satisfy works with class types)
 var isNumeric = maybe.Satisfy(x => int.TryParse(x, out _)); // Returns true
 
-// Filter with Where (works on nullable value types)
-var evenNumber = (42 as int?).Where(x => x % 2 == 0); // Maybe<int> with 42
-var oddNumber = (42 as int?).Where(x => x % 2 == 1); // Maybe<int> as None
+// Filter nullable reference values
+string? possibleName = "Ada";
+var validName = possibleName.Where(name => name.Length > 0);     // Maybe<string> with "Ada"
+var missingName = possibleName.Where(name => name.StartsWith("Z")); // Maybe<string> as None
 
 // WhereNot (inverse filter)
-var notEven = (42 as int?).WhereNot(x => x % 2 == 0); // Maybe<int> as None
+var notShort = possibleName.WhereNot(name => name.Length < 3);   // Maybe<string> with "Ada"
 ```
 
 ##### WithDefault
@@ -1032,11 +1040,11 @@ var maybe2 = (Maybe<string>)nullable; // Implicit conversion
 
 ```csharp
 // Convert IEnumerable to Maybe (first element or None)
-var numbers = new[] { 1, 2, 3 };
-var firstNumber = numbers.ToMaybe(); // Maybe<int> with 1
+var titles = new[] { "1984", "Brave New World" };
+var firstTitle = titles.ToMaybe(); // Maybe<string> with "1984"
 
-var empty = new int[0];
-var noNumber = empty.ToMaybe(); // Maybe<int> as None
+var empty = Array.Empty<string>();
+var noTitle = empty.ToMaybe(); // Maybe<string> as None
 ```
 
 ### Converting `Maybe<T>` to `Result<T>`
