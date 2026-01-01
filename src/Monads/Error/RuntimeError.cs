@@ -1,3 +1,5 @@
+using Bogoware.Monads.Polyfills;
+
 namespace Bogoware.Monads;
 
 /// <summary>
@@ -10,7 +12,7 @@ public sealed class RuntimeError : Error
 	public Exception Exception { get; }
 	public RuntimeError(Exception exception)
 	{
-		ArgumentNullException.ThrowIfNull(exception);
+		Guard.ThrowIfNull(exception);
 		Exception = exception;
 	}
 

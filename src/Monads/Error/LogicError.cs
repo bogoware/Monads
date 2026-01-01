@@ -1,5 +1,8 @@
 // ReSharper disable MemberCanBeProtected.Global
 // ReSharper disable UnusedMember.Global
+
+using Bogoware.Monads.Polyfills;
+
 namespace Bogoware.Monads;
 
 /// <summary>
@@ -37,7 +40,7 @@ public class LogicError: Error, IEquatable<LogicError>
 	public override string Message { get; }
 	public LogicError(string message)
 	{
-		ArgumentNullException.ThrowIfNull(message);
+		Guard.ThrowIfNull(message);
 		Message = message;
 	}
 

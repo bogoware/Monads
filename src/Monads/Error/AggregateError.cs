@@ -1,4 +1,7 @@
 // ReSharper disable MemberCanBePrivate.Global
+
+using Bogoware.Monads.Polyfills;
+
 namespace Bogoware.Monads;
 
 /// <summary>
@@ -21,8 +24,8 @@ public class AggregateError : Error
 	/// <param name="innerErrors">The inner errors</param>
 	public AggregateError(string message, IEnumerable<Error> innerErrors)
 	{
-		ArgumentNullException.ThrowIfNull(message);
-		ArgumentNullException.ThrowIfNull(innerErrors);
+		Guard.ThrowIfNull(message);
+		Guard.ThrowIfNull(innerErrors);
 		Message = message;
 		_innerErrors = innerErrors.ToList();
 	}

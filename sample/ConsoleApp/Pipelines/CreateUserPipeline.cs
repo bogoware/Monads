@@ -1,4 +1,5 @@
 using Bogoware.Monads;
+// ReSharper disable ArrangeObjectCreationWhenTypeNotEvident
 
 namespace Sample.Pipelines;
 
@@ -41,6 +42,7 @@ public static class CreateUserPipeline
 
 	private static Result<User> CreateUser(User user)
 	{
+		// ReSharper disable once ConvertIfStatementToReturnStatement
 		if (false) return Result.Failure<User>("Error creating user");
 		return new(user);
 	}

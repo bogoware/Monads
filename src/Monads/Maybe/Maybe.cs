@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
+using Bogoware.Monads.Polyfills;
 
 // ReSharper disable UnusedMember.Global
 
@@ -21,7 +22,7 @@ public static class Maybe
 	[MethodImpl(MethodImplOptions.AggressiveInlining)]
 	public static Maybe<T> Some<T>(T value)
 	{
-		ArgumentNullException.ThrowIfNull(value);
+		Guard.ThrowIfNull(value);
 		return new(value);
 	}
 
@@ -150,21 +151,21 @@ public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>
 	/// </summary>
 	public TValue GetValue(TValue defaultValue)
 	{
-		ArgumentNullException.ThrowIfNull(defaultValue);
+		Guard.ThrowIfNull(defaultValue);
 		return _value ?? defaultValue;
 	}
 
 	/// <inheritdoc cref="GetValue(TValue)"/>
 	public TValue GetValue(Func<TValue> defaultValue)
 	{
-		ArgumentNullException.ThrowIfNull(defaultValue);
+		Guard.ThrowIfNull(defaultValue);
 		return _value ?? defaultValue();
 	}
 
 	/// <inheritdoc cref="GetValue(TValue)"/>
 	public async Task<TValue> GetValue(Func<Task<TValue>> defaultValue)
 	{
-		ArgumentNullException.ThrowIfNull(defaultValue);
+		Guard.ThrowIfNull(defaultValue);
 		return _value ?? await defaultValue();
 	}
 
