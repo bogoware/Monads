@@ -2,7 +2,11 @@
 
 ![Nuget](https://img.shields.io/nuget/dt/Bogoware.Monads?logo=nuget&style=plastic) ![Nuget](https://img.shields.io/nuget/v/Bogoware.Monads?style=plastic)
 
-_Yet another functional library for C#_
+_A functional programming library for C# providing `Result<T>` and `Maybe<T>` monads_
+
+**Supported Platforms:** .NET Standard 2.1 | .NET 8 | .NET 9 | .NET 10
+
+[CHANGELOG](./CHANGELOG.md) | [NuGet Package](https://www.nuget.org/packages/Bogoware.Monads)
 
 ## Table of Contents
 
@@ -127,7 +131,14 @@ Here's a practical example that combines both monads:
 ```csharp
 using Bogoware.Monads;
 
-public record Book(string Title, Maybe<Person> Author);
+public record Author(string FirstName, Maybe<string> LastName)
+{
+    public string FullName => LastName
+        .Map(last => $"{FirstName} {last}")
+        .GetValue(FirstName);
+}
+
+public record Book(string Title, Maybe<Author> Author);
 
 public class BookService
 {
@@ -149,7 +160,7 @@ public class BookService
     private string FormatBookDescription(Book book)
     {
         return book.Author
-            .Map(author => $"'{book.Title}' by {author.GetFullName()}")
+            .Map(author => $"'{book.Title}' by {author.FullName}")
             .GetValue(() => $"'{book.Title}' (Author unknown)");
     }
 }
@@ -379,9 +390,8 @@ var unitSuccess = Result.Unit; // Result<Unit> for void operations
 var failure1 = Result.Failure<int>("Something went wrong"); // Uses LogicError
 var failure2 = Result.Failure<int>(new CustomError("Custom error")); // Uses custom error
 
-// Create from values (smart constructor)
+// Create from values
 var fromValue = Result.From(42); // Result<int> - Success
-var fromError = Result.From<int>(new LogicError("Error")); // Result<int> - Failure
 ```
 
 #### Safe Execution
@@ -486,19 +496,19 @@ var descriptions = books.MatchEach(
 #### Filtering and Predicates
 
 ```csharp
-var numbers = new[] { 
-    Maybe.Some(1), Maybe.None<int>(), Maybe.Some(2), Maybe.Some(3) 
+var names = new[] {
+    Maybe.Some("Alice"), Maybe.None<string>(), Maybe.Some("Bob"), Maybe.Some("Charlie")
 };
 
 // Where: Filter Some values based on predicate, None values are discarded
-var evenNumbers = numbers.Where(n => n % 2 == 0); // Maybe<int>[] with Some(2)
+var shortNames = names.Where(n => n.Length <= 3); // Maybe<string>[] with Some("Bob")
 
 // WhereNot: Filter Some values with negated predicate
-var oddNumbers = numbers.WhereNot(n => n % 2 == 0); // Maybe<int>[] with Some(1), Some(3)
+var longNames = names.WhereNot(n => n.Length <= 3); // Maybe<string>[] with Some("Alice"), Some("Charlie")
 
-// Predicate methods
-var allHaveValues = numbers.AllSome(); // false (contains None)
-var allEmpty = numbers.AllNone(); // false (contains Some values)
+// Predicate methods (requires reference types)
+var allHaveValues = names.AllSome(); // false (contains None)
+var allEmpty = names.AllNone(); // false (contains Some values)
 ```
 
 ### Manipulating `IEnumerable<Result<T>>`
@@ -858,38 +868,6 @@ public Result<User> CreateUser(string email, string password)
 }
 ```
 
-## Design Goals for `Maybe<T>`
-
-Before discussing what can be achieved with the `Maybe<T>` monad, let's clarify that it is not intended as a 
-replacement for `Nullable<T>`.
-This is mainly due to fundamental libraries, such as Entity Framework, relying on `Nullable<T>` to model class
-attributes, while support for structural types remains limited.
-
-A pragmatic approach involves using `Nullable<T>` for modeling class attributes and `Maybe<T>` for modeling
-return values and method parameters.
-
-The advantage of using `Maybe<T>` over `Nullable<T>` is that `Maybe<T>` provides a set of methods that enable
-chaining operations in a functional manner.
-This becomes particularly useful when dealing with operations that can optionally return a value,
-such as querying a database.
-
-The implicit conversion from `Nullable<T>` to `Maybe<T>` allows for lifting `Nullable<T>` values to `Maybe<T>`
-values and utilizing `Maybe<T>` methods for chaining operations.
-
-> **Practical rule**: Use `Nullable<T>` to model class attributes and `Maybe<T>` to model return values and
-> method parameters.
-
-### Recovering from `Maybe.None` with `WithDefault`
-
-The `WithDefault` method allows recovering from a `Maybe.None` instance by providing a default value.
-
-For example, consider the following code snippet:
-
-```csharp
-var maybeValue = Maybe.None<int>();
-var value = maybeValue.WithDefault(42);
-```
-
 ## Maybe&lt;T&gt; Monad
 
 ### Design Goals for `Maybe<T>`
@@ -932,11 +910,11 @@ var result = none.Map(s => s.ToUpper()); // Still None
 Chains operations that return `Maybe<T>`:
 
 ```csharp
-public Maybe<int> ParseNumber(string text) => 
-    int.TryParse(text, out var num) ? Maybe.Some(num) : Maybe.None<int>();
+public Maybe<string> ValidateName(string name) =>
+    !string.IsNullOrWhiteSpace(name) ? Maybe.Some(name.Trim()) : Maybe.None<string>();
 
-var result = Maybe.Some("42")
-    .Bind(ParseNumber); // Maybe<int> with 42
+var result = Maybe.Some("  John  ")
+    .Bind(ValidateName); // Maybe<string> with "John"
 ```
 
 ##### Match

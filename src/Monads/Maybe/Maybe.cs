@@ -164,7 +164,7 @@ public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>
     /// <inheritdoc cref="GetValue(TValue)"/>
     public TValue GetValue(Func<TValue> defaultValue)
     {
-        if (defaultValue is null) throw new ArgumentNullException(nameof(defaultValue));
+        Guard.ThrowIfNull(defaultValue);
 
         return Value ?? defaultValue();
     }
@@ -172,7 +172,7 @@ public readonly struct Maybe<TValue> : IMaybe<TValue>, IEquatable<Maybe<TValue>>
     /// <inheritdoc cref="GetValue(TValue)"/>
     public async Task<TValue> GetValue(Func<Task<TValue>> defaultValue)
     {
-        if (defaultValue is null) throw new ArgumentNullException(nameof(defaultValue));
+        Guard.ThrowIfNull(defaultValue);
         return Value ?? await defaultValue();
     }
 
