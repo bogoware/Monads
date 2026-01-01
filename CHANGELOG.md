@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [11.4.0] - 2026-01-01
+
 ### Added
 - Multi-target support: `netstandard2.1`, `net8.0`, `net9.0`, `net10.0`
 - Guard polyfill for `ArgumentNullException.ThrowIfNull` compatibility
@@ -15,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated SDK to .NET 10.0 with `rollForward: latestFeature`
 - Updated CI workflow to test against all supported runtimes (.NET 8, 9, 10)
 - Updated test dependencies
+- Improved README with verified code examples and platform requirements
 
 ### Removed
 - Dropped `net6.0` and `net7.0` targets (EOL)
@@ -142,7 +145,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Implicit conversions for ergonomic API
 - NuGet packaging and CI/CD pipeline
 
-[Unreleased]: https://github.com/bogoware/Monads/compare/v11.3.2...HEAD
+[Unreleased]: https://github.com/bogoware/Monads/compare/v11.4.0...HEAD
+[11.4.0]: https://github.com/bogoware/Monads/compare/v11.3.2...v11.4.0
 [11.3.2]: https://github.com/bogoware/Monads/compare/v11.3.0...v11.3.2
 [11.3.0]: https://github.com/bogoware/Monads/compare/v11.2.0...v11.3.0
 [11.2.0]: https://github.com/bogoware/Monads/compare/v11.1.0...v11.2.0
