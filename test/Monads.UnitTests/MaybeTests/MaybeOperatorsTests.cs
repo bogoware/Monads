@@ -2,23 +2,23 @@ namespace Bogoware.Monads.UnitTests.MaybeTests;
 
 public class MaybeOperatorsTests
 {
-	[Fact]
-	public void Implicit_conversion_to_Some()
-	{
-		Maybe<Value> GetSome() => new Value(0);
+    [Fact]
+    public void Implicit_conversion_to_Some()
+    {
+        Maybe<Value> GetSome() => new Value(0);
 
-		var value = GetSome();
+        var value = GetSome();
 
-		value.Equals(Maybe.Some(new Value(0))).Should().BeTrue();
-	}
-	
-	[Fact]
-	public void Implicit_conversion_to_None()
-	{
-		Maybe<Value> GetSome() => null;
+        value.Equals(Maybe.Some(new Value(0))).Should().BeTrue();
+    }
 
-		var value = GetSome();
+    [Fact]
+    public void Implicit_conversion_to_None()
+    {
+        Maybe<Value> GetSome() => null;
 
-		value.Equals(Maybe.None<Value>()).Should().BeTrue();
-	}
+        var value = GetSome();
+
+        value.Equals(Maybe.None<Value>()).Should().BeTrue();
+    }
 }

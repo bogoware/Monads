@@ -1,147 +1,157 @@
 using System.Collections;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 namespace Bogoware.Monads;
 
 public static class Result
 {
-	public static Result<Unit> Unit { get; } = new(Monads.Unit.Instance);
+    public static Result<Unit> Unit { get; } = new(Monads.Unit.Instance);
 
-	/// <summary>
-	/// Initializes a new successful instance of the <see cref="Result{TValue}"/> with the given <paramref name="value"/>.
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Result<TValue> Success<TValue>(TValue value) => new(value);
+    /// <summary>
+    /// Initializes a new successful instance of the <see cref="Result{TValue}"/> with the given <paramref name="value"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Result<TValue> Success<TValue>(TValue value) => new(value);
 
-	/// <summary>
-	/// Initializes a new failed instance of the <see cref="Result{TValue}"/> with a <see cref="LogicError"/>
-	/// with the message <paramref name="errorMessage"/>.
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Result<TValue> Failure<TValue>(string errorMessage) => new(new LogicError(errorMessage));
+    /// <summary>
+    /// Initializes a new failed instance of the <see cref="Result{TValue}"/> with a <see cref="LogicError"/>
+    /// with the message <paramref name="errorMessage"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Result<TValue> Failure<TValue>(string errorMessage) => new(new LogicError(errorMessage));
 
-	/// <summary>
-	/// Initializes a new failed instance of the <see cref="Result{TValue}"/> with the given <paramref name="error"/>.
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Result<TValue> Failure<TValue>(Error error) => new(error);
+    /// <summary>
+    /// Initializes a new failed instance of the <see cref="Result{TValue}"/> with the given <paramref name="error"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Result<TValue> Failure<TValue>(Error error) => new(error);
 
-	/// <summary>
-	///  If the <paramref name="condition"/> is <c>true</c> then initializes a new successful instance
-	/// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
-	/// with the given <paramref name="error"/>.
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Result<Unit> Ensure(bool condition, Func<Error> error) => condition ? Unit : error();
+    /// <summary>
+    ///  If the <paramref name="condition"/> is <c>true</c> then initializes a new successful instance
+    /// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
+    /// with the given <paramref name="error"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Result<Unit> Ensure(bool condition, Func<Error> error) => condition ? Unit : error();
 
-	/// <summary>
-	///  If the <paramref name="predicate"/> evaluates to <c>true</c> then initializes a new successful instance
-	/// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
-	/// with the given <paramref name="error"/>.
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Result<Unit> Ensure(Func<bool> predicate, Func<Error> error) => predicate() ? Unit : error();
+    /// <summary>
+    ///  If the <paramref name="predicate"/> evaluates to <c>true</c> then initializes a new successful instance
+    /// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
+    /// with the given <paramref name="error"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Result<Unit> Ensure(Func<bool> predicate, Func<Error> error) => predicate() ? Unit : error();
 
-	/// <summary>
-	///  If the <paramref name="predicate"/> evaluates to <c>true</c> then initializes a new successful instance
-	/// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
-	/// with the given <paramref name="error"/>.
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static async Task<Result<Unit>> Ensure(Func<Task<bool>> predicate, Func<Error> error) =>
-		await predicate() ? Unit : error();
+    /// <summary>
+    ///  If the <paramref name="predicate"/> evaluates to <c>true</c> then initializes a new successful instance
+    /// of <see cref="Result{Unit}"/>, otherwise return a failed instance of <see cref="Result{Unit}"/>
+    /// with the given <paramref name="error"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static async Task<Result<Unit>> Ensure(Func<Task<bool>> predicate, Func<Error> error) =>
+        await predicate() ? Unit : error();
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Result{TValue}"/> with the value returned by <paramref name="result"/>.
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Result<TValue> Bind<TValue>(Func<Result<TValue>> result) => result();
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Result{TValue}"/> with the value returned by <paramref name="result"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Result<TValue> Bind<TValue>(Func<Result<TValue>> result) => result();
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Result{TValue}"/> with the value returned by <paramref name="result"/>.
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Task<Result<TValue>> Bind<TValue>(Func<Task<Result<TValue>>> result) => result();
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Result{TValue}"/> with the value returned by <paramref name="result"/>.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Task<Result<TValue>> Bind<TValue>(Func<Task<Result<TValue>>> result) => result();
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Result{TValue}"/> with the value.
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Result<T> From<T>(T value)
+    {
+        if (value is Error error) return Result.Failure<T>(error);
+        return Result.Success(value);
+    } 
 
-	/// <summary>
-	/// Wraps the execution of the given <paramref name="action"/> in a <see cref="Result{TValue}"/>
-	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
-	/// </summary>
-	[MethodImpl(MethodImplOptions.AggressiveInlining)]
-	public static Result<Unit> Execute(Action action)
-	{
-		RuntimeError? error = null;
-		try
-		{
-			action();
-		}
-		catch (Exception ex)
-		{
-			error = new(ex);
-		}
+    /// <summary>
+    /// Wraps the execution of the given <paramref name="action"/> in a <see cref="Result{TValue}"/>
+    /// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
+    /// </summary>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    public static Result<Unit> Execute(Action action)
+    {
+        RuntimeError? error = null;
+        try
+        {
+            action();
+        }
+        catch (Exception ex)
+        {
+            error = new RuntimeError(ex);
+        }
 
-		return error ?? Unit;
-	}
+        return error ?? Unit;
+    }
 
-	/// <summary>
-	///	Wraps the execution of the given <paramref name="action"/> in a <see cref="Result{TValue}"/>
-	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
-	/// </summary>
-	public static async Task<Result<Unit>> Execute(Func<Task> action)
-	{
-		RuntimeError? error = null;
-		try
-		{
-			await action();
-		}
-		catch (Exception ex)
-		{
-			error = new(ex);
-		}
+    /// <summary>
+    ///	Wraps the execution of the given <paramref name="action"/> in a <see cref="Result{TValue}"/>
+    /// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
+    /// </summary>
+    public static async Task<Result<Unit>> Execute(Func<Task> action)
+    {
+        RuntimeError? error = null;
+        try
+        {
+            await action();
+        }
+        catch (Exception ex)
+        {
+            error = new RuntimeError(ex);
+        }
 
-		return error ?? Unit;
-	}
+        return error ?? Unit;
+    }
 
-	/// <summary>
-	/// Wraps the execution of the given <paramref name="function"/> in a <see cref="Result{TValue}"/>
-	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
-	/// </summary>
-	public static Result<TValue> Execute<TValue>(Func<TValue> function)
-	{
-		RuntimeError? error = null;
-		TValue? value = default;
-		try
-		{
-			value = function();
-		}
-		catch (Exception ex)
-		{
-			error = new(ex);
-		}
+    /// <summary>
+    /// Wraps the execution of the given <paramref name="function"/> in a <see cref="Result{TValue}"/>
+    /// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
+    /// </summary>
+    public static Result<TValue> Execute<TValue>(Func<TValue> function)
+    {
+        RuntimeError? error = null;
+        TValue? value = default;
+        try
+        {
+            value = function();
+        }
+        catch (Exception ex)
+        {
+            error = new RuntimeError(ex);
+        }
 
-		return error ?? new Result<TValue>(value!);
-	}
+        return error ?? new Result<TValue>(value!);
+    }
 
-	/// <summary>
-	/// Wraps the execution of the given <paramref name="function"/> in a <see cref="Result{TValue}"/>
-	/// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
-	/// </summary>
-	public static async Task<Result<TValue>> Execute<TValue>(Func<Task<TValue>> function)
-	{
-		RuntimeError? error = null;
-		TValue? value = default;
-		try
-		{
-			value = await function();
-		}
-		catch (Exception ex)
-		{
-			error = new(ex);
-		}
+    /// <summary>
+    /// Wraps the execution of the given <paramref name="function"/> in a <see cref="Result{TValue}"/>
+    /// catching any thrown exception and returning it as an <see cref="RuntimeError"/> .
+    /// </summary>
+    public static async Task<Result<TValue>> Execute<TValue>(Func<Task<TValue>> function)
+    {
+        RuntimeError? error = null;
+        TValue? value = default;
+        try
+        {
+            value = await function();
+        }
+        catch (Exception ex)
+        {
+            error = new RuntimeError(ex);
+        }
 
-		return error ?? new Result<TValue>(value!);
-	}
+        return error ?? new Result<TValue>(value!);
+    }
 }
 
 /// <summary>
@@ -150,269 +160,291 @@ public static class Result
 /// <typeparam name="TValue"></typeparam>
 public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValue>>, IEnumerable<TValue>
 {
-	internal readonly TValue? Value;
-	internal readonly Error? Error;
-	private readonly bool _isSuccess;
+    private readonly TValue? _value;
+    private readonly Error? _error;
 
-	/// <summary>
-	/// Initializes a successful instance of the <see cref="Result{TValue}"/> with the given <paramref name="value"/>.
-	/// </summary>
-	public Result(TValue value) => (Value, _isSuccess) = (value, true);
-	/// <summary>
-	/// Initializes a failed instance of the <see cref="Result{TValue}"/> with the given <paramref name="error"/>.
-	/// </summary>
-	/// <param name="error"></param>
-	public Result(Error error) => (Error, _isSuccess) = (error, false);
+    /// <summary>
+    /// Returns the value if the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/>
+    /// otherwise throw an <see cref="ResultFailedException"/>.
+    /// This method should be avoided in favor of pure functional composition style.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ResultFailedException"></exception>
+    public TValue? Value
+    {
+        get
+        {
+            if (IsFailure) throw new ResultFailedException(Error!);
+            return _value;
+        }
+    }
 
-	public Result(Result<TValue> result) =>
-		(Value, Error, _isSuccess) = (result.Value, result.Error, result._isSuccess);
+    /// <summary>
+    /// Returns the error if the <see cref="Result{TValue}"/>.<see cref="IsFailure"/>
+    /// otherwise throw an <see cref="ResultSuccessException"/>.
+    /// This method should be avoided in favor of pure functional composition style.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ResultFailedException"></exception>
+    public Error? Error
+    {
+        get
+        {
+            if (IsSuccess) throw new ResultSuccessException();
+            return _error;
+        }
+    }
 
-	/// <summary>
-	/// Is <c>true</c> if the <see cref="Result{TValue}"/> is successful, otherwise <c>false</c>.
-	/// </summary>
-	public bool IsSuccess => _isSuccess;
-	/// <summary>
-	/// Is <c>true</c> if the <see cref="Result{TValue}"/> is failed, otherwise <c>false</c>.
-	/// </summary>
-	public bool IsFailure => !_isSuccess;
+    /// <summary>
+    /// Initializes a successful instance of the <see cref="Result{TValue}"/> with the given <paramref name="value"/>.
+    /// </summary>
+    public Result(TValue value) => 
+        (_value, IsSuccess) = (value, true);
 
-	public static implicit operator Result<TValue>(TValue value) => new(value);
-	public static implicit operator Result<TValue>(Error error) => new(error);
+    /// <summary>
+    /// Initializes a failed instance of the <see cref="Result{TValue}"/> with the given <paramref name="error"/>.
+    /// </summary>
+    /// <param name="error"></param>
+    public Result(Error error) => (_error, IsSuccess) = (error, false);
 
-	/// <summary>
-	/// Returns the value if the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/>
-	/// otherwise throw an <see cref="ResultFailedException"/>.
-	/// This method should be avoided in favor of pure functional composition style.
-	/// </summary>
-	/// <returns></returns>
-	/// <exception cref="ResultFailedException"></exception>
-	public TValue GetValueOrThrow() => Value ?? throw new ResultFailedException(Error!);
+    public Result(Result<TValue> result) =>
+        (_value, _error, IsSuccess) = (result._value, result._error, result.IsSuccess);
 
-	/// <summary>
-	/// Returns the error if the <see cref="Result{TValue}"/>.<see cref="IsFailure"/>
-	/// otherwise throw an <see cref="ResultSuccessException"/>.
-	/// This method should be avoided in favor of pure functional composition style.
-	/// </summary>
-	/// <returns></returns>
-	/// <exception cref="ResultFailedException"></exception>
-	public Error GetErrorOrThrow() => Error ?? throw new ResultSuccessException();
+    /// <summary>
+    /// Is <c>true</c> if the <see cref="Result{TValue}"/> is successful, otherwise <c>false</c>.
+    /// </summary>
+    public bool IsSuccess { get; }
 
-	/// <summary>
-	/// In case of success returns the <paramref name="newValue"/>..
-	/// </summary>
-	public Result<TNewValue> Map<TNewValue>(TNewValue newValue)
-		=> Value is null ? new(Error!) : new(newValue);
+    /// <summary>
+    /// Is <c>true</c> if the <see cref="Result{TValue}"/> is failed, otherwise <c>false</c>.
+    /// </summary>
+    public bool IsFailure => !IsSuccess;
 
-	/// <summary>
-	/// In case of success returns the <paramref name="functor"/> result.
-	/// </summary>
-	public Result<TNewValue> Map<TNewValue>(Func<TNewValue> functor)
-		=> Value is null ? new(Error!) : new(functor());
+    public static implicit operator Result<TValue>(TValue value) => new(value);
+    public static implicit operator Result<TValue>(Error error) => new(error);
 
-	/// <inheritdoc cref="Map{TNewValue}(System.Func{TNewValue})"/>
-	public async Task<Result<TNewValue>> Map<TNewValue>(Func<Task<TNewValue>> functor)
-		=> Value is null ? new(Error!) : new(await functor());
+    /// <inheritdoc cref="Value"/>
+    public TValue GetValueOrThrow() => Value!;
 
-	/// <summary>
-	/// In case of success transform the original value by applying the <paramref name="functor"/>.
-	/// </summary>
-	public Result<TNewValue> Map<TNewValue>(Func<TValue, TNewValue> functor)
-		=> Value is null ? new(Error!) : new(functor(Value));
+    /// <inheritdoc cref="Error"/>
+    public Error GetErrorOrThrow() => Error!;
 
-	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
-	public async Task<Result<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue>> functor)
-		=> Value is null ? new(Error!) : new(await functor(Value));
-	
-	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
-	public Result<Unit> Map(Action<TValue> functor)
-	{
-		if (Value is null) return new(Error!);
-		functor(Value);
-		return Result.Unit;
-	}
-	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
-	public async Task<Result<Unit>> Map(Func<TValue, Task> functor)
-	{
-		if (Value is null) return new(Error!);
-		await functor(Value);
-		return Result.Unit;
-	}
+    /// <summary>
+    /// In case of success returns the <paramref name="newValue"/>..
+    /// </summary>
+    public Result<TNewValue> Map<TNewValue>(TNewValue newValue)
+        => IsSuccess ? newValue : _error!;
 
-	/// <summary>
-	/// In case of failure return the <paramref name="newError"/>.
-	/// </summary>
-	public Result<TValue> MapError(Error newError)
-		=> Value is null ? newError : this;
+    /// <summary>
+    /// In case of success returns the <paramref name="functor"/> result.
+    /// </summary>
+    public Result<TNewValue> Map<TNewValue>(Func<TNewValue> functor)
+        => IsSuccess ? functor() : _error!;
 
-	/// <summary>
-	/// In case of failure return the <paramref name="newErrorFunctor"/> result.
-	/// </summary>
-	public Result<TValue> MapError<TNewError>(Func<TNewError> newErrorFunctor)
-		where TNewError : Error
-		=> Value is null ? newErrorFunctor() : this;
+    /// <inheritdoc cref="Map{TNewValue}(System.Func{TNewValue})"/>
+    public async Task<Result<TNewValue>> Map<TNewValue>(Func<Task<TNewValue>> functor)
+        => IsSuccess ? await functor() : _error!;
 
-	/// <inheritdoc cref="MapError(Monads.Error)"/>
-	public Result<TValue> MapError<TNewError>(Func<Error, TNewError> newErrorFunctor)
-		where TNewError : Error
-		=> Value is null ? newErrorFunctor(Error!) : this;
+    /// <summary>
+    /// In case of success transform the original value by applying the <paramref name="functor"/>.
+    /// </summary>
+    public Result<TNewValue> Map<TNewValue>(Func<TValue, TNewValue> functor)
+        => IsSuccess ? functor(_value!) : _error!;
 
-	/// <inheritdoc cref="MapError(Monads.Error)"/>
-	public async Task<Result<TValue>> MapError<TNewError>(Func<Task<TNewError>> newErrorFunctor)
-		where TNewError : Error
-		=> Value is null ? await newErrorFunctor() : this;
+    /// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
+    public async Task<Result<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue>> functor)
+        => IsSuccess ? await functor(_value!) : _error!;
 
-	/// <inheritdoc cref="MapError(Monads.Error)"/>
-	public async Task<Result<TValue>> MapError<TNewError>(Func<Error, Task<TNewError>> newErrorFunctor)
-		where TNewError : Error
-		=> Value is null ? await newErrorFunctor(Error!) : this;
+    /// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
+    public Result<Unit> Map(Action<TValue> functor)
+    {
+        if (IsFailure) return _error!;
+        functor(_value!);
+        return Result.Unit;
+    }
 
-	/// <summary>
-	/// In case of success return the <paramref name="newResult"/>.
-	/// </summary>
-	public Result<TNewValue> Bind<TNewValue>(Result<TNewValue> newResult)
-		=> Value is null ? new(Error!) : newResult;
+    /// <inheritdoc cref="M:Bogoware.Monads.Result`1.Map``1(System.Func{`0,``0})"/>
+    public async Task<Result<Unit>> Map(Func<TValue, Task> functor)
+    {
+        if (IsFailure) return new Result<Unit>(_error!);
+        await functor(_value!);
+        return Result.Unit;
+    }
 
-	/// <summary>
-	/// In case of success return the <paramref name="functor"/> result.
-	/// </summary>
-	public Result<TNewValue> Bind<TNewValue>(Func<Result<TNewValue>> functor)
-		=> Value is null ? new(Error!) : functor();
+    /// <summary>
+    /// In case of failure return the <paramref name="newError"/>.
+    /// </summary>
+    public Result<TValue> MapError(Error newError)
+        => IsSuccess ? this : newError;
 
-	/// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
-	public Task<Result<TNewValue>> Bind<TNewValue>(Func<Task<Result<TNewValue>>> functor)
-		=> Value is null ? Task.FromResult(new Result<TNewValue>(Error!)) : functor();
+    /// <summary>
+    /// In case of failure return the <paramref name="newErrorFunctor"/> result.
+    /// </summary>
+    public Result<TValue> MapError<TNewError>(Func<TNewError> newErrorFunctor)
+        where TNewError : Error
+        => IsSuccess ? this : newErrorFunctor();
 
-	/// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
-	public Result<TNewValue> Bind<TNewValue>(Func<TValue, Result<TNewValue>> functor)
-		=> Value is null ? new(Error!) : functor(Value);
+    /// <inheritdoc cref="MapError(Monads.Error)"/>
+    public Result<TValue> MapError<TNewError>(Func<Error, TNewError> newErrorFunctor)
+        where TNewError : Error
+        => IsSuccess ? this : newErrorFunctor(_error!);
 
-	/// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
-	public Task<Result<TNewValue>> Bind<TNewValue>(Func<TValue, Task<Result<TNewValue>>> functor)
-		=> Value is null ? Task.FromResult(new Result<TNewValue>(Error!)) : functor(Value);
+    /// <inheritdoc cref="MapError(Monads.Error)"/>
+    public async Task<Result<TValue>> MapError<TNewError>(Func<Task<TNewError>> newErrorFunctor)
+        where TNewError : Error
+        => IsSuccess ? this : await newErrorFunctor();
 
-	/// <summary>
-	/// In case of success evaluate the <paramref name="successful"/> functor,  otherwise returns <paramref name="failure"/>.
-	/// </summary>
-	public TResult Match<TResult>(Func<TValue, TResult> successful, TResult failure)
-		=> Value is not null ? successful(Value) : failure;
+    /// <inheritdoc cref="MapError(Monads.Error)"/>
+    public async Task<Result<TValue>> MapError<TNewError>(Func<Error, Task<TNewError>> newErrorFunctor)
+        where TNewError : Error
+        => IsSuccess ? this : await newErrorFunctor(_error!);
 
-	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
-	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, TResult failure)
-		=> Value is not null ? successful(Value) : Task.FromResult(failure);
+    /// <summary>
+    /// In case of success return the <paramref name="newResult"/>.
+    /// </summary>
+    public Result<TNewValue> Bind<TNewValue>(Result<TNewValue> newResult)
+        => IsSuccess ? newResult : _error!;
 
-	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
-	public TResult Match<TResult>(Func<TValue, TResult> successful, Func<Error, TResult> failure)
-		=> Value is not null ? successful(Value) : failure(Error!);
+    /// <summary>
+    /// In case of success return the <paramref name="functor"/> result.
+    /// </summary>
+    public Result<TNewValue> Bind<TNewValue>(Func<Result<TNewValue>> functor)
+        => IsSuccess ? functor() : _error!;
 
-	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
-	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<Error, TResult> failure)
-		=> Value is not null ? successful(Value) : Task.FromResult(failure(Error!));
+    /// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
+    public Task<Result<TNewValue>> Bind<TNewValue>(Func<Task<Result<TNewValue>>> functor)
+        => IsSuccess ? functor() : Task.FromResult(new Result<TNewValue>(_error!));
 
-	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
-	public Task<TResult> Match<TResult>(Func<TValue, TResult> successful, Func<Error, Task<TResult>> failure)
-		=> Value is not null ? Task.FromResult(successful(Value)) : failure(Error!);
+    /// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
+    public Result<TNewValue> Bind<TNewValue>(Func<TValue, Result<TNewValue>> functor)
+        => IsSuccess ? functor(_value!) : _error!;
 
-	/// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
-	public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<Error, Task<TResult>> failure)
-		=> Value is not null ? successful(Value) : failure(Error!);
+    /// <inheritdoc cref="T:Bogoware.Monads.Result`1"/>
+    public Task<Result<TNewValue>> Bind<TNewValue>(Func<TValue, Task<Result<TNewValue>>> functor)
+        => IsSuccess ? functor(_value!) : Task.FromResult(new Result<TNewValue>(_error!));
 
-	public Result<TValue> RecoverWith(TValue newValue)
-		=> Error is not null ? new(newValue) : this;
+    /// <summary>
+    /// In case of success evaluate the <paramref name="successful"/> functor,  otherwise returns <paramref name="failure"/>.
+    /// </summary>
+    public TResult Match<TResult>(Func<TValue, TResult> successful, TResult failure)
+        => IsSuccess ? successful(_value!) : failure;
 
-	public Result<TValue> RecoverWith(Func<TValue> functor)
-		=> Error is not null ? new(functor()) : this;
+    /// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
+    public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, TResult failure)
+        => IsSuccess ? successful(_value!) : Task.FromResult(failure);
 
-	public Result<TValue> RecoverWith(Func<Error, TValue> functor)
-		=> Error is not null ? new(functor(Error)) : this;
+    /// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
+    public TResult Match<TResult>(Func<TValue, TResult> successful, Func<Error, TResult> failure)
+        => IsSuccess ? successful(_value!) : failure(_error!);
 
-	public async Task<Result<TValue>> RecoverWith(Func<Task<TValue>> functor)
-		=> Error is not null ? new(await functor()) : this;
+    /// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
+    public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<Error, TResult> failure)
+        => IsSuccess ? successful(_value!) : Task.FromResult(failure(_error!));
 
-	public async Task<Result<TValue>> RecoverWith(Func<Error, Task<TValue>> functor)
-		=> Error is not null ? new(await functor(Error)) : this;
+    /// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
+    public Task<TResult> Match<TResult>(Func<TValue, TResult> successful, Func<Error, Task<TResult>> failure)
+        => IsSuccess ? Task.FromResult(successful(_value!)) : failure(_error!);
 
-	/// <summary>
-	/// If the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/> is true then evaluate the <paramref name="predicate"/>
-	/// and return the <see cref="Result{TValue}"/> if the predicate is true, otherwise return
-	/// a new <see cref="Result{TValue}"/> provided by <paramref name="error"/>.
-	/// </summary>
-	public Result<TValue> Ensure(Func<TValue, bool> predicate, Error error)
-		=> IsFailure             ? this
-			: predicate(Value!) ? this : new(error);
+    /// <inheritdoc cref="M:Bogoware.Monads.Result`1.Match``1(System.Func{`0,``0},``0)"/>
+    public Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<Error, Task<TResult>> failure)
+        => IsSuccess ? successful(_value!) : failure(_error!);
 
-	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
-	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Error error)
-		=> IsFailure                   ? this
-			: await predicate(Value!) ? this : new(error);
+    public Result<TValue> RecoverWith(TValue newValue)
+        => IsSuccess ? this : newValue;
 
-	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
-	public Result<TValue> Ensure(Func<TValue, bool> predicate, Func<TValue, Error> error)
-		=> IsFailure             ? this
-			: predicate(Value!) ? this : new(error(Value!));
+    public Result<TValue> RecoverWith(Func<TValue> functor)
+        => IsSuccess ? this : functor();
 
-	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
-	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Func<TValue, Error> error)
-		=> IsFailure                   ? this
-			: await predicate(Value!) ? this : new(error(Value!));
+    public Result<TValue> RecoverWith(Func<Error, TValue> functor)
+        => IsSuccess ? this : functor(_error!);
 
-	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
-	public async Task<Result<TValue>> Ensure(Func<TValue, bool> predicate, Func<TValue, Task<Error>> error)
-		=> IsFailure             ? this
-			: predicate(Value!) ? this : new(await error(Value!));
+    public async Task<Result<TValue>> RecoverWith(Func<Task<TValue>> functor)
+        => IsSuccess ? this : await functor();
 
-	/// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
-	public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Func<TValue, Task<Error>> error)
-		=> IsFailure                   ? this
-			: await predicate(Value!) ? this : new(await error(Value!));
+    public async Task<Result<TValue>> RecoverWith(Func<Error, Task<TValue>> functor)
+        => IsSuccess ? this : await functor(_error!);
 
-	/// <summary>
-	/// Execute the action if the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/> is true.
-	/// </summary>
-	public Result<TValue> ExecuteIfSuccess(Action<TValue> action)
-	{
-		if (Value is not null) action(Value);
-		return this;
-	}
+    /// <summary>
+    /// If the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/> is true then evaluate the <paramref name="predicate"/>
+    /// and return the <see cref="Result{TValue}"/> if the predicate is true, otherwise return
+    /// a new <see cref="Result{TValue}"/> provided by <paramref name="error"/>.
+    /// </summary>
+    public Result<TValue> Ensure(Func<TValue, bool> predicate, Error error)
+        => IsFailure ? this
+            : predicate(_value!) ? this : new Result<TValue>(error);
 
-	/// <inheritdoc cref="ExecuteIfSuccess(System.Action{TValue})"/>
-	public async Task<Result<TValue>> ExecuteIfSuccess(Func<TValue, Task> action)
-	{
-		if (Value is not null) await action(Value);
-		return this;
-	}
+    /// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
+    public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Error error)
+        => IsFailure ? this
+            : await predicate(_value!) ? this : new Result<TValue>(error);
 
-	/// <summary>
-	/// Execute the action if the <see cref="Result{TValue}"/>.<see cref="IsFailure"/> is true.
-	/// </summary>
-	public Result<TValue> ExecuteIfFailure(Action<Error> action)
-	{
-		if (Error is not null) action(Error);
-		return this;
-	}
+    /// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
+    public Result<TValue> Ensure(Func<TValue, bool> predicate, Func<TValue, Error> error)
+        => IsFailure ? this
+            : predicate(_value!) ? this : new Result<TValue>(error(_value!));
 
+    /// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
+    public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Func<TValue, Error> error)
+        => IsFailure ? this
+            : await predicate(_value!) ? this : new Result<TValue>(error(_value!));
 
-	/// <inheritdoc cref="ExecuteIfFailure(System.Action{Monads.Error})"/>
-	public async Task<Result<TValue>> ExecuteIfFailure(Func<Error, Task> action)
-	{
-		if (Error is not null) await action(Error);
-		return this;
-	}
+    /// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
+    public async Task<Result<TValue>> Ensure(Func<TValue, bool> predicate, Func<TValue, Task<Error>> error)
+        => IsFailure ? this
+            : predicate(_value!) ? this : new Result<TValue>(await error(_value!));
 
-	public bool Equals(Result<TValue> other)
-		=> EqualityComparer<TValue?>.Default.Equals(Value, other.Value)
-		   && EqualityComparer<Error?>.Default.Equals(Error, other.Error);
+    /// <inheritdoc cref="Ensure(System.Func{TValue, bool}, Monads.Error)"/>
+    public async Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Func<TValue, Task<Error>> error)
+        => IsFailure ? this
+            : await predicate(_value!) ? this : new Result<TValue>(await error(_value!));
 
-	public IEnumerator<TValue> GetEnumerator()
-	{
-		if (Value is not null) yield return Value;
-	}
+    /// <summary>
+    /// Execute the action if the <see cref="Result{TValue}"/>.<see cref="IsSuccess"/> is true.
+    /// </summary>
+    public Result<TValue> IfSuccess(Action<TValue> action)
+    {
+        if (IsSuccess) action(_value!);
+        return this;
+    }
 
-	public override bool Equals(object? obj) => obj is Result<TValue> other && Equals(other);
+    /// <inheritdoc cref="M:Bogoware.Monads.Maybe`1.IfSome(System.Action{`0})"/>
+    public async Task<Result<TValue>> IfSuccess(Func<TValue, Task> action)
+    {
+        if (IsSuccess) await action(_value!);
+        return this;
+    }
 
-	public override int GetHashCode() => HashCode.Combine(Value, Error);
-	IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+    /// <summary>
+    /// Execute the action if the <see cref="Result{TValue}"/>.<see cref="IsFailure"/> is true.
+    /// </summary>
+    public Result<TValue> IfFailure(Action<Error> action)
+    {
+        if (IsFailure) action(_error!);
+        return this;
+    }
 
-	public static bool operator ==(Result<TValue> left, Result<TValue> right) => left.Equals(right);
+    /// <inheritdoc cref="M:Bogoware.Monads.Result`1.IfFailure(System.Action{Bogoware.Monads.Error})"/>
+    public async Task<Result<TValue>> IfFailure(Func<Error, Task> action)
+    {
+        if (IsFailure) await action(_error!);
+        return this;
+    }
 
-	public static bool operator !=(Result<TValue> left, Result<TValue> right) => !left.Equals(right);
+    public bool Equals(Result<TValue> other)
+        => EqualityComparer<TValue?>.Default.Equals(_value, other._value)
+           && EqualityComparer<Error?>.Default.Equals(_error, other._error);
+
+    public IEnumerator<TValue> GetEnumerator()
+    {
+        if (IsSuccess) yield return Value!;
+    }
+
+    public override bool Equals(object? obj) => obj is Result<TValue> other && Equals(other);
+
+    public override int GetHashCode() => HashCode.Combine(_value, _error);
+    IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+
+    public static bool operator ==(Result<TValue> left, Result<TValue> right) => left.Equals(right);
+
+    public static bool operator !=(Result<TValue> left, Result<TValue> right) => !left.Equals(right);
 }

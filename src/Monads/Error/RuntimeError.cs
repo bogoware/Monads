@@ -16,5 +16,5 @@ public sealed class RuntimeError : Error
 		Exception = exception;
 	}
 
-	public override string Message => Exception.Message;
+    public override string Message => Exception.Message;
 }
