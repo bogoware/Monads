@@ -478,3 +478,9 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Docusaurus
+docs/node_modules/
+docs/build/
+docs/.docusaurus/
+docs/.cache-loader/

@@ -1,12 +1,12 @@
 # Bogoware Monads
 
-![Nuget](https://img.shields.io/nuget/dt/Bogoware.Monads?logo=nuget&style=plastic) ![Nuget](https://img.shields.io/nuget/v/Bogoware.Monads?style=plastic)
+![Nuget](https://img.shields.io/nuget/dt/Bogoware.Monads?logo=nuget&style=plastic) ![Nuget](https://img.shields.io/nuget/v/Bogoware.Monads?style=plastic) [![Documentation](https://img.shields.io/badge/docs-online-blue)](https://bogoware.github.io/monads/)
 
 _A functional programming library for C# providing `Result<T>` and `Maybe<T>` monads_
 
 **Supported Platforms:** .NET Standard 2.1 | .NET 8 | .NET 9 | .NET 10
 
-[CHANGELOG](./CHANGELOG.md) | [NuGet Package](https://www.nuget.org/packages/Bogoware.Monads)
+[Documentation](https://bogoware.github.io/monads/) | [CHANGELOG](./CHANGELOG.md) | [NuGet Package](https://www.nuget.org/packages/Bogoware.Monads)
 
 ## Table of Contents
 
