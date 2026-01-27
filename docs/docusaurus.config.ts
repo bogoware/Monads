@@ -12,10 +12,10 @@ const config: Config = {
   },
 
   url: 'https://bogoware.github.io',
-  baseUrl: '/monads/',
+  baseUrl: '/Monads/',
 
   organizationName: 'bogoware',
-  projectName: 'monads',
+  projectName: 'Monads',
 
   onBrokenLinks: 'throw',
 

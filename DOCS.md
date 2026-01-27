@@ -2,7 +2,7 @@
 
 This project uses [Docusaurus 3](https://docusaurus.io/) to generate a documentation website with API reference auto-generated from XML documentation comments.
 
-**Live Site:** https://bogoware.github.io/monads/
+**Live Site:** https://bogoware.github.io/Monads/
 
 ## Prerequisites
 
