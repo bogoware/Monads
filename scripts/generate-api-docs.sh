@@ -74,8 +74,17 @@ for file in "$DOCS_API_DIR"/*.md; do
             # Add frontmatter to index
             add_frontmatter "$file" "API Reference" 1
         else
-            # Extract title from filename (remove namespace prefix if present)
-            title="${filename#bogoware.monads.}"
+            # Extract title from H1 heading in the generated markdown
+            h1_line=$(grep -m1 "^# " "$file" || true)
+            if [ -n "$h1_line" ]; then
+                title="${h1_line#\# }"
+                # Decode HTML entities for generic type parameters
+                title="${title//&lt;/<}"
+                title="${title//&gt;/>}"
+            else
+                # Fallback to filename-based title
+                title="${filename#bogoware.monads.}"
+            fi
             add_frontmatter "$file" "$title"
         fi
         echo "Processed: $filename"

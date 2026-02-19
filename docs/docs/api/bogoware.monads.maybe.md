@@ -1,5 +1,5 @@
 ---
-title: "maybe"
+title: "Maybe"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class Maybe
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Maybe](./bogoware.monads.maybe)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Maybe](./bogoware.monads.maybe)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Methods
@@ -24,15 +24,15 @@ public static Maybe<T> From<T>(T value)
 
 #### Type Parameters
 
-`T`<br />
+`T`<br>
 
 #### Parameters
 
-`value` T<br />
+`value` T<br>
 
 #### Returns
 
-Maybe&lt;T&gt;<br />
+Maybe&lt;T&gt;<br>
 
 ### **From&lt;T&gt;(Maybe&lt;T&gt;)**
 
@@ -42,15 +42,15 @@ public static Maybe<T> From<T>(Maybe<T> maybe)
 
 #### Type Parameters
 
-`T`<br />
+`T`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;T&gt;<br />
+`maybe` Maybe&lt;T&gt;<br>
 
 #### Returns
 
-Maybe&lt;T&gt;<br />
+Maybe&lt;T&gt;<br>
 
 ### **Some&lt;T&gt;(T)**
 
@@ -60,15 +60,15 @@ public static Maybe<T> Some<T>(T value)
 
 #### Type Parameters
 
-`T`<br />
+`T`<br>
 
 #### Parameters
 
-`value` T<br />
+`value` T<br>
 
 #### Returns
 
-Maybe&lt;T&gt;<br />
+Maybe&lt;T&gt;<br>
 
 ### **Some&lt;T&gt;(Maybe&lt;T&gt;)**
 
@@ -78,15 +78,15 @@ public static Maybe<T> Some<T>(Maybe<T> maybe)
 
 #### Type Parameters
 
-`T`<br />
+`T`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;T&gt;<br />
+`maybe` Maybe&lt;T&gt;<br>
 
 #### Returns
 
-Maybe&lt;T&gt;<br />
+Maybe&lt;T&gt;<br>
 
 ### **None&lt;T&gt;()**
 
@@ -96,11 +96,11 @@ public static Maybe<T> None<T>()
 
 #### Type Parameters
 
-`T`<br />
+`T`<br>
 
 #### Returns
 
-Maybe&lt;T&gt;<br />
+Maybe&lt;T&gt;<br>
 
 ### **None()**
 
@@ -110,4 +110,4 @@ public static Maybe<Unit> None()
 
 #### Returns
 
-[Maybe&lt;Unit&gt;](./bogoware.monads.maybe-1)<br />
+[Maybe&lt;Unit&gt;](./bogoware.monads.maybe-1)<br>

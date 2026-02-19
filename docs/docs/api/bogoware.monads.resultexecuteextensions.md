@@ -1,5 +1,5 @@
 ---
-title: "resultexecuteextensions"
+title: "ResultExecuteExtensions"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class ResultExecuteExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultExecuteExtensions](./bogoware.monads.resultexecuteextensions)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultExecuteExtensions](./bogoware.monads.resultexecuteextensions)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [ExtensionAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
@@ -24,17 +24,17 @@ public static Result<TValue> IfSuccess<TValue>(Result<TValue> result, Action act
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br />
+`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **IfSuccess&lt;TValue&gt;(Result&lt;TValue&gt;, Func&lt;Task&gt;)**
 
@@ -44,17 +44,17 @@ public static Task<Result<TValue>> IfSuccess<TValue>(Result<TValue> result, Func
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfFailure&lt;TValue&gt;(Result&lt;TValue&gt;, Action)**
 
@@ -64,17 +64,17 @@ public static Result<TValue> IfFailure<TValue>(Result<TValue> result, Action act
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br />
+`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **IfFailure&lt;TValue&gt;(Result&lt;TValue&gt;, Func&lt;Task&gt;)**
 
@@ -84,17 +84,17 @@ public static Task<Result<TValue>> IfFailure<TValue>(Result<TValue> result, Func
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Execute&lt;TValue&gt;(Result&lt;TValue&gt;, Action)**
 
@@ -104,17 +104,17 @@ public static Result<TValue> Execute<TValue>(Result<TValue> result, Action actio
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br />
+`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **Execute&lt;TValue&gt;(Result&lt;TValue&gt;, Func&lt;Task&gt;)**
 
@@ -124,17 +124,17 @@ public static Task<Result<TValue>> Execute<TValue>(Result<TValue> result, Func<T
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Execute&lt;TValue&gt;(Result&lt;TValue&gt;, Action&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -144,17 +144,17 @@ public static Result<TValue> Execute<TValue>(Result<TValue> result, Action<Resul
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`action` Action&lt;Result&lt;TValue&gt;&gt;<br />
+`action` Action&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **Execute&lt;TValue&gt;(Result&lt;TValue&gt;, Func&lt;Result&lt;TValue&gt;, Task&gt;)**
 
@@ -164,17 +164,17 @@ public static Task<Result<TValue>> Execute<TValue>(Result<TValue> result, Func<R
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`action` Func&lt;Result&lt;TValue&gt;, Task&gt;<br />
+`action` Func&lt;Result&lt;TValue&gt;, Task&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfSuccess&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Action&lt;TValue&gt;)**
 
@@ -184,17 +184,17 @@ public static Task<Result<TValue>> IfSuccess<TValue>(Task<Result<TValue>> result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` Action&lt;TValue&gt;<br />
+`action` Action&lt;TValue&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfSuccess&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Task&gt;)**
 
@@ -204,17 +204,17 @@ public static Task<Result<TValue>> IfSuccess<TValue>(Task<Result<TValue>> result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` Func&lt;TValue, Task&gt;<br />
+`action` Func&lt;TValue, Task&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfSuccess&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Action)**
 
@@ -224,17 +224,17 @@ public static Task<Result<TValue>> IfSuccess<TValue>(Task<Result<TValue>> result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br />
+`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfSuccess&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;Task&gt;)**
 
@@ -244,17 +244,17 @@ public static Task<Result<TValue>> IfSuccess<TValue>(Task<Result<TValue>> result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfFailure&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Action&lt;Error&gt;)**
 
@@ -264,17 +264,17 @@ public static Task<Result<TValue>> IfFailure<TValue>(Task<Result<TValue>> result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` [Action&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br />
+`action` [Action&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfFailure&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;Error, Task&gt;)**
 
@@ -284,17 +284,17 @@ public static Task<Result<TValue>> IfFailure<TValue>(Task<Result<TValue>> result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` [Func&lt;Error, Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br />
+`action` [Func&lt;Error, Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfFailure&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Action)**
 
@@ -304,17 +304,17 @@ public static Task<Result<TValue>> IfFailure<TValue>(Task<Result<TValue>> result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br />
+`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfFailure&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;Task&gt;)**
 
@@ -324,17 +324,17 @@ public static Task<Result<TValue>> IfFailure<TValue>(Task<Result<TValue>> result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Execute&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Action)**
 
@@ -344,17 +344,17 @@ public static Task<Result<TValue>> Execute<TValue>(Task<Result<TValue>> result, 
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br />
+`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Execute&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;Task&gt;)**
 
@@ -364,17 +364,17 @@ public static Task<Result<TValue>> Execute<TValue>(Task<Result<TValue>> result, 
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Execute&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Action&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -384,17 +384,17 @@ public static Task<Result<TValue>> Execute<TValue>(Task<Result<TValue>> resultTa
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`resultTask` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`resultTask` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` Action&lt;Result&lt;TValue&gt;&gt;<br />
+`action` Action&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Execute&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;Result&lt;TValue&gt;, Task&gt;)**
 
@@ -404,14 +404,14 @@ public static Task<Result<TValue>> Execute<TValue>(Task<Result<TValue>> resultTa
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`resultTask` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`resultTask` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`action` Func&lt;Result&lt;TValue&gt;, Task&gt;<br />
+`action` Func&lt;Result&lt;TValue&gt;, Task&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>

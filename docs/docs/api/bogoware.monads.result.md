@@ -1,5 +1,5 @@
 ---
-title: "result"
+title: "Result"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class Result
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Result](./bogoware.monads.result)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Result](./bogoware.monads.result)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Properties
@@ -24,7 +24,7 @@ public static Result<Unit> Unit { get; }
 
 #### Property Value
 
-[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br>
 
 ## Methods
 
@@ -38,15 +38,15 @@ public static Result<TValue> Success<TValue>(TValue value)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`value` TValue<br />
+`value` TValue<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **Failure&lt;TValue&gt;(String)**
 
@@ -59,15 +59,15 @@ public static Result<TValue> Failure<TValue>(string errorMessage)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+`errorMessage` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **Failure&lt;TValue&gt;(Error)**
 
@@ -79,15 +79,15 @@ public static Result<TValue> Failure<TValue>(Error error)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`error` [Error](./bogoware.monads.error)<br />
+`error` [Error](./bogoware.monads.error)<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **Ensure(Boolean, Func&lt;Error&gt;)**
 
@@ -101,13 +101,13 @@ public static Result<Unit> Ensure(bool condition, Func<Error> error)
 
 #### Parameters
 
-`condition` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+`condition` [Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
-`error` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`error` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br>
 
 ### **Ensure(Func&lt;Boolean&gt;, Func&lt;Error&gt;)**
 
@@ -121,13 +121,13 @@ public static Result<Unit> Ensure(Func<bool> predicate, Func<Error> error)
 
 #### Parameters
 
-`predicate` [Func&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`predicate` [Func&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
-`error` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`error` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br>
 
 ### **Ensure(Func&lt;Task&lt;Boolean&gt;&gt;, Func&lt;Error&gt;)**
 
@@ -141,13 +141,13 @@ public static Task<Result<Unit>> Ensure(Func<Task<bool>> predicate, Func<Error> 
 
 #### Parameters
 
-`predicate` [Func&lt;Task&lt;Boolean&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`predicate` [Func&lt;Task&lt;Boolean&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
-`error` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`error` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br />
+[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **Bind&lt;TValue&gt;(Func&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -159,15 +159,15 @@ public static Result<TValue> Bind<TValue>(Func<Result<TValue>> result)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Func&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Func&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **Bind&lt;TValue&gt;(Func&lt;Task&lt;Result&lt;TValue&gt;&gt;&gt;)**
 
@@ -179,15 +179,15 @@ public static Task<Result<TValue>> Bind<TValue>(Func<Task<Result<TValue>>> resul
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Func&lt;Task&lt;Result&lt;TValue&gt;&gt;&gt;<br />
+`result` Func&lt;Task&lt;Result&lt;TValue&gt;&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **From&lt;T&gt;(T)**
 
@@ -199,15 +199,15 @@ public static Result<T> From<T>(T value)
 
 #### Type Parameters
 
-`T`<br />
+`T`<br>
 
 #### Parameters
 
-`value` T<br />
+`value` T<br>
 
 #### Returns
 
-Result&lt;T&gt;<br />
+Result&lt;T&gt;<br>
 
 ### **Execute(Action)**
 
@@ -220,11 +220,11 @@ public static Result<Unit> Execute(Action action)
 
 #### Parameters
 
-`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br />
+`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
 
 #### Returns
 
-[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br>
 
 ### **Execute(Func&lt;Task&gt;)**
 
@@ -237,11 +237,11 @@ public static Task<Result<Unit>> Execute(Func<Task> action)
 
 #### Parameters
 
-`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br />
+[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **Execute&lt;TValue&gt;(Func&lt;TValue&gt;)**
 
@@ -254,15 +254,15 @@ public static Result<TValue> Execute<TValue>(Func<TValue> function)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`function` Func&lt;TValue&gt;<br />
+`function` Func&lt;TValue&gt;<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **Execute&lt;TValue&gt;(Func&lt;Task&lt;TValue&gt;&gt;)**
 
@@ -275,12 +275,12 @@ public static Task<Result<TValue>> Execute<TValue>(Func<Task<TValue>> function)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`function` Func&lt;Task&lt;TValue&gt;&gt;<br />
+`function` Func&lt;Task&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>

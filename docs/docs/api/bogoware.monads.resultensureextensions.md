@@ -1,5 +1,5 @@
 ---
-title: "resultensureextensions"
+title: "ResultEnsureExtensions"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class ResultEnsureExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultEnsureExtensions](./bogoware.monads.resultensureextensions)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultEnsureExtensions](./bogoware.monads.resultensureextensions)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [ExtensionAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
@@ -24,21 +24,21 @@ public static Result<TValue> Ensure<TValue, TError>(Result<TValue> result, Func<
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TError`<br />
+`TError`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
-`error` Func&lt;TError&gt;<br />
+`error` Func&lt;TError&gt;<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **Ensure&lt;TValue, TError&gt;(Result&lt;TValue&gt;, Func&lt;TValue, Boolean&gt;, Func&lt;Task&lt;TError&gt;&gt;)**
 
@@ -48,21 +48,21 @@ public static Task<Result<TValue>> Ensure<TValue, TError>(Result<TValue> result,
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TError`<br />
+`TError`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
-`error` Func&lt;Task&lt;TError&gt;&gt;<br />
+`error` Func&lt;Task&lt;TError&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure&lt;TValue, TError&gt;(Result&lt;TValue&gt;, Func&lt;TValue, Task&lt;Boolean&gt;&gt;, Func&lt;TError&gt;)**
 
@@ -72,21 +72,21 @@ public static Task<Result<TValue>> Ensure<TValue, TError>(Result<TValue> result,
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TError`<br />
+`TError`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
-`error` Func&lt;TError&gt;<br />
+`error` Func&lt;TError&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure&lt;TValue, TError&gt;(Result&lt;TValue&gt;, Func&lt;TValue, Task&lt;Boolean&gt;&gt;, Func&lt;Task&lt;TError&gt;&gt;)**
 
@@ -96,21 +96,21 @@ public static Task<Result<TValue>> Ensure<TValue, TError>(Result<TValue> result,
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TError`<br />
+`TError`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
-`error` Func&lt;Task&lt;TError&gt;&gt;<br />
+`error` Func&lt;Task&lt;TError&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Boolean&gt;, Error)**
 
@@ -120,19 +120,19 @@ public static Task<Result<TValue>> Ensure<TValue>(Task<Result<TValue>> result, F
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
-`error` [Error](./bogoware.monads.error)<br />
+`error` [Error](./bogoware.monads.error)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **RecoverWith&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Task&lt;Boolean&gt;&gt;, Error)**
 
@@ -142,19 +142,19 @@ public static Task<Result<TValue>> RecoverWith<TValue>(Task<Result<TValue>> resu
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
-`error` [Error](./bogoware.monads.error)<br />
+`error` [Error](./bogoware.monads.error)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Boolean&gt;, Func&lt;Error&gt;)**
 
@@ -164,19 +164,19 @@ public static Task<Result<TValue>> Ensure<TValue>(Task<Result<TValue>> result, F
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
-`error` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`error` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Boolean&gt;, Func&lt;Task&lt;Error&gt;&gt;)**
 
@@ -186,19 +186,19 @@ public static Task<Result<TValue>> Ensure<TValue>(Task<Result<TValue>> result, F
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
-`error` [Func&lt;Task&lt;Error&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`error` [Func&lt;Task&lt;Error&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Task&lt;Boolean&gt;&gt;, Func&lt;Error&gt;)**
 
@@ -208,19 +208,19 @@ public static Task<Result<TValue>> Ensure<TValue>(Task<Result<TValue>> result, F
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
-`error` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`error` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Task&lt;Boolean&gt;&gt;, Func&lt;Task&lt;Error&gt;&gt;)**
 
@@ -230,16 +230,16 @@ public static Task<Result<TValue>> Ensure<TValue>(Task<Result<TValue>> result, F
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
-`error` [Func&lt;Task&lt;Error&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`error` [Func&lt;Task&lt;Error&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>

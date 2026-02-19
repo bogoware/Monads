@@ -1,5 +1,5 @@
 ---
-title: "maybeextensions"
+title: "MaybeExtensions"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class MaybeExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [MaybeExtensions](./bogoware.monads.maybeextensions)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [MaybeExtensions](./bogoware.monads.maybeextensions)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [ExtensionAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
@@ -26,19 +26,19 @@ public static Maybe<TNewValue> Map<TValue, TNewValue>(Maybe<TValue> maybe, TNewV
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`value` TNewValue<br />
+`value` TNewValue<br>
 
 #### Returns
 
-Maybe&lt;TNewValue&gt;<br />
+Maybe&lt;TNewValue&gt;<br>
 
 ### **Map&lt;TValue, TNewValue&gt;(Maybe&lt;TValue&gt;, Func&lt;TNewValue&gt;)**
 
@@ -48,19 +48,19 @@ public static Maybe<TNewValue> Map<TValue, TNewValue>(Maybe<TValue> maybe, Func<
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`map` Func&lt;TNewValue&gt;<br />
+`map` Func&lt;TNewValue&gt;<br>
 
 #### Returns
 
-Maybe&lt;TNewValue&gt;<br />
+Maybe&lt;TNewValue&gt;<br>
 
 ### **Map&lt;TValue, TNewValue&gt;(Maybe&lt;TValue&gt;, Func&lt;Task&lt;TNewValue&gt;&gt;)**
 
@@ -70,19 +70,19 @@ public static Task<Maybe<TNewValue>> Map<TValue, TNewValue>(Maybe<TValue> maybe,
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`map` Func&lt;Task&lt;TNewValue&gt;&gt;<br />
+`map` Func&lt;Task&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Maybe&lt;TNewValue&gt;&gt;<br />
+Task&lt;Maybe&lt;TNewValue&gt;&gt;<br>
 
 ### **Bind&lt;TValue, TNewValue&gt;(Maybe&lt;TValue&gt;, Func&lt;Maybe&lt;TNewValue&gt;&gt;)**
 
@@ -94,19 +94,19 @@ public static Maybe<TNewValue> Bind<TValue, TNewValue>(Maybe<TValue> maybe, Func
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`map` Func&lt;Maybe&lt;TNewValue&gt;&gt;<br />
+`map` Func&lt;Maybe&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-Maybe&lt;TNewValue&gt;<br />
+Maybe&lt;TNewValue&gt;<br>
 
 ### **Bind&lt;TValue, TNewValue&gt;(Maybe&lt;TValue&gt;, Func&lt;Task&lt;Maybe&lt;TNewValue&gt;&gt;&gt;)**
 
@@ -116,19 +116,19 @@ public static Task<Maybe<TNewValue>> Bind<TValue, TNewValue>(Maybe<TValue> maybe
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`map` Func&lt;Task&lt;Maybe&lt;TNewValue&gt;&gt;&gt;<br />
+`map` Func&lt;Task&lt;Maybe&lt;TNewValue&gt;&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Maybe&lt;TNewValue&gt;&gt;<br />
+Task&lt;Maybe&lt;TNewValue&gt;&gt;<br>
 
 ### **Match&lt;TValue, TResult&gt;(Maybe&lt;TValue&gt;, TResult, TResult)**
 
@@ -140,21 +140,21 @@ public static TResult Match<TValue, TResult>(Maybe<TValue> maybe, TResult result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`resultOnValue` TResult<br />
+`resultOnValue` TResult<br>
 
-`resultOnNone` TResult<br />
+`resultOnNone` TResult<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TValue, TResult&gt;(Maybe&lt;TValue&gt;, Func&lt;TResult&gt;, TResult)**
 
@@ -164,21 +164,21 @@ public static TResult Match<TValue, TResult>(Maybe<TValue> maybe, Func<TResult> 
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`resultOnValue` Func&lt;TResult&gt;<br />
+`resultOnValue` Func&lt;TResult&gt;<br>
 
-`resultOnNone` TResult<br />
+`resultOnNone` TResult<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TValue, TResult&gt;(Maybe&lt;TValue&gt;, TResult, Func&lt;TResult&gt;)**
 
@@ -188,21 +188,21 @@ public static TResult Match<TValue, TResult>(Maybe<TValue> maybe, TResult result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`resultOnValue` TResult<br />
+`resultOnValue` TResult<br>
 
-`resultOnNone` Func&lt;TResult&gt;<br />
+`resultOnNone` Func&lt;TResult&gt;<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TValue, TResult&gt;(Maybe&lt;TValue&gt;, Func&lt;TResult&gt;, Func&lt;TResult&gt;)**
 
@@ -212,21 +212,21 @@ public static TResult Match<TValue, TResult>(Maybe<TValue> maybe, Func<TResult> 
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`resultOnValue` Func&lt;TResult&gt;<br />
+`resultOnValue` Func&lt;TResult&gt;<br>
 
-`resultOnNone` Func&lt;TResult&gt;<br />
+`resultOnNone` Func&lt;TResult&gt;<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TValue, TResult&gt;(Maybe&lt;TValue&gt;, Func&lt;Task&lt;TResult&gt;&gt;, TResult)**
 
@@ -236,21 +236,21 @@ public static Task<TResult> Match<TValue, TResult>(Maybe<TValue> maybe, Func<Tas
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`resultOnValue` Func&lt;Task&lt;TResult&gt;&gt;<br />
+`resultOnValue` Func&lt;Task&lt;TResult&gt;&gt;<br>
 
-`resultOnNone` TResult<br />
+`resultOnNone` TResult<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TValue, TResult&gt;(Maybe&lt;TValue&gt;, TResult, Func&lt;Task&lt;TResult&gt;&gt;)**
 
@@ -260,21 +260,21 @@ public static Task<TResult> Match<TValue, TResult>(Maybe<TValue> maybe, TResult 
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`resultOnValue` TResult<br />
+`resultOnValue` TResult<br>
 
-`resultOnNone` Func&lt;Task&lt;TResult&gt;&gt;<br />
+`resultOnNone` Func&lt;Task&lt;TResult&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TValue, TResult&gt;(Maybe&lt;TValue&gt;, Func&lt;Task&lt;TResult&gt;&gt;, Func&lt;Task&lt;TResult&gt;&gt;)**
 
@@ -284,21 +284,21 @@ public static Task<TResult> Match<TValue, TResult>(Maybe<TValue> maybe, Func<Tas
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`resultOnValue` Func&lt;Task&lt;TResult&gt;&gt;<br />
+`resultOnValue` Func&lt;Task&lt;TResult&gt;&gt;<br>
 
-`resultOnNone` Func&lt;Task&lt;TResult&gt;&gt;<br />
+`resultOnNone` Func&lt;Task&lt;TResult&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **ToMaybe&lt;TValue&gt;(IEnumerable&lt;TValue&gt;)**
 
@@ -310,15 +310,15 @@ public static Maybe<TValue> ToMaybe<TValue>(IEnumerable<TValue> values)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`values` IEnumerable&lt;TValue&gt;<br />
+`values` IEnumerable&lt;TValue&gt;<br>
 
 #### Returns
 
-Maybe&lt;TValue&gt;<br />
+Maybe&lt;TValue&gt;<br>
 
 ### **Where&lt;TValue&gt;(TValue, Func&lt;TValue, Boolean&gt;)**
 
@@ -330,17 +330,17 @@ public static Maybe<TValue> Where<TValue>(TValue obj, Func<TValue, bool> predica
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`obj` TValue<br />
+`obj` TValue<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
 #### Returns
 
-Maybe&lt;TValue&gt;<br />
+Maybe&lt;TValue&gt;<br>
 
 ### **WhereNot&lt;TValue&gt;(TValue, Func&lt;TValue, Boolean&gt;)**
 
@@ -352,17 +352,17 @@ public static Maybe<TValue> WhereNot<TValue>(TValue obj, Func<TValue, bool> pred
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`obj` TValue<br />
+`obj` TValue<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
 #### Returns
 
-Maybe&lt;TValue&gt;<br />
+Maybe&lt;TValue&gt;<br>
 
 ### **Satisfy&lt;TValue&gt;(Maybe&lt;TValue&gt;, Func&lt;TValue, Boolean&gt;)**
 
@@ -375,17 +375,17 @@ public static bool Satisfy<TValue>(Maybe<TValue> maybe, Func<TValue, bool> predi
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **Satisfy&lt;TValue&gt;(Maybe&lt;TValue&gt;, Func&lt;TValue, Task&lt;Boolean&gt;&gt;)**
 
@@ -395,17 +395,17 @@ public static Task<bool> Satisfy<TValue>(Maybe<TValue> maybe, Func<TValue, Task<
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
 #### Returns
 
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br />
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **Execute&lt;TValue&gt;(Maybe`1&, Action&lt;Maybe&lt;TValue&gt;&gt;)**
 
@@ -417,17 +417,17 @@ public static Maybe`1& Execute<TValue>(Maybe`1& maybe, Action<Maybe<TValue>> act
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybe` Maybe`1&<br />
+`maybe` Maybe`1&<br>
 
-`action` Action&lt;Maybe&lt;TValue&gt;&gt;<br />
+`action` Action&lt;Maybe&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Maybe`1&<br />
+Maybe`1&<br>
 
 ### **Execute&lt;TValue&gt;(Maybe&lt;TValue&gt;, Func&lt;Maybe&lt;TValue&gt;, Task&gt;)**
 
@@ -437,17 +437,17 @@ public static Task<Maybe<TValue>> Execute<TValue>(Maybe<TValue> maybe, Func<Mayb
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`action` Func&lt;Maybe&lt;TValue&gt;, Task&gt;<br />
+`action` Func&lt;Maybe&lt;TValue&gt;, Task&gt;<br>
 
 #### Returns
 
-Task&lt;Maybe&lt;TValue&gt;&gt;<br />
+Task&lt;Maybe&lt;TValue&gt;&gt;<br>
 
 ### **IfSome&lt;TValue&gt;(Maybe`1&, Action)**
 
@@ -459,17 +459,17 @@ public static Maybe`1& IfSome<TValue>(Maybe`1& maybe, Action action)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybe` Maybe`1&<br />
+`maybe` Maybe`1&<br>
 
-`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br />
+`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
 
 #### Returns
 
-Maybe`1&<br />
+Maybe`1&<br>
 
 ### **IfSome&lt;TNewValue&gt;(Maybe&lt;TNewValue&gt;, Func&lt;Task&gt;)**
 
@@ -479,17 +479,17 @@ public static Task<Maybe<TNewValue>> IfSome<TNewValue>(Maybe<TNewValue> maybe, F
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TNewValue&gt;<br />
+`maybe` Maybe&lt;TNewValue&gt;<br>
 
-`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Maybe&lt;TNewValue&gt;&gt;<br />
+Task&lt;Maybe&lt;TNewValue&gt;&gt;<br>
 
 ### **IfNone&lt;TNewValue&gt;(Maybe`1&, Action)**
 
@@ -501,17 +501,17 @@ public static Maybe`1& IfNone<TNewValue>(Maybe`1& maybe, Action action)
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe`1&<br />
+`maybe` Maybe`1&<br>
 
-`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br />
+`action` [Action](https://docs.microsoft.com/en-us/dotnet/api/system.action)<br>
 
 #### Returns
 
-Maybe`1&<br />
+Maybe`1&<br>
 
 ### **IfNone&lt;TNewValue&gt;(Maybe&lt;TNewValue&gt;, Func&lt;Task&gt;)**
 
@@ -521,17 +521,17 @@ public static Task<Maybe<TNewValue>> IfNone<TNewValue>(Maybe<TNewValue> maybe, F
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TNewValue&gt;<br />
+`maybe` Maybe&lt;TNewValue&gt;<br>
 
-`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`action` [Func&lt;Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Maybe&lt;TNewValue&gt;&gt;<br />
+Task&lt;Maybe&lt;TNewValue&gt;&gt;<br>
 
 ### **WithDefault&lt;TNewValue&gt;(Maybe&lt;TNewValue&gt;, TNewValue)**
 
@@ -541,17 +541,17 @@ public static Maybe<TNewValue> WithDefault<TNewValue>(Maybe<TNewValue> maybe, TN
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TNewValue&gt;<br />
+`maybe` Maybe&lt;TNewValue&gt;<br>
 
-`value` TNewValue<br />
+`value` TNewValue<br>
 
 #### Returns
 
-Maybe&lt;TNewValue&gt;<br />
+Maybe&lt;TNewValue&gt;<br>
 
 ### **WithDefault&lt;TNewValue&gt;(Maybe&lt;TNewValue&gt;, Func&lt;TNewValue&gt;)**
 
@@ -561,17 +561,17 @@ public static Maybe<TNewValue> WithDefault<TNewValue>(Maybe<TNewValue> maybe, Fu
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TNewValue&gt;<br />
+`maybe` Maybe&lt;TNewValue&gt;<br>
 
-`value` Func&lt;TNewValue&gt;<br />
+`value` Func&lt;TNewValue&gt;<br>
 
 #### Returns
 
-Maybe&lt;TNewValue&gt;<br />
+Maybe&lt;TNewValue&gt;<br>
 
 ### **WithDefault&lt;TNewValue&gt;(Maybe&lt;TNewValue&gt;, Func&lt;Task&lt;TNewValue&gt;&gt;)**
 
@@ -581,17 +581,17 @@ public static Task<Maybe<TNewValue>> WithDefault<TNewValue>(Maybe<TNewValue> may
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TNewValue&gt;<br />
+`maybe` Maybe&lt;TNewValue&gt;<br>
 
-`value` Func&lt;Task&lt;TNewValue&gt;&gt;<br />
+`value` Func&lt;Task&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Maybe&lt;TNewValue&gt;&gt;<br />
+Task&lt;Maybe&lt;TNewValue&gt;&gt;<br>
 
 ### **MapToResult&lt;TValue&gt;(Maybe&lt;TValue&gt;)**
 
@@ -603,15 +603,15 @@ public static Result<TValue> MapToResult<TValue>(Maybe<TValue> maybe)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **MapToResult&lt;TValue&gt;(Maybe&lt;TValue&gt;, Func&lt;Error&gt;)**
 
@@ -623,17 +623,17 @@ public static Result<TValue> MapToResult<TValue>(Maybe<TValue> maybe, Func<Error
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`errorFunc` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`errorFunc` [Func&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **MapToResult&lt;TValue&gt;(Maybe&lt;TValue&gt;, Func&lt;Task&lt;Error&gt;&gt;)**
 
@@ -643,14 +643,14 @@ public static Task<Result<TValue>> MapToResult<TValue>(Maybe<TValue> maybe, Func
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybe` Maybe&lt;TValue&gt;<br />
+`maybe` Maybe&lt;TValue&gt;<br>
 
-`errorFunc` [Func&lt;Task&lt;Error&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br />
+`errorFunc` [Func&lt;Task&lt;Error&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-1)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>

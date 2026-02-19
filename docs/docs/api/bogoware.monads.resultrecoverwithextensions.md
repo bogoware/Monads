@@ -1,5 +1,5 @@
 ---
-title: "resultrecoverwithextensions"
+title: "ResultRecoverWithExtensions"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class ResultRecoverWithExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultRecoverWithExtensions](./bogoware.monads.resultrecoverwithextensions)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultRecoverWithExtensions](./bogoware.monads.resultrecoverwithextensions)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [ExtensionAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
@@ -24,19 +24,19 @@ public static Result<TValue> RecoverWith<TValue, TError>(Result<TValue> result, 
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TError`<br />
+`TError`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`newValue` TValue<br />
+`newValue` TValue<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **RecoverWith&lt;TValue, TError&gt;(Result&lt;TValue&gt;, Func&lt;TValue&gt;)**
 
@@ -46,19 +46,19 @@ public static Result<TValue> RecoverWith<TValue, TError>(Result<TValue> result, 
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TError`<br />
+`TError`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`functor` Func&lt;TValue&gt;<br />
+`functor` Func&lt;TValue&gt;<br>
 
 #### Returns
 
-Result&lt;TValue&gt;<br />
+Result&lt;TValue&gt;<br>
 
 ### **RecoverWith&lt;TValue, TError&gt;(Result&lt;TValue&gt;, Func&lt;Task&lt;TValue&gt;&gt;)**
 
@@ -68,19 +68,19 @@ public static Task<Result<TValue>> RecoverWith<TValue, TError>(Result<TValue> re
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TError`<br />
+`TError`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`functor` Func&lt;Task&lt;TValue&gt;&gt;<br />
+`functor` Func&lt;Task&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **RecoverWith&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;Error, TValue&gt;)**
 
@@ -90,17 +90,17 @@ public static Task<Result<TValue>> RecoverWith<TValue>(Task<Result<TValue>> resu
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;Error, TValue&gt;<br />
+`functor` Func&lt;Error, TValue&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **RecoverWith&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;Error, Task&lt;TValue&gt;&gt;)**
 
@@ -110,17 +110,17 @@ public static Task<Result<TValue>> RecoverWith<TValue>(Task<Result<TValue>> resu
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;Error, Task&lt;TValue&gt;&gt;<br />
+`functor` Func&lt;Error, Task&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **RecoverWith&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, TValue)**
 
@@ -130,17 +130,17 @@ public static Task<Result<TValue>> RecoverWith<TValue>(Task<Result<TValue>> resu
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`newValue` TValue<br />
+`newValue` TValue<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **RecoverWith&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue&gt;)**
 
@@ -150,17 +150,17 @@ public static Task<Result<TValue>> RecoverWith<TValue>(Task<Result<TValue>> resu
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;TValue&gt;<br />
+`functor` Func&lt;TValue&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **RecoverWith&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;Task&lt;TValue&gt;&gt;)**
 
@@ -170,14 +170,14 @@ public static Task<Result<TValue>> RecoverWith<TValue>(Task<Result<TValue>> resu
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;Task&lt;TValue&gt;&gt;<br />
+`functor` Func&lt;Task&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>

@@ -1,5 +1,5 @@
 ---
-title: "aggregateerror"
+title: "AggregateError"
 sidebar_position: 99
 ---
 
@@ -13,7 +13,7 @@ An error that aggregates multiple errors.
 public class AggregateError : Error
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Error](./bogoware.monads.error) → [AggregateError](./bogoware.monads.aggregateerror)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Error](./bogoware.monads.error) → [AggregateError](./bogoware.monads.aggregateerror)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Properties
@@ -28,7 +28,7 @@ public IEnumerable<Error> Errors { get; }
 
 #### Property Value
 
-[IEnumerable&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+[IEnumerable&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
 ### **Message**
 
@@ -38,7 +38,7 @@ public string Message { get; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 
@@ -52,10 +52,10 @@ public AggregateError(string message, IEnumerable<Error> innerErrors)
 
 #### Parameters
 
-`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 The error message
 
-`innerErrors` [IEnumerable&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+`innerErrors` [IEnumerable&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 The inner errors
 
 ### **AggregateError(String, Error, Error, Error[])**
@@ -66,13 +66,13 @@ public AggregateError(string message, Error first, Error second, Error[] others)
 
 #### Parameters
 
-`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
-`first` [Error](./bogoware.monads.error)<br />
+`first` [Error](./bogoware.monads.error)<br>
 
-`second` [Error](./bogoware.monads.error)<br />
+`second` [Error](./bogoware.monads.error)<br>
 
-`others` [Error[]](./bogoware.monads.error)<br />
+`others` [Error[]](./bogoware.monads.error)<br>
 
 ### **AggregateError(IEnumerable&lt;Error&gt;)**
 
@@ -82,7 +82,7 @@ public AggregateError(IEnumerable<Error> innerErrors)
 
 #### Parameters
 
-`innerErrors` [IEnumerable&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+`innerErrors` [IEnumerable&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
 ### **AggregateError(Error, Error, Error[])**
 
@@ -92,8 +92,8 @@ public AggregateError(Error first, Error second, Error[] others)
 
 #### Parameters
 
-`first` [Error](./bogoware.monads.error)<br />
+`first` [Error](./bogoware.monads.error)<br>
 
-`second` [Error](./bogoware.monads.error)<br />
+`second` [Error](./bogoware.monads.error)<br>
 
-`others` [Error[]](./bogoware.monads.error)<br />
+`others` [Error[]](./bogoware.monads.error)<br>

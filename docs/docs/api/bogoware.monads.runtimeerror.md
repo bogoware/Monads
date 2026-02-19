@@ -1,5 +1,5 @@
 ---
-title: "runtimeerror"
+title: "RuntimeError"
 sidebar_position: 99
 ---
 
@@ -15,7 +15,7 @@ Runtime errors are errors that depends on external factors
 public sealed class RuntimeError : Error
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Error](./bogoware.monads.error) → [RuntimeError](./bogoware.monads.runtimeerror)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Error](./bogoware.monads.error) → [RuntimeError](./bogoware.monads.runtimeerror)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Properties
@@ -28,7 +28,7 @@ public Exception Exception { get; }
 
 #### Property Value
 
-[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br />
+[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
 
 ### **Message**
 
@@ -38,7 +38,7 @@ public string Message { get; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 
@@ -50,4 +50,4 @@ public RuntimeError(Exception exception)
 
 #### Parameters
 
-`exception` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br />
+`exception` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>

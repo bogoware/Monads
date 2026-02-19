@@ -1,5 +1,5 @@
 ---
-title: "maybeenumerableextensions"
+title: "MaybeEnumerableExtensions"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class MaybeEnumerableExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [MaybeEnumerableExtensions](./bogoware.monads.maybeenumerableextensions)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [MaybeEnumerableExtensions](./bogoware.monads.maybeenumerableextensions)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [ExtensionAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
@@ -26,11 +26,11 @@ public static bool AllSome(IEnumerable<IMaybe> maybes)
 
 #### Parameters
 
-`maybes` [IEnumerable&lt;IMaybe&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+`maybes` [IEnumerable&lt;IMaybe&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AllSome&lt;TValue&gt;(IEnumerable&lt;Maybe&lt;TValue&gt;&gt;)**
 
@@ -40,15 +40,15 @@ public static bool AllSome<TValue>(IEnumerable<Maybe<TValue>> maybes)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AllNone(IEnumerable&lt;IMaybe&gt;)**
 
@@ -60,11 +60,11 @@ public static bool AllNone(IEnumerable<IMaybe> maybes)
 
 #### Parameters
 
-`maybes` [IEnumerable&lt;IMaybe&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+`maybes` [IEnumerable&lt;IMaybe&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AllNone&lt;TValue&gt;(IEnumerable&lt;Maybe&lt;TValue&gt;&gt;)**
 
@@ -74,15 +74,15 @@ public static bool AllNone<TValue>(IEnumerable<Maybe<TValue>> maybes)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AnySome(IEnumerable&lt;IMaybe&gt;)**
 
@@ -94,11 +94,11 @@ public static bool AnySome(IEnumerable<IMaybe> maybes)
 
 #### Parameters
 
-`maybes` [IEnumerable&lt;IMaybe&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+`maybes` [IEnumerable&lt;IMaybe&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AnySome&lt;TValue&gt;(IEnumerable&lt;Maybe&lt;TValue&gt;&gt;)**
 
@@ -108,15 +108,15 @@ public static bool AnySome<TValue>(IEnumerable<Maybe<TValue>> maybes)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AnyNone(IEnumerable&lt;IMaybe&gt;)**
 
@@ -128,11 +128,11 @@ public static bool AnyNone(IEnumerable<IMaybe> maybes)
 
 #### Parameters
 
-`maybes` [IEnumerable&lt;IMaybe&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+`maybes` [IEnumerable&lt;IMaybe&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AnyNone&lt;TValue&gt;(IEnumerable&lt;Maybe&lt;TValue&gt;&gt;)**
 
@@ -142,15 +142,15 @@ public static bool AnyNone<TValue>(IEnumerable<Maybe<TValue>> maybes)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **SelectValues&lt;TValue&gt;(IEnumerable&lt;Maybe&lt;TValue&gt;&gt;)**
 
@@ -163,15 +163,15 @@ public static IEnumerable<TValue> SelectValues<TValue>(IEnumerable<Maybe<TValue>
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;TValue&gt;<br />
+IEnumerable&lt;TValue&gt;<br>
 
 ### **BindEach&lt;TValue, TNewValue&gt;(IEnumerable&lt;Maybe&lt;TValue&gt;&gt;, Func&lt;TValue, Maybe&lt;TNewValue&gt;&gt;)**
 
@@ -183,19 +183,19 @@ public static IEnumerable<Maybe<TNewValue>> BindEach<TValue, TNewValue>(IEnumera
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;TValue, Maybe&lt;TNewValue&gt;&gt;<br />
+`functor` Func&lt;TValue, Maybe&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;Maybe&lt;TNewValue&gt;&gt;<br />
+IEnumerable&lt;Maybe&lt;TNewValue&gt;&gt;<br>
 
 ### **MapEach&lt;TValue, TNewValue&gt;(IEnumerable&lt;Maybe&lt;TValue&gt;&gt;, Func&lt;TValue, TNewValue&gt;)**
 
@@ -207,19 +207,19 @@ public static IEnumerable<Maybe<TNewValue>> MapEach<TValue, TNewValue>(IEnumerab
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;TValue, TNewValue&gt;<br />
+`functor` Func&lt;TValue, TNewValue&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;Maybe&lt;TNewValue&gt;&gt;<br />
+IEnumerable&lt;Maybe&lt;TNewValue&gt;&gt;<br>
 
 ### **MatchEach&lt;TValue, TResult&gt;(IEnumerable&lt;Maybe&lt;TValue&gt;&gt;, Func&lt;TValue, TResult&gt;, TResult)**
 
@@ -231,21 +231,21 @@ public static IEnumerable<TResult> MatchEach<TValue, TResult>(IEnumerable<Maybe<
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
-`mapSuccesses` Func&lt;TValue, TResult&gt;<br />
+`mapSuccesses` Func&lt;TValue, TResult&gt;<br>
 
-`none` TResult<br />
+`none` TResult<br>
 
 #### Returns
 
-IEnumerable&lt;TResult&gt;<br />
+IEnumerable&lt;TResult&gt;<br>
 
 ### **Where&lt;TValue&gt;(IEnumerable&lt;Maybe&lt;TValue&gt;&gt;, Func&lt;TValue, Boolean&gt;)**
 
@@ -258,17 +258,17 @@ public static IEnumerable<Maybe<TValue>> Where<TValue>(IEnumerable<Maybe<TValue>
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
 ### **WhereNot&lt;TValue&gt;(IEnumerable&lt;Maybe&lt;TValue&gt;&gt;, Func&lt;TValue, Boolean&gt;)**
 
@@ -281,14 +281,14 @@ public static IEnumerable<Maybe<TValue>> WhereNot<TValue>(IEnumerable<Maybe<TVal
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+`maybes` IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br />
+IEnumerable&lt;Maybe&lt;TValue&gt;&gt;<br>

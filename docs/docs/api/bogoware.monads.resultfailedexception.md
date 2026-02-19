@@ -1,5 +1,5 @@
 ---
-title: "resultfailedexception"
+title: "ResultFailedException"
 sidebar_position: 99
 ---
 
@@ -14,8 +14,8 @@ Exception thrown when attempting to get the value of a [Result&lt;TValue&gt;](./
 public class ResultFailedException : ResultInvalidOperationException, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [SystemException](https://docs.microsoft.com/en-us/dotnet/api/system.systemexception) → [InvalidOperationException](https://docs.microsoft.com/en-us/dotnet/api/system.invalidoperationexception) → [ResultInvalidOperationException](./bogoware.monads.resultinvalidoperationexception) → [ResultFailedException](./bogoware.monads.resultfailedexception)<br />
-Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [SystemException](https://docs.microsoft.com/en-us/dotnet/api/system.systemexception) → [InvalidOperationException](https://docs.microsoft.com/en-us/dotnet/api/system.invalidoperationexception) → [ResultInvalidOperationException](./bogoware.monads.resultinvalidoperationexception) → [ResultFailedException](./bogoware.monads.resultfailedexception)<br>
+Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Properties
@@ -30,7 +30,7 @@ public Error Error { get; }
 
 #### Property Value
 
-[Error](./bogoware.monads.error)<br />
+[Error](./bogoware.monads.error)<br>
 
 ### **TargetSite**
 
@@ -40,7 +40,7 @@ public MethodBase TargetSite { get; }
 
 #### Property Value
 
-[MethodBase](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodbase)<br />
+[MethodBase](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodbase)<br>
 
 ### **Message**
 
@@ -50,7 +50,7 @@ public string Message { get; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **Data**
 
@@ -60,7 +60,7 @@ public IDictionary Data { get; }
 
 #### Property Value
 
-[IDictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.idictionary)<br />
+[IDictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.idictionary)<br>
 
 ### **InnerException**
 
@@ -70,7 +70,7 @@ public Exception InnerException { get; }
 
 #### Property Value
 
-[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br />
+[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
 
 ### **HelpLink**
 
@@ -80,7 +80,7 @@ public string HelpLink { get; set; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **Source**
 
@@ -90,7 +90,7 @@ public string Source { get; set; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **HResult**
 
@@ -100,7 +100,7 @@ public int HResult { get; set; }
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br />
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **StackTrace**
 
@@ -110,7 +110,7 @@ public string StackTrace { get; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 
@@ -122,7 +122,7 @@ public ResultFailedException(Error error)
 
 #### Parameters
 
-`error` [Error](./bogoware.monads.error)<br />
+`error` [Error](./bogoware.monads.error)<br>
 
 ## Events
 

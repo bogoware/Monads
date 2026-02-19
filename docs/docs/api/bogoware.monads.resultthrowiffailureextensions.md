@@ -1,5 +1,5 @@
 ---
-title: "resultthrowiffailureextensions"
+title: "ResultThrowIfFailureExtensions"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class ResultThrowIfFailureExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultThrowIfFailureExtensions](./bogoware.monads.resultthrowiffailureextensions)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultThrowIfFailureExtensions](./bogoware.monads.resultthrowiffailureextensions)<br>
 Attributes [ExtensionAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
@@ -26,11 +26,11 @@ public static void ThrowIfFailure<TValue>(Result<TValue> result)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
 ### **ThrowIfFailure&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -40,12 +40,12 @@ public static Task ThrowIfFailure<TValue>(Task<Result<TValue>> resultTask)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`resultTask` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`resultTask` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br />
+[Task](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task)<br>

@@ -1,5 +1,5 @@
 ---
-title: "imaybe"
+title: "IMaybe"
 sidebar_position: 99
 ---
 
@@ -23,7 +23,7 @@ public abstract bool IsSome { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **IsNone**
 
@@ -33,4 +33,4 @@ public abstract bool IsNone { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>

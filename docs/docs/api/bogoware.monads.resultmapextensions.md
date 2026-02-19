@@ -1,5 +1,5 @@
 ---
-title: "resultmapextensions"
+title: "ResultMapExtensions"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class ResultMapExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultMapExtensions](./bogoware.monads.resultmapextensions)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultMapExtensions](./bogoware.monads.resultmapextensions)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [ExtensionAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
@@ -24,15 +24,15 @@ public static Result<Unit> MapToUnit<TValue>(Result<TValue> result)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
 #### Returns
 
-[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br>
 
 ### **MapToUnit&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -42,15 +42,15 @@ public static Task<Result<Unit>> MapToUnit<TValue>(Task<Result<TValue>> result)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br />
+[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **Map&lt;TValue, TNewValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TNewValue&gt;)**
 
@@ -60,19 +60,19 @@ public static Task<Result<TNewValue>> Map<TValue, TNewValue>(Task<Result<TValue>
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;TNewValue&gt;<br />
+`functor` Func&lt;TNewValue&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TNewValue&gt;&gt;<br />
+Task&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 ### **Map&lt;TValue, TNewValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;Task&lt;TNewValue&gt;&gt;)**
 
@@ -82,19 +82,19 @@ public static Task<Result<TNewValue>> Map<TValue, TNewValue>(Task<Result<TValue>
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;Task&lt;TNewValue&gt;&gt;<br />
+`functor` Func&lt;Task&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TNewValue&gt;&gt;<br />
+Task&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 ### **Map&lt;TValue, TNewValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, TNewValue&gt;)**
 
@@ -104,19 +104,19 @@ public static Task<Result<TNewValue>> Map<TValue, TNewValue>(Task<Result<TValue>
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;TValue, TNewValue&gt;<br />
+`functor` Func&lt;TValue, TNewValue&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TNewValue&gt;&gt;<br />
+Task&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 ### **Map&lt;TValue, TNewValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Task&lt;TNewValue&gt;&gt;)**
 
@@ -126,19 +126,19 @@ public static Task<Result<TNewValue>> Map<TValue, TNewValue>(Task<Result<TValue>
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;TValue, Task&lt;TNewValue&gt;&gt;<br />
+`functor` Func&lt;TValue, Task&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TNewValue&gt;&gt;<br />
+Task&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 ### **Map&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Action&lt;TValue&gt;)**
 
@@ -148,17 +148,17 @@ public static Task<Result<Unit>> Map<TValue>(Task<Result<TValue>> resultTask, Ac
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`resultTask` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`resultTask` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Action&lt;TValue&gt;<br />
+`functor` Action&lt;TValue&gt;<br>
 
 #### Returns
 
-[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br />
+[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **Map&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Task&gt;)**
 
@@ -168,14 +168,14 @@ public static Task<Result<Unit>> Map<TValue>(Task<Result<TValue>> resultTask, Fu
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`resultTask` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`resultTask` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;TValue, Task&gt;<br />
+`functor` Func&lt;TValue, Task&gt;<br>
 
 #### Returns
 
-[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br />
+[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>

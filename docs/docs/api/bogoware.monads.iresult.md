@@ -1,5 +1,5 @@
 ---
-title: "iresult"
+title: "IResult"
 sidebar_position: 99
 ---
 
@@ -23,7 +23,7 @@ public abstract bool IsSuccess { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **IsFailure**
 
@@ -33,7 +33,7 @@ public abstract bool IsFailure { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ## Methods
 
@@ -45,4 +45,4 @@ Error GetErrorOrThrow()
 
 #### Returns
 
-[Error](./bogoware.monads.error)<br />
+[Error](./bogoware.monads.error)<br>

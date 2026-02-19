@@ -1,5 +1,5 @@
 ---
-title: "unit"
+title: "Unit"
 sidebar_position: 99
 ---
 
@@ -13,8 +13,8 @@ The Unit type is used to represent the absence of a specific value
 public sealed class Unit : System.IEquatable`1[[Bogoware.Monads.Unit, Bogoware.Monads, Version=11.0.0.0, Culture=neutral, PublicKeyToken=null]]
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Unit](./bogoware.monads.unit)<br />
-Implements [IEquatable&lt;Unit&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.iequatable-1)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Unit](./bogoware.monads.unit)<br>
+Implements [IEquatable&lt;Unit&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.iequatable-1)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Fields
@@ -35,11 +35,11 @@ public bool Equals(object obj)
 
 #### Parameters
 
-`obj` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br />
+`obj` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **Equals(Unit)**
 
@@ -49,11 +49,11 @@ public bool Equals(Unit other)
 
 #### Parameters
 
-`other` [Unit](./bogoware.monads.unit)<br />
+`other` [Unit](./bogoware.monads.unit)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **GetHashCode()**
 
@@ -63,7 +63,7 @@ public int GetHashCode()
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br />
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **ToString()**
 
@@ -73,4 +73,4 @@ public string ToString()
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>

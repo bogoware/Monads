@@ -1,5 +1,5 @@
 ---
-title: "iresult-1"
+title: "IResult<TValue>"
 sidebar_position: 99
 ---
 
@@ -13,6 +13,6 @@ public interface IResult<TValue> : IResult
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 Implements [IResult](./bogoware.monads.iresult)

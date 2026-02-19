@@ -1,5 +1,5 @@
 ---
-title: "resultenumerableextensions"
+title: "ResultEnumerableExtensions"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class ResultEnumerableExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultEnumerableExtensions](./bogoware.monads.resultenumerableextensions)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultEnumerableExtensions](./bogoware.monads.resultenumerableextensions)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [ExtensionAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
@@ -27,17 +27,17 @@ public static IEnumerable<Result<TValue>> Where<TValue>(IEnumerable<Result<TValu
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **WhereNot&lt;TValue&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Boolean&gt;)**
 
@@ -50,17 +50,17 @@ public static IEnumerable<Result<TValue>> WhereNot<TValue>(IEnumerable<Result<TV
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **AllSuccess(IEnumerable&lt;IResult&gt;)**
 
@@ -72,11 +72,11 @@ public static bool AllSuccess(IEnumerable<IResult> successes)
 
 #### Parameters
 
-`successes` [IEnumerable&lt;IResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+`successes` [IEnumerable&lt;IResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AllSuccess&lt;TValue&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -86,15 +86,15 @@ public static bool AllSuccess<TValue>(IEnumerable<Result<TValue>> successes)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AllFailure(IEnumerable&lt;IResult&gt;)**
 
@@ -106,11 +106,11 @@ public static bool AllFailure(IEnumerable<IResult> successes)
 
 #### Parameters
 
-`successes` [IEnumerable&lt;IResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+`successes` [IEnumerable&lt;IResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AllFailure&lt;TValue&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -120,15 +120,15 @@ public static bool AllFailure<TValue>(IEnumerable<Result<TValue>> successes)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AnySuccess(IEnumerable&lt;IResult&gt;)**
 
@@ -140,11 +140,11 @@ public static bool AnySuccess(IEnumerable<IResult> successes)
 
 #### Parameters
 
-`successes` [IEnumerable&lt;IResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+`successes` [IEnumerable&lt;IResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AnySuccess&lt;TValue&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -154,15 +154,15 @@ public static bool AnySuccess<TValue>(IEnumerable<Result<TValue>> successes)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AnyFailure(IEnumerable&lt;IResult&gt;)**
 
@@ -174,11 +174,11 @@ public static bool AnyFailure(IEnumerable<IResult> successes)
 
 #### Parameters
 
-`successes` [IEnumerable&lt;IResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br />
+`successes` [IEnumerable&lt;IResult&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.collections.generic.ienumerable-1)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **AnyFailure&lt;TValue&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -188,15 +188,15 @@ public static bool AnyFailure<TValue>(IEnumerable<Result<TValue>> successes)
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **SelectValues&lt;TValue&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -209,15 +209,15 @@ public static IEnumerable<TValue> SelectValues<TValue>(IEnumerable<Result<TValue
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`successes` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;TValue&gt;<br />
+IEnumerable&lt;TValue&gt;<br>
 
 ### **MapEach&lt;TValue, TNewValue&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, TNewValue&gt;)**
 
@@ -229,19 +229,19 @@ public static IEnumerable<Result<TNewValue>> MapEach<TValue, TNewValue>(IEnumera
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`results` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`results` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;TValue, TNewValue&gt;<br />
+`functor` Func&lt;TValue, TNewValue&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;Result&lt;TNewValue&gt;&gt;<br />
+IEnumerable&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 ### **BindEach&lt;TValue, TNewValue&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Result&lt;TNewValue&gt;&gt;)**
 
@@ -253,19 +253,19 @@ public static IEnumerable<Result<TNewValue>> BindEach<TValue, TNewValue>(IEnumer
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`results` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`results` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
-`functor` Func&lt;TValue, Result&lt;TNewValue&gt;&gt;<br />
+`functor` Func&lt;TValue, Result&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;Result&lt;TNewValue&gt;&gt;<br />
+IEnumerable&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 ### **MatchEach&lt;TValue, TResult&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, TResult&gt;, Func&lt;Error, TResult&gt;)**
 
@@ -277,21 +277,21 @@ public static IEnumerable<TResult> MatchEach<TValue, TResult>(IEnumerable<Result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`results` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`results` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
-`mapSuccesses` Func&lt;TValue, TResult&gt;<br />
+`mapSuccesses` Func&lt;TValue, TResult&gt;<br>
 
-`mapFailures` Func&lt;Error, TResult&gt;<br />
+`mapFailures` Func&lt;Error, TResult&gt;<br>
 
 #### Returns
 
-IEnumerable&lt;TResult&gt;<br />
+IEnumerable&lt;TResult&gt;<br>
 
 ### **MatchEach&lt;TValue, TResult&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, TResult&gt;, TResult)**
 
@@ -301,21 +301,21 @@ public static IEnumerable<TResult> MatchEach<TValue, TResult>(IEnumerable<Result
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`results` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`results` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
-`mapSuccesses` Func&lt;TValue, TResult&gt;<br />
+`mapSuccesses` Func&lt;TValue, TResult&gt;<br>
 
-`failure` TResult<br />
+`failure` TResult<br>
 
 #### Returns
 
-IEnumerable&lt;TResult&gt;<br />
+IEnumerable&lt;TResult&gt;<br>
 
 ### **AggregateResults&lt;TValue&gt;(IEnumerable&lt;Result&lt;TValue&gt;&gt;)**
 
@@ -329,12 +329,12 @@ public static Result<IEnumerable<TValue>> AggregateResults<TValue>(IEnumerable<R
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`results` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br />
+`results` IEnumerable&lt;Result&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Result&lt;IEnumerable&lt;TValue&gt;&gt;<br />
+Result&lt;IEnumerable&lt;TValue&gt;&gt;<br>

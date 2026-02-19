@@ -1,5 +1,5 @@
 ---
-title: "imaybe-1"
+title: "IMaybe<TValue>"
 sidebar_position: 99
 ---
 
@@ -13,6 +13,6 @@ public interface IMaybe<TValue> : IMaybe
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 Implements [IMaybe](./bogoware.monads.imaybe)

@@ -1,5 +1,5 @@
 ---
-title: "resultmatchextensions"
+title: "ResultMatchExtensions"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class ResultMatchExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultMatchExtensions](./bogoware.monads.resultmatchextensions)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultMatchExtensions](./bogoware.monads.resultmatchextensions)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [ExtensionAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
@@ -24,21 +24,21 @@ public static TResult Match<TValue, TResult>(Result<TValue> result, TResult succ
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` TResult<br />
+`successful` TResult<br>
 
-`failure` TResult<br />
+`failure` TResult<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, Func&lt;TResult&gt;, TResult)**
 
@@ -48,21 +48,21 @@ public static TResult Match<TValue, TResult>(Result<TValue> result, Func<TResult
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` Func&lt;TResult&gt;<br />
+`successful` Func&lt;TResult&gt;<br>
 
-`failure` TResult<br />
+`failure` TResult<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, Func&lt;Task&lt;TResult&gt;&gt;, TResult)**
 
@@ -72,21 +72,21 @@ public static Task<TResult> Match<TValue, TResult>(Result<TValue> result, Func<T
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` Func&lt;Task&lt;TResult&gt;&gt;<br />
+`successful` Func&lt;Task&lt;TResult&gt;&gt;<br>
 
-`failure` TResult<br />
+`failure` TResult<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, TResult, Func&lt;TResult&gt;)**
 
@@ -96,21 +96,21 @@ public static TResult Match<TValue, TResult>(Result<TValue> result, TResult succ
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` TResult<br />
+`successful` TResult<br>
 
-`failure` Func&lt;TResult&gt;<br />
+`failure` Func&lt;TResult&gt;<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, TResult, Func&lt;Task&lt;TResult&gt;&gt;)**
 
@@ -120,21 +120,21 @@ public static Task<TResult> Match<TValue, TResult>(Result<TValue> result, TResul
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` TResult<br />
+`successful` TResult<br>
 
-`failure` Func&lt;Task&lt;TResult&gt;&gt;<br />
+`failure` Func&lt;Task&lt;TResult&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, Func&lt;TResult&gt;, Func&lt;TResult&gt;)**
 
@@ -144,21 +144,21 @@ public static TResult Match<TValue, TResult>(Result<TValue> result, Func<TResult
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` Func&lt;TResult&gt;<br />
+`successful` Func&lt;TResult&gt;<br>
 
-`failure` Func&lt;TResult&gt;<br />
+`failure` Func&lt;TResult&gt;<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, Func&lt;TValue, TResult&gt;, TResult)**
 
@@ -168,21 +168,21 @@ public static TResult Match<TValue, TResult>(Result<TValue> result, Func<TValue,
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` Func&lt;TValue, TResult&gt;<br />
+`successful` Func&lt;TValue, TResult&gt;<br>
 
-`failure` TResult<br />
+`failure` TResult<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, Func&lt;TValue, TResult&gt;, Func&lt;TResult&gt;)**
 
@@ -192,21 +192,21 @@ public static TResult Match<TValue, TResult>(Result<TValue> result, Func<TValue,
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` Func&lt;TValue, TResult&gt;<br />
+`successful` Func&lt;TValue, TResult&gt;<br>
 
-`failure` Func&lt;TResult&gt;<br />
+`failure` Func&lt;TResult&gt;<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, Func&lt;TValue, TResult&gt;, Func&lt;Task&lt;TResult&gt;&gt;)**
 
@@ -216,21 +216,21 @@ public static Task<TResult> Match<TValue, TResult>(Result<TValue> result, Func<T
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` Func&lt;TValue, TResult&gt;<br />
+`successful` Func&lt;TValue, TResult&gt;<br>
 
-`failure` Func&lt;Task&lt;TResult&gt;&gt;<br />
+`failure` Func&lt;Task&lt;TResult&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, TResult, Func&lt;Error, Task&lt;TResult&gt;&gt;)**
 
@@ -240,21 +240,21 @@ public static Task<TResult> Match<TValue, TResult>(Result<TValue> result, TResul
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` TResult<br />
+`successful` TResult<br>
 
-`failure` Func&lt;Error, Task&lt;TResult&gt;&gt;<br />
+`failure` Func&lt;Error, Task&lt;TResult&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, Func&lt;TResult&gt;, Func&lt;Error, Task&lt;TResult&gt;&gt;)**
 
@@ -264,21 +264,21 @@ public static Task<TResult> Match<TValue, TResult>(Result<TValue> result, Func<T
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` Func&lt;TResult&gt;<br />
+`successful` Func&lt;TResult&gt;<br>
 
-`failure` Func&lt;Error, Task&lt;TResult&gt;&gt;<br />
+`failure` Func&lt;Error, Task&lt;TResult&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, Func&lt;TValue, Task&lt;TResult&gt;&gt;, TResult)**
 
@@ -288,21 +288,21 @@ public static Task<TResult> Match<TValue, TResult>(Result<TValue> result, Func<T
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` Func&lt;TValue, Task&lt;TResult&gt;&gt;<br />
+`successful` Func&lt;TValue, Task&lt;TResult&gt;&gt;<br>
 
-`failure` TResult<br />
+`failure` TResult<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TValue, TResult&gt;(Result&lt;TValue&gt;, Func&lt;TValue, Task&lt;TResult&gt;&gt;, Func&lt;TResult&gt;)**
 
@@ -312,21 +312,21 @@ public static Task<TResult> Match<TValue, TResult>(Result<TValue> result, Func<T
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`successful` Func&lt;TValue, Task&lt;TResult&gt;&gt;<br />
+`successful` Func&lt;TValue, Task&lt;TResult&gt;&gt;<br>
 
-`failure` Func&lt;TResult&gt;<br />
+`failure` Func&lt;TResult&gt;<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **GetValue&lt;TValue&gt;(Result&lt;TValue&gt;, TValue)**
 
@@ -338,17 +338,17 @@ public static TValue GetValue<TValue>(Result<TValue> result, TValue recoverValue
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`recoverValue` TValue<br />
+`recoverValue` TValue<br>
 
 #### Returns
 
-TValue<br />
+TValue<br>
 
 ### **GetValue&lt;TValue&gt;(Result&lt;TValue&gt;, Func&lt;TValue&gt;)**
 
@@ -358,17 +358,17 @@ public static TValue GetValue<TValue>(Result<TValue> result, Func<TValue> recove
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`recoverValue` Func&lt;TValue&gt;<br />
+`recoverValue` Func&lt;TValue&gt;<br>
 
 #### Returns
 
-TValue<br />
+TValue<br>
 
 ### **GetValue&lt;TValue&gt;(Result&lt;TValue&gt;, Func&lt;Task&lt;TValue&gt;&gt;)**
 
@@ -378,14 +378,14 @@ public static Task<TValue> GetValue<TValue>(Result<TValue> result, Func<Task<TVa
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`recoverValue` Func&lt;Task&lt;TValue&gt;&gt;<br />
+`recoverValue` Func&lt;Task&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;TValue&gt;<br />
+Task&lt;TValue&gt;<br>

@@ -1,5 +1,5 @@
 ---
-title: "maybenoneexception"
+title: "MaybeNoneException"
 sidebar_position: 99
 ---
 
@@ -13,8 +13,8 @@ Thrown when attempting to instantiate a [Maybe&lt;TValue&gt;](./bogoware.monads.
 public class MaybeNoneException : System.ArgumentNullException, System.Runtime.Serialization.ISerializable
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [SystemException](https://docs.microsoft.com/en-us/dotnet/api/system.systemexception) → [ArgumentException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentexception) → [ArgumentNullException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentnullexception) → [MaybeNoneException](./bogoware.monads.maybenoneexception)<br />
-Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception) → [SystemException](https://docs.microsoft.com/en-us/dotnet/api/system.systemexception) → [ArgumentException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentexception) → [ArgumentNullException](https://docs.microsoft.com/en-us/dotnet/api/system.argumentnullexception) → [MaybeNoneException](./bogoware.monads.maybenoneexception)<br>
+Implements [ISerializable](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.serialization.iserializable)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Properties
@@ -27,7 +27,7 @@ public string Message { get; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **ParamName**
 
@@ -37,7 +37,7 @@ public string ParamName { get; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **TargetSite**
 
@@ -47,7 +47,7 @@ public MethodBase TargetSite { get; }
 
 #### Property Value
 
-[MethodBase](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodbase)<br />
+[MethodBase](https://docs.microsoft.com/en-us/dotnet/api/system.reflection.methodbase)<br>
 
 ### **Data**
 
@@ -57,7 +57,7 @@ public IDictionary Data { get; }
 
 #### Property Value
 
-[IDictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.idictionary)<br />
+[IDictionary](https://docs.microsoft.com/en-us/dotnet/api/system.collections.idictionary)<br>
 
 ### **InnerException**
 
@@ -67,7 +67,7 @@ public Exception InnerException { get; }
 
 #### Property Value
 
-[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br />
+[Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
 
 ### **HelpLink**
 
@@ -77,7 +77,7 @@ public string HelpLink { get; set; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **Source**
 
@@ -87,7 +87,7 @@ public string Source { get; set; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ### **HResult**
 
@@ -97,7 +97,7 @@ public int HResult { get; set; }
 
 #### Property Value
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br />
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **StackTrace**
 
@@ -107,7 +107,7 @@ public string StackTrace { get; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 
@@ -125,7 +125,7 @@ public MaybeNoneException(Exception inner)
 
 #### Parameters
 
-`inner` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br />
+`inner` [Exception](https://docs.microsoft.com/en-us/dotnet/api/system.exception)<br>
 
 ## Events
 

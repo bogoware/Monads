@@ -1,5 +1,5 @@
 ---
-title: "result-1"
+title: "Result<TValue>"
 sidebar_position: 99
 ---
 
@@ -15,10 +15,10 @@ public struct Result<TValue>
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
-Implements IResult&lt;TValue&gt;, [IResult](./bogoware.monads.iresult), IEquatable&lt;Result&lt;TValue&gt;&gt;, IEnumerable&lt;TValue&gt;, [IEnumerable](https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerable)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ValueType](https://docs.microsoft.com/en-us/dotnet/api/system.valuetype) → [Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
+Implements IResult&lt;TValue&gt;, [IResult](./bogoware.monads.iresult), IEquatable&lt;Result&lt;TValue&gt;&gt;, IEnumerable&lt;TValue&gt;, [IEnumerable](https://docs.microsoft.com/en-us/dotnet/api/system.collections.ienumerable)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [IsReadOnlyAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.isreadonlyattribute)
 
 ## Properties
@@ -35,11 +35,11 @@ public TValue Value { get; }
 
 #### Property Value
 
-TValue<br />
+TValue<br>
 
 #### Exceptions
 
-[ResultFailedException](./bogoware.monads.resultfailedexception)<br />
+[ResultFailedException](./bogoware.monads.resultfailedexception)<br>
 
 ### **Error**
 
@@ -53,11 +53,11 @@ public Error Error { get; }
 
 #### Property Value
 
-[Error](./bogoware.monads.error)<br />
+[Error](./bogoware.monads.error)<br>
 
 #### Exceptions
 
-[ResultFailedException](./bogoware.monads.resultfailedexception)<br />
+[ResultFailedException](./bogoware.monads.resultfailedexception)<br>
 
 ### **IsSuccess**
 
@@ -69,7 +69,7 @@ public bool IsSuccess { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **IsFailure**
 
@@ -81,7 +81,7 @@ public bool IsFailure { get; }
 
 #### Property Value
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ## Constructors
 
@@ -95,7 +95,7 @@ Result(TValue value)
 
 #### Parameters
 
-`value` TValue<br />
+`value` TValue<br>
 
 ### **Result(Error)**
 
@@ -107,7 +107,7 @@ Result(Error error)
 
 #### Parameters
 
-`error` [Error](./bogoware.monads.error)<br />
+`error` [Error](./bogoware.monads.error)<br>
 
 ### **Result(Result&lt;TValue&gt;)**
 
@@ -117,7 +117,7 @@ Result(Result<TValue> result)
 
 #### Parameters
 
-`result` [Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+`result` [Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ## Methods
 
@@ -129,7 +129,7 @@ TValue GetValueOrThrow()
 
 #### Returns
 
-TValue<br />
+TValue<br>
 
 ### **GetErrorOrThrow()**
 
@@ -139,7 +139,7 @@ Error GetErrorOrThrow()
 
 #### Returns
 
-[Error](./bogoware.monads.error)<br />
+[Error](./bogoware.monads.error)<br>
 
 ### **Map&lt;TNewValue&gt;(TNewValue)**
 
@@ -151,15 +151,15 @@ Result<TNewValue> Map<TNewValue>(TNewValue newValue)
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`newValue` TNewValue<br />
+`newValue` TNewValue<br>
 
 #### Returns
 
-Result&lt;TNewValue&gt;<br />
+Result&lt;TNewValue&gt;<br>
 
 ### **Map&lt;TNewValue&gt;(Func&lt;TNewValue&gt;)**
 
@@ -171,15 +171,15 @@ Result<TNewValue> Map<TNewValue>(Func<TNewValue> functor)
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`functor` Func&lt;TNewValue&gt;<br />
+`functor` Func&lt;TNewValue&gt;<br>
 
 #### Returns
 
-Result&lt;TNewValue&gt;<br />
+Result&lt;TNewValue&gt;<br>
 
 ### **Map&lt;TNewValue&gt;(Func&lt;Task&lt;TNewValue&gt;&gt;)**
 
@@ -189,15 +189,15 @@ Task<Result<TNewValue>> Map<TNewValue>(Func<Task<TNewValue>> functor)
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`functor` Func&lt;Task&lt;TNewValue&gt;&gt;<br />
+`functor` Func&lt;Task&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TNewValue&gt;&gt;<br />
+Task&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 ### **Map&lt;TNewValue&gt;(Func&lt;TValue, TNewValue&gt;)**
 
@@ -209,15 +209,15 @@ Result<TNewValue> Map<TNewValue>(Func<TValue, TNewValue> functor)
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`functor` Func&lt;TValue, TNewValue&gt;<br />
+`functor` Func&lt;TValue, TNewValue&gt;<br>
 
 #### Returns
 
-Result&lt;TNewValue&gt;<br />
+Result&lt;TNewValue&gt;<br>
 
 ### **Map&lt;TNewValue&gt;(Func&lt;TValue, Task&lt;TNewValue&gt;&gt;)**
 
@@ -227,15 +227,15 @@ Task<Result<TNewValue>> Map<TNewValue>(Func<TValue, Task<TNewValue>> functor)
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`functor` Func&lt;TValue, Task&lt;TNewValue&gt;&gt;<br />
+`functor` Func&lt;TValue, Task&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TNewValue&gt;&gt;<br />
+Task&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 ### **Map(Action&lt;TValue&gt;)**
 
@@ -245,11 +245,11 @@ Result<Unit> Map(Action<TValue> functor)
 
 #### Parameters
 
-`functor` Action&lt;TValue&gt;<br />
+`functor` Action&lt;TValue&gt;<br>
 
 #### Returns
 
-[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;Unit&gt;](./bogoware.monads.result-1)<br>
 
 ### **Map(Func&lt;TValue, Task&gt;)**
 
@@ -259,11 +259,11 @@ Task<Result<Unit>> Map(Func<TValue, Task> functor)
 
 #### Parameters
 
-`functor` Func&lt;TValue, Task&gt;<br />
+`functor` Func&lt;TValue, Task&gt;<br>
 
 #### Returns
 
-[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br />
+[Task&lt;Result&lt;Unit&gt;&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **MapError(Error)**
 
@@ -275,11 +275,11 @@ Result<TValue> MapError(Error newError)
 
 #### Parameters
 
-`newError` [Error](./bogoware.monads.error)<br />
+`newError` [Error](./bogoware.monads.error)<br>
 
 #### Returns
 
-[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ### **MapError&lt;TNewError&gt;(Func&lt;TNewError&gt;)**
 
@@ -291,15 +291,15 @@ Result<TValue> MapError<TNewError>(Func<TNewError> newErrorFunctor)
 
 #### Type Parameters
 
-`TNewError`<br />
+`TNewError`<br>
 
 #### Parameters
 
-`newErrorFunctor` Func&lt;TNewError&gt;<br />
+`newErrorFunctor` Func&lt;TNewError&gt;<br>
 
 #### Returns
 
-[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ### **MapError&lt;TNewError&gt;(Func&lt;Error, TNewError&gt;)**
 
@@ -309,15 +309,15 @@ Result<TValue> MapError<TNewError>(Func<Error, TNewError> newErrorFunctor)
 
 #### Type Parameters
 
-`TNewError`<br />
+`TNewError`<br>
 
 #### Parameters
 
-`newErrorFunctor` Func&lt;Error, TNewError&gt;<br />
+`newErrorFunctor` Func&lt;Error, TNewError&gt;<br>
 
 #### Returns
 
-[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ### **MapError&lt;TNewError&gt;(Func&lt;Task&lt;TNewError&gt;&gt;)**
 
@@ -327,15 +327,15 @@ Task<Result<TValue>> MapError<TNewError>(Func<Task<TNewError>> newErrorFunctor)
 
 #### Type Parameters
 
-`TNewError`<br />
+`TNewError`<br>
 
 #### Parameters
 
-`newErrorFunctor` Func&lt;Task&lt;TNewError&gt;&gt;<br />
+`newErrorFunctor` Func&lt;Task&lt;TNewError&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **MapError&lt;TNewError&gt;(Func&lt;Error, Task&lt;TNewError&gt;&gt;)**
 
@@ -345,15 +345,15 @@ Task<Result<TValue>> MapError<TNewError>(Func<Error, Task<TNewError>> newErrorFu
 
 #### Type Parameters
 
-`TNewError`<br />
+`TNewError`<br>
 
 #### Parameters
 
-`newErrorFunctor` Func&lt;Error, Task&lt;TNewError&gt;&gt;<br />
+`newErrorFunctor` Func&lt;Error, Task&lt;TNewError&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Bind&lt;TNewValue&gt;(Result&lt;TNewValue&gt;)**
 
@@ -365,15 +365,15 @@ Result<TNewValue> Bind<TNewValue>(Result<TNewValue> newResult)
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`newResult` Result&lt;TNewValue&gt;<br />
+`newResult` Result&lt;TNewValue&gt;<br>
 
 #### Returns
 
-Result&lt;TNewValue&gt;<br />
+Result&lt;TNewValue&gt;<br>
 
 ### **Bind&lt;TNewValue&gt;(Func&lt;Result&lt;TNewValue&gt;&gt;)**
 
@@ -385,15 +385,15 @@ Result<TNewValue> Bind<TNewValue>(Func<Result<TNewValue>> functor)
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`functor` Func&lt;Result&lt;TNewValue&gt;&gt;<br />
+`functor` Func&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-Result&lt;TNewValue&gt;<br />
+Result&lt;TNewValue&gt;<br>
 
 ### **Bind&lt;TNewValue&gt;(Func&lt;Task&lt;Result&lt;TNewValue&gt;&gt;&gt;)**
 
@@ -403,15 +403,15 @@ Task<Result<TNewValue>> Bind<TNewValue>(Func<Task<Result<TNewValue>>> functor)
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`functor` Func&lt;Task&lt;Result&lt;TNewValue&gt;&gt;&gt;<br />
+`functor` Func&lt;Task&lt;Result&lt;TNewValue&gt;&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TNewValue&gt;&gt;<br />
+Task&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 ### **Bind&lt;TNewValue&gt;(Func&lt;TValue, Result&lt;TNewValue&gt;&gt;)**
 
@@ -421,15 +421,15 @@ Result<TNewValue> Bind<TNewValue>(Func<TValue, Result<TNewValue>> functor)
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`functor` Func&lt;TValue, Result&lt;TNewValue&gt;&gt;<br />
+`functor` Func&lt;TValue, Result&lt;TNewValue&gt;&gt;<br>
 
 #### Returns
 
-Result&lt;TNewValue&gt;<br />
+Result&lt;TNewValue&gt;<br>
 
 ### **Bind&lt;TNewValue&gt;(Func&lt;TValue, Task&lt;Result&lt;TNewValue&gt;&gt;&gt;)**
 
@@ -439,15 +439,15 @@ Task<Result<TNewValue>> Bind<TNewValue>(Func<TValue, Task<Result<TNewValue>>> fu
 
 #### Type Parameters
 
-`TNewValue`<br />
+`TNewValue`<br>
 
 #### Parameters
 
-`functor` Func&lt;TValue, Task&lt;Result&lt;TNewValue&gt;&gt;&gt;<br />
+`functor` Func&lt;TValue, Task&lt;Result&lt;TNewValue&gt;&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TNewValue&gt;&gt;<br />
+Task&lt;Result&lt;TNewValue&gt;&gt;<br>
 
 ### **Match&lt;TResult&gt;(Func&lt;TValue, TResult&gt;, TResult)**
 
@@ -459,17 +459,17 @@ TResult Match<TResult>(Func<TValue, TResult> successful, TResult failure)
 
 #### Type Parameters
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`successful` Func&lt;TValue, TResult&gt;<br />
+`successful` Func&lt;TValue, TResult&gt;<br>
 
-`failure` TResult<br />
+`failure` TResult<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TResult&gt;(Func&lt;TValue, Task&lt;TResult&gt;&gt;, TResult)**
 
@@ -479,17 +479,17 @@ Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, TResult fai
 
 #### Type Parameters
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`successful` Func&lt;TValue, Task&lt;TResult&gt;&gt;<br />
+`successful` Func&lt;TValue, Task&lt;TResult&gt;&gt;<br>
 
-`failure` TResult<br />
+`failure` TResult<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TResult&gt;(Func&lt;TValue, TResult&gt;, Func&lt;Error, TResult&gt;)**
 
@@ -499,17 +499,17 @@ TResult Match<TResult>(Func<TValue, TResult> successful, Func<Error, TResult> fa
 
 #### Type Parameters
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`successful` Func&lt;TValue, TResult&gt;<br />
+`successful` Func&lt;TValue, TResult&gt;<br>
 
-`failure` Func&lt;Error, TResult&gt;<br />
+`failure` Func&lt;Error, TResult&gt;<br>
 
 #### Returns
 
-TResult<br />
+TResult<br>
 
 ### **Match&lt;TResult&gt;(Func&lt;TValue, Task&lt;TResult&gt;&gt;, Func&lt;Error, TResult&gt;)**
 
@@ -519,17 +519,17 @@ Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<Error,
 
 #### Type Parameters
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`successful` Func&lt;TValue, Task&lt;TResult&gt;&gt;<br />
+`successful` Func&lt;TValue, Task&lt;TResult&gt;&gt;<br>
 
-`failure` Func&lt;Error, TResult&gt;<br />
+`failure` Func&lt;Error, TResult&gt;<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TResult&gt;(Func&lt;TValue, TResult&gt;, Func&lt;Error, Task&lt;TResult&gt;&gt;)**
 
@@ -539,17 +539,17 @@ Task<TResult> Match<TResult>(Func<TValue, TResult> successful, Func<Error, Task<
 
 #### Type Parameters
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`successful` Func&lt;TValue, TResult&gt;<br />
+`successful` Func&lt;TValue, TResult&gt;<br>
 
-`failure` Func&lt;Error, Task&lt;TResult&gt;&gt;<br />
+`failure` Func&lt;Error, Task&lt;TResult&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **Match&lt;TResult&gt;(Func&lt;TValue, Task&lt;TResult&gt;&gt;, Func&lt;Error, Task&lt;TResult&gt;&gt;)**
 
@@ -559,17 +559,17 @@ Task<TResult> Match<TResult>(Func<TValue, Task<TResult>> successful, Func<Error,
 
 #### Type Parameters
 
-`TResult`<br />
+`TResult`<br>
 
 #### Parameters
 
-`successful` Func&lt;TValue, Task&lt;TResult&gt;&gt;<br />
+`successful` Func&lt;TValue, Task&lt;TResult&gt;&gt;<br>
 
-`failure` Func&lt;Error, Task&lt;TResult&gt;&gt;<br />
+`failure` Func&lt;Error, Task&lt;TResult&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;TResult&gt;<br />
+Task&lt;TResult&gt;<br>
 
 ### **RecoverWith(TValue)**
 
@@ -579,11 +579,11 @@ Result<TValue> RecoverWith(TValue newValue)
 
 #### Parameters
 
-`newValue` TValue<br />
+`newValue` TValue<br>
 
 #### Returns
 
-[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ### **RecoverWith(Func&lt;TValue&gt;)**
 
@@ -593,11 +593,11 @@ Result<TValue> RecoverWith(Func<TValue> functor)
 
 #### Parameters
 
-`functor` Func&lt;TValue&gt;<br />
+`functor` Func&lt;TValue&gt;<br>
 
 #### Returns
 
-[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ### **RecoverWith(Func&lt;Error, TValue&gt;)**
 
@@ -607,11 +607,11 @@ Result<TValue> RecoverWith(Func<Error, TValue> functor)
 
 #### Parameters
 
-`functor` Func&lt;Error, TValue&gt;<br />
+`functor` Func&lt;Error, TValue&gt;<br>
 
 #### Returns
 
-[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ### **RecoverWith(Func&lt;Task&lt;TValue&gt;&gt;)**
 
@@ -621,11 +621,11 @@ Task<Result<TValue>> RecoverWith(Func<Task<TValue>> functor)
 
 #### Parameters
 
-`functor` Func&lt;Task&lt;TValue&gt;&gt;<br />
+`functor` Func&lt;Task&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **RecoverWith(Func&lt;Error, Task&lt;TValue&gt;&gt;)**
 
@@ -635,11 +635,11 @@ Task<Result<TValue>> RecoverWith(Func<Error, Task<TValue>> functor)
 
 #### Parameters
 
-`functor` Func&lt;Error, Task&lt;TValue&gt;&gt;<br />
+`functor` Func&lt;Error, Task&lt;TValue&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure(Func&lt;TValue, Boolean&gt;, Error)**
 
@@ -653,13 +653,13 @@ Result<TValue> Ensure(Func<TValue, bool> predicate, Error error)
 
 #### Parameters
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
-`error` [Error](./bogoware.monads.error)<br />
+`error` [Error](./bogoware.monads.error)<br>
 
 #### Returns
 
-[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ### **Ensure(Func&lt;TValue, Task&lt;Boolean&gt;&gt;, Error)**
 
@@ -669,13 +669,13 @@ Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Error error)
 
 #### Parameters
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
-`error` [Error](./bogoware.monads.error)<br />
+`error` [Error](./bogoware.monads.error)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure(Func&lt;TValue, Boolean&gt;, Func&lt;TValue, Error&gt;)**
 
@@ -685,13 +685,13 @@ Result<TValue> Ensure(Func<TValue, bool> predicate, Func<TValue, Error> error)
 
 #### Parameters
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
-`error` Func&lt;TValue, Error&gt;<br />
+`error` Func&lt;TValue, Error&gt;<br>
 
 #### Returns
 
-[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ### **Ensure(Func&lt;TValue, Task&lt;Boolean&gt;&gt;, Func&lt;TValue, Error&gt;)**
 
@@ -701,13 +701,13 @@ Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Func<TValue, Err
 
 #### Parameters
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
-`error` Func&lt;TValue, Error&gt;<br />
+`error` Func&lt;TValue, Error&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure(Func&lt;TValue, Boolean&gt;, Func&lt;TValue, Task&lt;Error&gt;&gt;)**
 
@@ -717,13 +717,13 @@ Task<Result<TValue>> Ensure(Func<TValue, bool> predicate, Func<TValue, Task<Erro
 
 #### Parameters
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
-`error` Func&lt;TValue, Task&lt;Error&gt;&gt;<br />
+`error` Func&lt;TValue, Task&lt;Error&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Ensure(Func&lt;TValue, Task&lt;Boolean&gt;&gt;, Func&lt;TValue, Task&lt;Error&gt;&gt;)**
 
@@ -733,13 +733,13 @@ Task<Result<TValue>> Ensure(Func<TValue, Task<bool>> predicate, Func<TValue, Tas
 
 #### Parameters
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
-`error` Func&lt;TValue, Task&lt;Error&gt;&gt;<br />
+`error` Func&lt;TValue, Task&lt;Error&gt;&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfSuccess(Action&lt;TValue&gt;)**
 
@@ -751,11 +751,11 @@ Result<TValue> IfSuccess(Action<TValue> action)
 
 #### Parameters
 
-`action` Action&lt;TValue&gt;<br />
+`action` Action&lt;TValue&gt;<br>
 
 #### Returns
 
-[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ### **IfSuccess(Func&lt;TValue, Task&gt;)**
 
@@ -765,11 +765,11 @@ Task<Result<TValue>> IfSuccess(Func<TValue, Task> action)
 
 #### Parameters
 
-`action` Func&lt;TValue, Task&gt;<br />
+`action` Func&lt;TValue, Task&gt;<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **IfFailure(Action&lt;Error&gt;)**
 
@@ -781,11 +781,11 @@ Result<TValue> IfFailure(Action<Error> action)
 
 #### Parameters
 
-`action` [Action&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br />
+`action` [Action&lt;Error&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.action-1)<br>
 
 #### Returns
 
-[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+[Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 ### **IfFailure(Func&lt;Error, Task&gt;)**
 
@@ -795,11 +795,11 @@ Task<Result<TValue>> IfFailure(Func<Error, Task> action)
 
 #### Parameters
 
-`action` [Func&lt;Error, Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br />
+`action` [Func&lt;Error, Task&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.func-2)<br>
 
 #### Returns
 
-Task&lt;Result&lt;TValue&gt;&gt;<br />
+Task&lt;Result&lt;TValue&gt;&gt;<br>
 
 ### **Equals(Result&lt;TValue&gt;)**
 
@@ -809,11 +809,11 @@ bool Equals(Result<TValue> other)
 
 #### Parameters
 
-`other` [Result&lt;TValue&gt;](./bogoware.monads.result-1)<br />
+`other` [Result&lt;TValue&gt;](./bogoware.monads.result-1)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **GetEnumerator()**
 
@@ -823,7 +823,7 @@ IEnumerator<TValue> GetEnumerator()
 
 #### Returns
 
-IEnumerator&lt;TValue&gt;<br />
+IEnumerator&lt;TValue&gt;<br>
 
 ### **Equals(Object)**
 
@@ -833,11 +833,11 @@ bool Equals(object obj)
 
 #### Parameters
 
-`obj` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br />
+`obj` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **GetHashCode()**
 
@@ -847,4 +847,4 @@ int GetHashCode()
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br />
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>

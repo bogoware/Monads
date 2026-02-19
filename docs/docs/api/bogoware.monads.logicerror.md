@@ -1,5 +1,5 @@
 ---
-title: "logicerror"
+title: "LogicError"
 sidebar_position: 99
 ---
 
@@ -20,8 +20,8 @@ Represents a logic error, that is an error that is caused by a
 public class LogicError : Error, System.IEquatable`1[[Bogoware.Monads.LogicError, Bogoware.Monads, Version=11.0.0.0, Culture=neutral, PublicKeyToken=null]]
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Error](./bogoware.monads.error) → [LogicError](./bogoware.monads.logicerror)<br />
-Implements [IEquatable&lt;LogicError&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.iequatable-1)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [Error](./bogoware.monads.error) → [LogicError](./bogoware.monads.logicerror)<br>
+Implements [IEquatable&lt;LogicError&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.iequatable-1)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute)
 
 ## Properties
@@ -34,7 +34,7 @@ public string Message { get; }
 
 #### Property Value
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Constructors
 
@@ -46,7 +46,7 @@ public LogicError(string message)
 
 #### Parameters
 
-`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+`message` [String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>
 
 ## Methods
 
@@ -58,11 +58,11 @@ public bool Equals(LogicError other)
 
 #### Parameters
 
-`other` [LogicError](./bogoware.monads.logicerror)<br />
+`other` [LogicError](./bogoware.monads.logicerror)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **Equals(Object)**
 
@@ -72,11 +72,11 @@ public bool Equals(object obj)
 
 #### Parameters
 
-`obj` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br />
+`obj` [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object)<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **GetHashCode()**
 
@@ -86,7 +86,7 @@ public int GetHashCode()
 
 #### Returns
 
-[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br />
+[Int32](https://docs.microsoft.com/en-us/dotnet/api/system.int32)<br>
 
 ### **Deconstruct(String&)**
 
@@ -96,7 +96,7 @@ public void Deconstruct(String& message)
 
 #### Parameters
 
-`message` [String&](https://docs.microsoft.com/en-us/dotnet/api/system.string&)<br />
+`message` [String&](https://docs.microsoft.com/en-us/dotnet/api/system.string&)<br>
 
 ### **ToString()**
 
@@ -106,4 +106,4 @@ public string ToString()
 
 #### Returns
 
-[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br />
+[String](https://docs.microsoft.com/en-us/dotnet/api/system.string)<br>

@@ -1,5 +1,5 @@
 ---
-title: "resultsatisfyextensions"
+title: "ResultSatisfyExtensions"
 sidebar_position: 99
 ---
 
@@ -11,7 +11,7 @@ Namespace: Bogoware.Monads
 public static class ResultSatisfyExtensions
 ```
 
-Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultSatisfyExtensions](./bogoware.monads.resultsatisfyextensions)<br />
+Inheritance [Object](https://docs.microsoft.com/en-us/dotnet/api/system.object) → [ResultSatisfyExtensions](./bogoware.monads.resultsatisfyextensions)<br>
 Attributes [NullableContextAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullablecontextattribute), [NullableAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.nullableattribute), [ExtensionAttribute](https://docs.microsoft.com/en-us/dotnet/api/system.runtime.compilerservices.extensionattribute)
 
 ## Methods
@@ -27,17 +27,17 @@ public static bool Satisfy<TValue>(Result<TValue> result, Func<TValue, bool> pre
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
 #### Returns
 
-[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br />
+[Boolean](https://docs.microsoft.com/en-us/dotnet/api/system.boolean)<br>
 
 ### **Satisfy&lt;TValue&gt;(Result&lt;TValue&gt;, Func&lt;TValue, Task&lt;Boolean&gt;&gt;)**
 
@@ -47,17 +47,17 @@ public static Task<bool> Satisfy<TValue>(Result<TValue> result, Func<TValue, Tas
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Result&lt;TValue&gt;<br />
+`result` Result&lt;TValue&gt;<br>
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
 #### Returns
 
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br />
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **Satisfy&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Boolean&gt;)**
 
@@ -67,17 +67,17 @@ public static Task<bool> Satisfy<TValue>(Task<Result<TValue>> result, Func<TValu
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`result` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`result` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Boolean&gt;<br />
+`predicate` Func&lt;TValue, Boolean&gt;<br>
 
 #### Returns
 
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br />
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
 
 ### **Satisfy&lt;TValue&gt;(Task&lt;Result&lt;TValue&gt;&gt;, Func&lt;TValue, Task&lt;Boolean&gt;&gt;)**
 
@@ -87,14 +87,14 @@ public static Task<bool> Satisfy<TValue>(Task<Result<TValue>> maybe, Func<TValue
 
 #### Type Parameters
 
-`TValue`<br />
+`TValue`<br>
 
 #### Parameters
 
-`maybe` Task&lt;Result&lt;TValue&gt;&gt;<br />
+`maybe` Task&lt;Result&lt;TValue&gt;&gt;<br>
 
-`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br />
+`predicate` Func&lt;TValue, Task&lt;Boolean&gt;&gt;<br>
 
 #### Returns
 
-[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br />
+[Task&lt;Boolean&gt;](https://docs.microsoft.com/en-us/dotnet/api/system.threading.tasks.task-1)<br>
