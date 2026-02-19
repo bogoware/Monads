@@ -64,11 +64,25 @@ jobs:
           for file in docs/docs/api/*.md; do
             if [ -f "$file" ]; then
               filename=$(basename "$file" .md)
-              title="${filename#bogoware.monads.}"
+              if [ "$filename" = "index" ]; then
+                title="API Reference"
+                position=1
+              else
+                position=99
+                # Extract title from H1 heading in the generated markdown
+                h1_line=$(grep -m1 "^# " "$file" || true)
+                if [ -n "$h1_line" ]; then
+                  title="${h1_line#\# }"
+                  title="${title//&lt;/<}"
+                  title="${title//&gt;/>}"
+                else
+                  title="${filename#bogoware.monads.}"
+                fi
+              fi
               temp_file=$(mktemp)
               echo "---" > "$temp_file"
               echo "title: \"$title\"" >> "$temp_file"
-              echo "sidebar_position: 99" >> "$temp_file"
+              echo "sidebar_position: $position" >> "$temp_file"
               echo "---" >> "$temp_file"
               echo "" >> "$temp_file"
               cat "$file" >> "$temp_file"
