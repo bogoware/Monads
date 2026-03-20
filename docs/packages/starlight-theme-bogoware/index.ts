@@ -11,7 +11,7 @@ export default function bogowareTheme(
   return {
     name: '@bogoware/starlight-theme',
     hooks: {
-      setup({ updateConfig, config: starlightConfig, logger }) {
+      async setup({ updateConfig, addIntegration, astroConfig, config: starlightConfig, logger }) {
         logger.info(`Bogoware theme loaded (mode: ${config.mode})`);
 
         // Inject base CSS (always loaded)
@@ -31,7 +31,7 @@ export default function bogowareTheme(
           Hero: '@bogoware/starlight-theme/overrides/Hero.astro',
           Sidebar: '@bogoware/starlight-theme/overrides/Sidebar.astro',
           Footer: '@bogoware/starlight-theme/overrides/Footer.astro',
-          // TODO: Head override (Task 10)
+          Head: '@bogoware/starlight-theme/overrides/Head.astro',
         };
 
         updateConfig({
@@ -44,6 +44,47 @@ export default function bogowareTheme(
             ...componentOverrides,
           },
         });
+
+        // Analytics integration
+        if (config.analytics.googleAnalyticsId) {
+          const id = config.analytics.googleAnalyticsId;
+          const respectDnt = config.analytics.respectDnt;
+          const cookieless = config.analytics.cookieless;
+
+          addIntegration({
+            name: '@bogoware/starlight-theme/analytics',
+            hooks: {
+              'astro:config:setup'({ injectScript }) {
+                injectScript('head-inline', `
+                  (function(){
+                    ${respectDnt ? "if(navigator.doNotTrack==='1')return;" : ''}
+                    var s=document.createElement('script');
+                    s.src='https://www.googletagmanager.com/gtag/js?id=${id}';
+                    s.async=true;document.head.appendChild(s);
+                    window.dataLayer=window.dataLayer||[];
+                    function gtag(){dataLayer.push(arguments)}
+                    gtag('js',new Date());
+                    gtag('config','${id}'${cookieless ? ",{client_storage:'none',anonymize_ip:true}" : ''});
+                  })();
+                `);
+              },
+            },
+          });
+        }
+
+        // Sitemap integration
+        const hasSitemap = astroConfig.integrations.some(
+          (i: { name: string }) => i.name === '@astrojs/sitemap'
+        );
+        if (!hasSitemap) {
+          try {
+            const sitemap = await import('@astrojs/sitemap');
+            addIntegration(sitemap.default());
+            logger.info('Sitemap integration added');
+          } catch {
+            logger.warn('Install @astrojs/sitemap for automatic sitemap generation');
+          }
+        }
       },
     },
   };
