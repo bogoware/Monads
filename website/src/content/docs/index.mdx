@@ -16,7 +16,7 @@ hero:
       variant: minimal
 ---
 
-import { CardGrid, LinkCard, Steps } from '@astrojs/starlight/components';
+import { Card, CardGrid, LinkCard, Steps } from '@astrojs/starlight/components';
 
 _A functional programming library for C# providing `Result<T>` and `Maybe<T>` monads_
 
@@ -25,12 +25,24 @@ _A functional programming library for C# providing `Result<T>` and `Maybe<T>` mo
 ## Key Features
 
 <CardGrid>
-  <LinkCard title="Result Monad" description="Model operations that can fail with explicit, composable error handling — no more hidden exceptions." href="/Monads/concepts/result-monad/" />
-  <LinkCard title="Maybe Monad" description="Handle optional values safely with chainable operations — a superior alternative to null checks." href="/Monads/concepts/maybe-monad/" />
-  <LinkCard title="Railway-Oriented Programming" description="Chain operations fluently along success and failure tracks for clean, readable pipelines." href="/Monads/guides/railway-oriented-programming/" />
-  <LinkCard title="Typed Error Hierarchy" description="Distinguish between logic errors and runtime errors with a structured, extensible error model." href="/Monads/concepts/error-types/" />
-  <LinkCard title="Collection Extensions" description="Work with sequences of monadic values using MapEach, BindEach, MatchEach, and AggregateResults." href="/Monads/guides/working-with-collections/" />
-  <LinkCard title="Async Support" description="Every operation has async overloads that work seamlessly with Task-based patterns." href="/Monads/concepts/async-programming/" />
+  <Card title="Result Monad" icon="approve-check">
+    Model operations that can fail with explicit, composable error handling — no more hidden exceptions.
+  </Card>
+  <Card title="Maybe Monad" icon="puzzle">
+    Handle optional values safely with chainable operations — a superior alternative to null checks.
+  </Card>
+  <Card title="Railway-Oriented Programming" icon="rocket">
+    Chain operations fluently along success and failure tracks for clean, readable pipelines.
+  </Card>
+  <Card title="Typed Error Hierarchy" icon="warning">
+    Distinguish between logic errors and runtime errors with a structured, extensible error model.
+  </Card>
+  <Card title="Collection Extensions" icon="list-unordered">
+    Work with sequences of monadic values using MapEach, BindEach, MatchEach, and AggregateResults.
+  </Card>
+  <Card title="Full Async Support" icon="seti:csharp">
+    Every operation has async overloads that work seamlessly with Task-based patterns.
+  </Card>
 </CardGrid>
 
 ## Quick Start
