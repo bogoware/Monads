@@ -16,7 +16,7 @@ importers:
         version: 0.30.6(astro@5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3))
       '@bogoware/starlight-theme':
         specifier: ^0.1.3
-        version: 0.1.4(@astrojs/sitemap@3.7.1)(@astrojs/starlight@0.30.6(astro@5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3)))(astro@5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3))
+        version: 0.1.5(@astrojs/sitemap@3.7.1)(@astrojs/starlight@0.30.6(astro@5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3)))(astro@5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3))
       astro:
         specifier: ^5.17.0
         version: 5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3)
@@ -75,8 +75,8 @@ packages:
     resolution: {integrity: sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A==}
     engines: {node: '>=6.9.0'}
 
-  '@bogoware/starlight-theme@0.1.4':
-    resolution: {integrity: sha512-PvU3iJu5VsbgFQm9dfwdt0o9sriCht31u93XjpYwMK5xjgn9O4IB43OReoIrNCfxzE0aWtFUjQWuMVhQchwPSQ==}
+  '@bogoware/starlight-theme@0.1.5':
+    resolution: {integrity: sha512-eM/YYXiGjQ8sASIfsrfq7ux5109HrbbY79ecNWOJZUeqjIpYcEQ70hHpTYuHX3N3qBj1b1V4/THnQYsDeNIHfQ==}
     peerDependencies:
       '@astrojs/sitemap': '>=3.0.0'
       '@astrojs/starlight': '>=0.30.0'
@@ -2163,7 +2163,7 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@bogoware/starlight-theme@0.1.4(@astrojs/sitemap@3.7.1)(@astrojs/starlight@0.30.6(astro@5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3)))(astro@5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3))':
+  '@bogoware/starlight-theme@0.1.5(@astrojs/sitemap@3.7.1)(@astrojs/starlight@0.30.6(astro@5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3)))(astro@5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3))':
     dependencies:
       '@astrojs/starlight': 0.30.6(astro@5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3))
       astro: 5.18.1(@types/node@24.12.0)(rollup@4.59.0)(typescript@5.9.3)
