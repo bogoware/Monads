@@ -1,6 +1,6 @@
 {
   "name": "@bogoware/starlight-theme",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Bogoware brand identity theme for Astro Starlight documentation sites",
   "license": "MIT",
@@ -27,7 +27,9 @@
     "astro": ">=5.0.0"
   },
   "peerDependenciesMeta": {
-    "@astrojs/sitemap": { "optional": true }
+    "@astrojs/sitemap": {
+      "optional": true
+    }
   },
   "dependencies": {
     "zod": "^3.23.0"
