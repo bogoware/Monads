@@ -1,0 +1,29 @@
+{
+  "name": "@bogoware/starlight-theme",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "peerDependencies": {
+    "@astrojs/starlight": ">=0.30.0",
+    "astro": ">=5.0.0"
+  },
+  "dependencies": {
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@astrojs/starlight": "^0.30.0",
+    "astro": "^5.17.0",
+    "typescript": "^5.7.0"
+  },
+  "license": "MIT",
+  "files": [
+    "index.ts",
+    "schema.ts",
+    "styles/",
+    "overrides/",
+    "components/",
+    "assets/"
+  ]
+}

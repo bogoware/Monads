@@ -1,0 +1,16 @@
+{
+  "name": "@bogoware/playground",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/starlight": "^0.30.0",
+    "@bogoware/starlight-theme": "workspace:*",
+    "astro": "^5.17.0"
+  }
+}
