@@ -8,10 +8,6 @@
       <stop offset="0%" stop-color="#ef4444" stop-opacity="0.06"/>
       <stop offset="100%" stop-color="#ef4444" stop-opacity="0.12"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="2.5" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
     <marker id="arrowS" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
       <path d="M0,0 L8,3 L0,6" fill="#22c55e"/>
     </marker>
@@ -28,51 +24,60 @@
   <rect x="0" y="140" width="820" height="100" rx="8" fill="url(#failureGrad)"/>
 
   <!-- Track labels -->
-  <text x="16" y="56" font-size="10" font-weight="700" fill="#22c55e" opacity="0.6" letter-spacing="1.2" text-transform="uppercase">SUCCESS TRACK</text>
-  <text x="16" y="166" font-size="10" font-weight="700" fill="#ef4444" opacity="0.6" letter-spacing="1.2" text-transform="uppercase">FAILURE TRACK</text>
+  <text x="16" y="56" font-size="10" font-weight="700" fill="#22c55e" opacity="0.6" letter-spacing="1.2">SUCCESS TRACK</text>
+  <text x="16" y="166" font-size="10" font-weight="700" fill="#ef4444" opacity="0.6" letter-spacing="1.2">FAILURE TRACK</text>
 
-  <!-- Success track line -->
-  <line x1="30" y1="90" x2="758" y2="90" stroke="#22c55e" stroke-width="3" stroke-linecap="round" marker-end="url(#arrowS)"/>
+  <!-- Success track: segments BETWEEN nodes only -->
+  <line x1="64"  y1="90" x2="120" y2="90" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <line x1="230" y1="90" x2="270" y2="90" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <line x1="380" y1="90" x2="420" y2="90" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <line x1="530" y1="90" x2="570" y2="90" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  <line x1="680" y1="90" x2="760" y2="90" stroke="#22c55e" stroke-width="2" stroke-linecap="round" opacity="0.6" marker-end="url(#arrowS)"/>
+
+  <!-- Small chevrons between segments -->
+  <text x="250" y="95" text-anchor="middle" font-size="14" fill="#22c55e" opacity="0.4">›</text>
+  <text x="400" y="95" text-anchor="middle" font-size="14" fill="#22c55e" opacity="0.4">›</text>
+  <text x="550" y="95" text-anchor="middle" font-size="14" fill="#22c55e" opacity="0.4">›</text>
 
   <!-- Failure track line (dashed) -->
   <line x1="30" y1="200" x2="758" y2="200" stroke="#ef4444" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="10,5" marker-end="url(#arrowF)"/>
 
-  <!-- Switch paths — vertical dashed lines from each node down to failure track -->
-  <path d="M175,112 L175,192" stroke="#ef4444" stroke-width="1.5" fill="none" stroke-dasharray="3,4" opacity="0.35" marker-end="url(#arrowD)"/>
-  <path d="M315,112 L315,192" stroke="#ef4444" stroke-width="1.5" fill="none" stroke-dasharray="3,4" opacity="0.35" marker-end="url(#arrowD)"/>
-  <path d="M455,112 L455,192" stroke="#ef4444" stroke-width="1.5" fill="none" stroke-dasharray="3,4" opacity="0.35" marker-end="url(#arrowD)"/>
-  <path d="M595,112 L595,192" stroke="#ef4444" stroke-width="1.5" fill="none" stroke-dasharray="3,4" opacity="0.35" marker-end="url(#arrowD)"/>
+  <!-- Switch paths from each node down to failure track -->
+  <path d="M175,112 L175,192" stroke="#ef4444" stroke-width="1.5" fill="none" stroke-dasharray="3,4" opacity="0.3" marker-end="url(#arrowD)"/>
+  <path d="M325,112 L325,192" stroke="#ef4444" stroke-width="1.5" fill="none" stroke-dasharray="3,4" opacity="0.3" marker-end="url(#arrowD)"/>
+  <path d="M475,112 L475,192" stroke="#ef4444" stroke-width="1.5" fill="none" stroke-dasharray="3,4" opacity="0.3" marker-end="url(#arrowD)"/>
+  <path d="M625,112 L625,192" stroke="#ef4444" stroke-width="1.5" fill="none" stroke-dasharray="3,4" opacity="0.3" marker-end="url(#arrowD)"/>
 
-  <!-- Operation nodes (pill shape, green border, semi-transparent fill) -->
-  <rect x="115" y="68" width="120" height="44" rx="22" fill="#22c55e" fill-opacity="0.08" stroke="#22c55e" stroke-width="2"/>
-  <text x="175" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="#22c55e">Validate</text>
+  <!-- Operation nodes — solid dark fill for readable text -->
+  <rect x="125" y="68" width="100" height="44" rx="22" fill="#0c1f17" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="175" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#86efac">Validate</text>
 
-  <rect x="255" y="68" width="120" height="44" rx="22" fill="#22c55e" fill-opacity="0.08" stroke="#22c55e" stroke-width="2"/>
-  <text x="315" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="#22c55e">Bind</text>
+  <rect x="275" y="68" width="100" height="44" rx="22" fill="#0c1f17" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="325" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#86efac">Bind</text>
 
-  <rect x="395" y="68" width="120" height="44" rx="22" fill="#22c55e" fill-opacity="0.08" stroke="#22c55e" stroke-width="2"/>
-  <text x="455" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="#22c55e">Map</text>
+  <rect x="425" y="68" width="100" height="44" rx="22" fill="#0c1f17" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="475" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#86efac">Map</text>
 
-  <rect x="535" y="68" width="120" height="44" rx="22" fill="#22c55e" fill-opacity="0.08" stroke="#22c55e" stroke-width="2"/>
-  <text x="595" y="94" text-anchor="middle" font-size="13" font-weight="600" fill="#22c55e">Execute</text>
+  <rect x="575" y="68" width="100" height="44" rx="22" fill="#0c1f17" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="625" y="95" text-anchor="middle" font-size="13" font-weight="600" fill="#86efac">Execute</text>
 
   <!-- Start node -->
-  <circle cx="50" cy="90" r="15" fill="#22c55e" filter="url(#glow)"/>
-  <polygon points="46,83 46,97 57,90" fill="#fff"/>
+  <circle cx="50" cy="90" r="14" fill="#22c55e"/>
+  <polygon points="46,83 46,97 57,90" fill="#0f172a"/>
 
   <!-- End: Success pill -->
   <rect x="770" y="74" width="42" height="32" rx="16" fill="#22c55e"/>
-  <text x="791" y="95" text-anchor="middle" font-size="11" font-weight="700" fill="#fff">OK</text>
+  <text x="791" y="95" text-anchor="middle" font-size="11" font-weight="700" fill="#0f172a">OK</text>
 
   <!-- End: Failure pill -->
   <rect x="770" y="184" width="42" height="32" rx="16" fill="#ef4444"/>
   <text x="791" y="205" text-anchor="middle" font-size="10" font-weight="700" fill="#fff">ERR</text>
 
-  <!-- "skip" labels on failure track -->
-  <text x="175" y="222" text-anchor="middle" font-size="9.5" fill="#ef4444" opacity="0.45" font-style="italic">skip</text>
-  <text x="315" y="222" text-anchor="middle" font-size="9.5" fill="#ef4444" opacity="0.45" font-style="italic">skip</text>
-  <text x="455" y="222" text-anchor="middle" font-size="9.5" fill="#ef4444" opacity="0.45" font-style="italic">skip</text>
-  <text x="595" y="222" text-anchor="middle" font-size="9.5" fill="#ef4444" opacity="0.45" font-style="italic">skip</text>
+  <!-- "skip" labels -->
+  <text x="175" y="222" text-anchor="middle" font-size="9.5" fill="#ef4444" opacity="0.4" font-style="italic">skip</text>
+  <text x="325" y="222" text-anchor="middle" font-size="9.5" fill="#ef4444" opacity="0.4" font-style="italic">skip</text>
+  <text x="475" y="222" text-anchor="middle" font-size="9.5" fill="#ef4444" opacity="0.4" font-style="italic">skip</text>
+  <text x="625" y="222" text-anchor="middle" font-size="9.5" fill="#ef4444" opacity="0.4" font-style="italic">skip</text>
 
   <!-- Annotation -->
   <text x="410" y="252" text-anchor="middle" font-size="11" fill="#94a3b8" font-style="italic">Once on the failure track, subsequent operations are bypassed</text>
