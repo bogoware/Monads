@@ -24,10 +24,10 @@
         <PackageTags>c# functional maybe result success failure error some none map bind flatmap linq option either monad async</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>nuget-icon.png</PackageIcon>
-        <!-- <PackageProjectUrl>https://mr.bogoware.io/projects/2023/monads</PackageProjectUrl> -->
+        <PackageProjectUrl>https://bogoware.github.io/Monads/</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
-        <RepositoryUrl>https://github.com/bogoware/monads</RepositoryUrl>
+        <RepositoryUrl>https://github.com/Bogoware/Monads</RepositoryUrl>
         <RepositoryType>github</RepositoryType>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <!-- If all members are not documented, you can disable the compiler warnings -->
