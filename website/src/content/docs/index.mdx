@@ -4,7 +4,7 @@ description: Functional programming patterns for C# — Result, Maybe, and more
 template: splash
 hero:
   title: Bogoware.Monads
-  tagline: Functional programming patterns for C# — Result, Maybe, and more
+  tagline: Bring the elegance of functional error handling to your C# codebase
   image:
     html: <img src="/Monads/hero-logo.svg" alt="Bogoware logo" style="width:280px;height:280px;filter:drop-shadow(0 0 40px rgba(99,102,241,0.4)) drop-shadow(0 0 80px rgba(139,92,246,0.2));" />
   actions:
@@ -18,9 +18,26 @@ hero:
 
 import { Card, CardGrid, LinkCard, Steps } from '@astrojs/starlight/components';
 
-_A functional programming library for C# providing `Result<T>` and `Maybe<T>` monads_
+<p class="sl-text-lg" style="text-align:center;max-width:640px;margin:0 auto 0.5rem;">
+Composable `Result<T>` and `Maybe<T>` monads that replace exceptions with explicit, chainable pipelines — so your code reads like intent, not accident.
+</p>
 
-**Supported Platforms:** .NET Standard 2.1 | .NET 8 | .NET 9 | .NET 10
+<p style="text-align:center;margin-bottom:2rem;">
+<span style="display:inline-flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;">
+<a href="https://www.nuget.org/packages/Bogoware.Monads"><img src="https://img.shields.io/nuget/v/Bogoware.Monads?style=flat-square&color=6366f1&label=NuGet" alt="NuGet" /></a>
+<a href="https://www.nuget.org/packages/Bogoware.Monads"><img src="https://img.shields.io/nuget/dt/Bogoware.Monads?style=flat-square&color=8b5cf6&label=Downloads" alt="Downloads" /></a>
+<img src="https://img.shields.io/badge/.NET_Standard_2.1_%7C_8_%7C_9_%7C_10-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt=".NET versions" />
+<a href="/Monads/changelog/"><img src="https://img.shields.io/badge/Changelog-94a3b8?style=flat-square" alt="Changelog" /></a>
+</span>
+</p>
+
+## Why?
+
+Exceptions are invisible control flow. A method signature that returns `User` might throw five different exceptions — but the compiler won't tell you, and the caller won't know until production. You're left guessing which `try`/`catch` blocks to write, wrapping everything defensively, and hoping nothing slips through.
+
+**Monads make failure explicit.** A method that returns `Result<User>` declares — right in its signature — that it can fail. The compiler enforces handling. Chaining operations with `.Bind()` and `.Map()` creates a clean pipeline where errors short-circuit automatically. No hidden jumps, no forgotten catch blocks, no surprises.
+
+This is *railway-oriented programming*: your code flows along a success track until something fails, then it switches to the failure track. Every step is visible, composable, and testable. It's an idea from functional programming — applied to real-world C#, with full async support and zero ceremony.
 
 ## Key Features
 
@@ -55,103 +72,55 @@ _A functional programming library for C# providing `Result<T>` and `Maybe<T>` mo
    dotnet add package Bogoware.Monads
    ```
 
-2. **Your First Maybe Example**
-
-   Use `Maybe<T>` to handle optional values safely:
+2. **Handle optional values with Maybe**
 
    ```csharp
    using Bogoware.Monads;
 
-   // Traditional approach with null checks
-   public string GetFullName(string firstName, string? lastName)
-   {
-       if (lastName != null)
-           return $"{firstName} {lastName}";
-       return firstName;
-   }
-
-   // Using Maybe<T> for safer optional handling
    public record Person(string FirstName, Maybe<string> LastName);
 
-   public string GetFullNameSafe(Person person)
-   {
-       return person.LastName
-           .Map(last => $"{person.FirstName} {last}")
-           .GetValue(person.FirstName);
-   }
+   var person = new Person("Jane", Maybe.None<string>());
 
-   // Usage
-   var personWithLastName = new Person("John", Maybe.Some("Doe"));
-   var personWithoutLastName = new Person("Jane", Maybe.None<string>());
-
-   Console.WriteLine(GetFullNameSafe(personWithLastName));   // "John Doe"
-   Console.WriteLine(GetFullNameSafe(personWithoutLastName)); // "Jane"
+   string greeting = person.LastName
+       .Map(last => $"Hello, {person.FirstName} {last}!")
+       .GetValue($"Hello, {person.FirstName}!");
+   // → "Hello, Jane!"
    ```
 
-3. **Your First Result Example**
-
-   Use `Result<T>` to handle operations that can fail:
+3. **Build explicit error pipelines with Result**
 
    ```csharp
-   using Bogoware.Monads;
+   public Result<User> CreateUser(string email, string password)
+       => ValidateEmail(email)
+           .Bind(_ => ValidatePassword(password))
+           .Map(_ => new User(email, password));
 
-   // Using Result<T> for explicit error handling
-   public Result<User> CreateUserSafe(string email, string password)
-   {
-       return ValidateEmail(email)
-           .Bind(() => ValidatePassword(password))
-           .Map(() => new User(email, password));
-   }
-
-   public Result<Unit> ValidateEmail(string email)
-   {
-       if (string.IsNullOrEmpty(email) || !email.Contains("@"))
-           return Result.Failure<Unit>("Invalid email address");
-
-       return Result.Unit;
-   }
-
-   public Result<Unit> ValidatePassword(string password)
-   {
-       if (password.Length < 8)
-           return Result.Failure<Unit>("Password must be at least 8 characters");
-
-       return Result.Unit;
-   }
-
-   // Usage
-   var successResult = CreateUserSafe("john@example.com", "secure123");
-   var failureResult = CreateUserSafe("invalid-email", "short");
-
-   successResult.Match(
-       user => $"User created: {user.Email}",
-       error => $"Error: {error.Message}"
+   // Errors short-circuit — no try/catch needed
+   var result = CreateUser("bad-email", "short");
+   result.Match(
+       user => $"Created: {user.Email}",
+       error => $"Failed: {error.Message}"
    );
    ```
 
 </Steps>
 
-## Introduction to Monads
-
-Monads are powerful tools for modeling operations in a functional way, making them a cornerstone of functional programming. For the purpose of this introduction, we can consider monads as an abstraction of a _safe container_ that encapsulates the result of an operation.
-
-They provide methods that enable manipulation of the result in a safe manner, ensuring that the execution flow follows the "happy" path in case of success and the "unhappy" path in case of failure. This model is also known as _railway-oriented programming_.
-
-By employing monads, code can be protected from further processing in case of errors or missing data. Adopting a functional approach offers benefits such as increased readability, improved reasoning capabilities, and more robust and error-resistant code.
-
 ## Library Overview
 
-This library provides two well-known monads:
-
-| Monad | Purpose |
-|-------|---------|
-| `Result<T>` | Model operations that can fail |
-| `Maybe<T>` | Model operations that can optionally return a value |
-
-Additionally, the library provides the `Error` abstract class, which complements the `Result<T>` monad and offers an ergonomic approach to error management at an application-wide scale.
+| Type | Purpose | Key Operations |
+|------|---------|----------------|
+| `Result<T>` | Operations that can fail | `Map`, `Bind`, `Match`, `Ensure`, `RecoverWith` |
+| `Maybe<T>` | Optional values without null | `Map`, `Bind`, `Match`, `GetValue`, `MapToResult` |
+| `Error` | Structured error hierarchy | `LogicError`, `RuntimeError`, `AggregateError` |
+| `Unit` | Void-equivalent for monadic returns | Used with `Result<Unit>` for side-effect operations |
 
 ## Next Steps
 
-<LinkCard title="Getting Started" description="Installation and setup guide" href="/Monads/getting-started/installation/" />
-<LinkCard title="Concepts" description="Deep dive into Result and Maybe monads" href="/Monads/concepts/result-monad/" />
-<LinkCard title="API Reference" description="Complete API documentation" href="/Monads/api/" />
+<CardGrid>
+  <LinkCard title="Installation Guide" description="Supported platforms, package setup, and first steps" href="/Monads/getting-started/installation/" />
+  <LinkCard title="Result\<T\> Monad" description="Deep dive into explicit error handling and pipelines" href="/Monads/concepts/result-monad/" />
+  <LinkCard title="Maybe\<T\> Monad" description="Safe optional value handling without null" href="/Monads/concepts/maybe-monad/" />
+  <LinkCard title="Railway-Oriented Programming" description="The pattern behind composable success/failure pipelines" href="/Monads/guides/railway-oriented-programming/" />
+  <LinkCard title="Async Programming" description="Full async/await support for all monadic operations" href="/Monads/concepts/async-programming/" />
+  <LinkCard title="API Reference" description="Complete type and method documentation" href="/Monads/api/" />
+</CardGrid>
