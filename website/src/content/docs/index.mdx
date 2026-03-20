@@ -1,0 +1,126 @@
+---
+title: Bogoware.Monads
+description: Functional programming patterns for C# — Result, Maybe, and more
+template: splash
+hero:
+  title: Bogoware.Monads
+  tagline: Bring the elegance of functional error handling to your C# codebase
+  image:
+    html: <img src="/Monads/hero-logo.svg" alt="Bogoware logo" style="width:280px;height:280px;filter:drop-shadow(0 0 40px rgba(99,102,241,0.4)) drop-shadow(0 0 80px rgba(139,92,246,0.2));" />
+  actions:
+    - text: Get Started
+      link: /Monads/getting-started/installation/
+      icon: right-arrow
+    - text: View on NuGet
+      link: https://www.nuget.org/packages/Bogoware.Monads
+      variant: minimal
+---
+
+import { Card, CardGrid, LinkCard, Steps } from '@astrojs/starlight/components';
+
+<p class="sl-text-lg" style="text-align:center;max-width:640px;margin:0 auto 0.5rem;">
+Composable `Result<T>` and `Maybe<T>` monads that replace exceptions with explicit, chainable pipelines — so your code reads like intent, not accident.
+</p>
+
+<p style="text-align:center;margin-bottom:2rem;">
+<span style="display:inline-flex;gap:0.5rem;flex-wrap:wrap;justify-content:center;">
+<a href="https://www.nuget.org/packages/Bogoware.Monads"><img src="https://img.shields.io/nuget/v/Bogoware.Monads?style=flat-square&color=6366f1&label=NuGet" alt="NuGet" /></a>
+<a href="https://www.nuget.org/packages/Bogoware.Monads"><img src="https://img.shields.io/nuget/dt/Bogoware.Monads?style=flat-square&color=8b5cf6&label=Downloads" alt="Downloads" /></a>
+<img src="https://img.shields.io/badge/.NET_Standard_2.1_%7C_8_%7C_9_%7C_10-512BD4?style=flat-square&logo=dotnet&logoColor=white" alt=".NET versions" />
+<a href="/Monads/changelog/"><img src="https://img.shields.io/badge/Changelog-94a3b8?style=flat-square" alt="Changelog" /></a>
+</span>
+</p>
+
+## Why?
+
+Exceptions are invisible control flow. A method signature that returns `User` might throw five different exceptions — but the compiler won't tell you, and the caller won't know until production. You're left guessing which `try`/`catch` blocks to write, wrapping everything defensively, and hoping nothing slips through.
+
+**Monads make failure explicit.** A method that returns `Result<User>` declares — right in its signature — that it can fail. The compiler enforces handling. Chaining operations with `.Bind()` and `.Map()` creates a clean pipeline where errors short-circuit automatically. No hidden jumps, no forgotten catch blocks, no surprises.
+
+This is *railway-oriented programming*: your code flows along a success track until something fails, then it switches to the failure track. Every step is visible, composable, and testable. It's an idea from functional programming — applied to real-world C#, with full async support and zero ceremony.
+
+## Key Features
+
+<CardGrid>
+  <Card title="Result Monad" icon="approve-check">
+    Model operations that can fail with explicit, composable error handling — no more hidden exceptions.
+  </Card>
+  <Card title="Maybe Monad" icon="puzzle">
+    Handle optional values safely with chainable operations — a superior alternative to null checks.
+  </Card>
+  <Card title="Railway-Oriented Programming" icon="rocket">
+    Chain operations fluently along success and failure tracks for clean, readable pipelines.
+  </Card>
+  <Card title="Typed Error Hierarchy" icon="warning">
+    Distinguish between logic errors and runtime errors with a structured, extensible error model.
+  </Card>
+  <Card title="Collection Extensions" icon="list-unordered">
+    Work with sequences of monadic values using MapEach, BindEach, MatchEach, and AggregateResults.
+  </Card>
+  <Card title="Full Async Support" icon="seti:csharp">
+    Every operation has async overloads that work seamlessly with Task-based patterns.
+  </Card>
+</CardGrid>
+
+## Quick Start
+
+<Steps>
+
+1. **Install from NuGet**
+
+   ```shell
+   dotnet add package Bogoware.Monads
+   ```
+
+2. **Handle optional values with Maybe**
+
+   ```csharp
+   using Bogoware.Monads;
+
+   public record Person(string FirstName, Maybe<string> LastName);
+
+   var person = new Person("Jane", Maybe.None<string>());
+
+   string greeting = person.LastName
+       .Map(last => $"Hello, {person.FirstName} {last}!")
+       .GetValue($"Hello, {person.FirstName}!");
+   // → "Hello, Jane!"
+   ```
+
+3. **Build explicit error pipelines with Result**
+
+   ```csharp
+   public Result<User> CreateUser(string email, string password)
+       => ValidateEmail(email)
+           .Bind(_ => ValidatePassword(password))
+           .Map(_ => new User(email, password));
+
+   // Errors short-circuit — no try/catch needed
+   var result = CreateUser("bad-email", "short");
+   result.Match(
+       user => $"Created: {user.Email}",
+       error => $"Failed: {error.Message}"
+   );
+   ```
+
+</Steps>
+
+## Library Overview
+
+| Type | Purpose | Key Operations |
+|------|---------|----------------|
+| `Result<T>` | Operations that can fail | `Map`, `Bind`, `Match`, `Ensure`, `RecoverWith` |
+| `Maybe<T>` | Optional values without null | `Map`, `Bind`, `Match`, `GetValue`, `MapToResult` |
+| `Error` | Structured error hierarchy | `LogicError`, `RuntimeError`, `AggregateError` |
+| `Unit` | Void-equivalent for monadic returns | Used with `Result<Unit>` for side-effect operations |
+
+## Next Steps
+
+<CardGrid>
+  <LinkCard title="Installation Guide" description="Supported platforms, package setup, and first steps" href="/Monads/getting-started/installation/" />
+  <LinkCard title="Result\<T\> Monad" description="Deep dive into explicit error handling and pipelines" href="/Monads/concepts/result-monad/" />
+  <LinkCard title="Maybe\<T\> Monad" description="Safe optional value handling without null" href="/Monads/concepts/maybe-monad/" />
+  <LinkCard title="Railway-Oriented Programming" description="The pattern behind composable success/failure pipelines" href="/Monads/guides/railway-oriented-programming/" />
+  <LinkCard title="Async Programming" description="Full async/await support for all monadic operations" href="/Monads/concepts/async-programming/" />
+  <LinkCard title="API Reference" description="Complete type and method documentation" href="/Monads/api/" />
+</CardGrid>

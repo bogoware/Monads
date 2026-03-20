@@ -1,28 +1,38 @@
 #!/usr/bin/env node
 
 /**
- * Syncs README.md and CHANGELOG.md from the project root to Docusaurus docs folder.
- * Adds Docusaurus frontmatter to make them compatible with the documentation site.
+ * Syncs CHANGELOG.md from the project root to the Starlight docs folder.
+ * Adds Starlight-compatible frontmatter.
  */
 
 const fs = require('fs');
 const path = require('path');
 
 const ROOT_DIR = path.join(__dirname, '..');
-const DOCS_DIR = path.join(ROOT_DIR, 'docs', 'docs');
+const DOCS_DIR = path.join(ROOT_DIR, 'website', 'src', 'content', 'docs');
 
 /**
- * Adds frontmatter to markdown content
+ * Adds YAML frontmatter to markdown content (supports nested objects)
  */
 function addFrontmatter(content, frontmatter) {
-    const frontmatterStr = Object.entries(frontmatter)
-        .map(([key, value]) => `${key}: ${value}`)
-        .join('\n');
-    return `---\n${frontmatterStr}\n---\n\n${content}`;
+    function serializeYaml(obj, indent = 0) {
+        const prefix = '  '.repeat(indent);
+        const lines = [];
+        for (const [key, value] of Object.entries(obj)) {
+            if (typeof value === 'object' && value !== null) {
+                lines.push(`${prefix}${key}:`);
+                lines.push(serializeYaml(value, indent + 1));
+            } else {
+                lines.push(`${prefix}${key}: ${value}`);
+            }
+        }
+        return lines.join('\n');
+    }
+    return `---\n${serializeYaml(frontmatter)}\n---\n\n${content}`;
 }
 
 /**
- * Transforms README.md for Docusaurus
+ * Transforms README.md for Starlight
  */
 function transformReadme(content) {
     // Remove existing badges line (we'll add them in the intro.md)
@@ -39,7 +49,7 @@ function transformReadme(content) {
 }
 
 /**
- * Transforms CHANGELOG.md for Docusaurus
+ * Transforms CHANGELOG.md for Starlight
  */
 function transformChangelog(content) {
     // The changelog can be used as-is with frontmatter
@@ -52,8 +62,8 @@ const filesToSync = [
         source: path.join(ROOT_DIR, 'CHANGELOG.md'),
         dest: path.join(DOCS_DIR, 'changelog.md'),
         frontmatter: {
-            sidebar_position: 2,
-            title: 'Changelog'
+            title: 'Changelog',
+            sidebar: { order: 2 }
         },
         transform: transformChangelog
     }

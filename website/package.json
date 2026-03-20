@@ -1,0 +1,17 @@
+{
+  "name": "@bogoware/monads-docs",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.1",
+    "@astrojs/starlight": "^0.30.0",
+    "@bogoware/starlight-theme": "^0.1.1",
+    "astro": "^5.17.0"
+  }
+}

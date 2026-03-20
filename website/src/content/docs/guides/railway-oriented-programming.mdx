@@ -1,0 +1,102 @@
+---
+title: Railway-Oriented Programming
+description: "Chain operations along success and failure tracks using Result monads for clean, composable pipelines."
+sidebar:
+  order: 1
+---
+
+import { LinkCard } from '@astrojs/starlight/components';
+
+Railway-oriented programming is a pattern for modeling the flow of operations that can succeed or fail, visualized as two parallel tracks — the success track and the failure track.
+
+## The Pattern
+
+Each operation either continues on the **success track** or switches to the **failure track**. Once on the failure track, subsequent operations are bypassed — no exceptions, no hidden control flow.
+
+![Railway-oriented programming diagram showing success and failure tracks with Validate, Bind, Map, and Execute operations](/Monads/railway-diagram.svg)
+
+## Basic Pipeline
+
+```csharp
+public Result<ProcessedOrder> ProcessOrder(OrderRequest request)
+{
+    return ValidateOrderRequest(request)
+        .Bind(ValidateCustomer)
+        .Bind(ValidateInventory)
+        .Bind(CalculatePricing)
+        .Map(CreateOrder);
+}
+```
+
+## Advanced Pipeline with Side Effects
+
+```csharp
+public async Task<Result<ProcessedOrder>> ProcessOrderAsync(OrderRequest request)
+{
+    return await ValidateOrderRequest(request)
+        .Bind(ValidateCustomer)
+        .Bind(ValidateInventory)
+        .Bind(CalculatePricing)
+        .Bind(async order => await SaveOrderAsync(order))
+        .Bind(async order => await ProcessPaymentAsync(order))
+        .IfSuccess(async order => await SendConfirmationAsync(order))
+        .IfFailure(async error => await LogErrorAsync(error));
+}
+```
+
+## Starting Pipelines
+
+Use `Result.Ensure` for cleaner pipeline initialization:
+
+```csharp
+// Instead of:
+public Result<Unit> Publish()
+{
+    if (PublishingStatus == PublishingStatus.Published)
+        return new InvalidOperationError("Already published");
+
+    return ValidateCostComponents()
+        .Bind(ValidateTimingComponents)
+        .IfSuccess(() => PublishingStatus = PublishingStatus.Published);
+}
+
+// Prefer:
+public Result<Unit> Publish() => Result
+    .Ensure(PublishingStatus != PublishingStatus.Published,
+            () => new InvalidOperationError("Already published"))
+    .Bind(ValidateCostComponents)
+    .Bind(ValidateTimingComponents)
+    .IfSuccess(() => PublishingStatus = PublishingStatus.Published);
+```
+
+## Error Recovery
+
+```csharp
+var config = LoadConfigFromFile()
+    .RecoverWith(() => LoadConfigFromEnvironment())
+    .RecoverWith(GetDefaultConfig());
+```
+
+## Combining Maybe and Result
+
+```csharp
+public Result<UserProfile> GetUserProfile(int userId)
+{
+    return FindUser(userId)                    // Maybe<User>
+        .MapToResult(() => new NotFoundError("User not found"))
+        .Bind(user => LoadUserProfile(user))   // Result<UserProfile>
+        .Map(profile => EnrichProfile(profile));
+}
+```
+
+## Benefits
+
+1. **Explicit error handling** - No hidden exceptions
+2. **Composable operations** - Easy to add/remove steps
+3. **Readable flow** - Clear success/failure paths
+4. **Testable** - Each step can be tested in isolation
+
+## See Also
+
+<LinkCard title="Result\<T\> Monad" description="Core Result monad operations and patterns" href="/Monads/concepts/result-monad/" />
+<LinkCard title="Async Programming" description="Use railway patterns with async/await" href="/Monads/concepts/async-programming/" />

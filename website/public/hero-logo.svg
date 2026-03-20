@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+  <defs>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#99f0ff"/>
+      <stop offset="100%" stop-color="#b0a0ff"/>
+    </linearGradient>
+    <radialGradient id="glow-center" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#818cf8" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#6366f1" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow-outer" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-vertex" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="glow-paths" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Ambient glow -->
+  <circle cx="140" cy="140" r="130" fill="url(#glow-center)"/>
+
+  <!-- Field lines (ghosted offsets) -->
+  <g opacity="0.12">
+    <path d="M 44,44 C 88,44 71,104 116,116 C 161,128 144,188 188,188"
+          fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 52,52 C 96,52 79,112 124,124 C 169,136 152,196 196,196"
+          fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 236,44 C 192,44 209,104 164,116 C 119,128 136,188 92,188"
+          fill="none" stroke="#99f0ff" stroke-width="2" stroke-linecap="round"/>
+    <path d="M 228,52 C 184,52 201,112 156,124 C 111,136 128,196 84,196"
+          fill="none" stroke="#b0a0ff" stroke-width="2" stroke-linecap="round"/>
+  </g>
+
+  <!-- Main paths with glow -->
+  <g filter="url(#glow-paths)">
+    <path d="M 48,48 C 92,48 75,108 120,120 C 165,132 148,192 192,192"
+          fill="none" stroke="url(#g1)" stroke-width="5.5" stroke-linecap="round"/>
+    <path d="M 232,48 C 188,48 205,108 160,120 C 115,132 132,192 88,192"
+          fill="none" stroke="url(#g2)" stroke-width="5.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Vertex with strong glow -->
+  <circle cx="140" cy="120" r="9" fill="white" filter="url(#glow-vertex)"/>
+</svg>
