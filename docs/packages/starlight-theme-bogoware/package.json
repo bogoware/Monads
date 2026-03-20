@@ -2,6 +2,14 @@
   "name": "@bogoware/starlight-theme",
   "version": "0.1.0",
   "type": "module",
+  "description": "Bogoware brand identity theme for Astro Starlight documentation sites",
+  "license": "MIT",
+  "author": "Bogoware",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Bogoware/Monads.git",
+    "directory": "docs/packages/starlight-theme-bogoware"
+  },
   "scripts": {
     "test": "vitest run",
     "test:watch": "vitest"
@@ -30,13 +38,14 @@
     "typescript": "^5.7.0",
     "vitest": "^3.0.0"
   },
-  "license": "MIT",
   "files": [
     "index.ts",
     "schema.ts",
     "styles/",
     "overrides/",
     "components/",
-    "assets/"
+    "assets/",
+    "!**/__tests__/",
+    "!**/*.test.ts"
   ]
 }
