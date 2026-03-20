@@ -86,6 +86,8 @@ for file in "$DOCS_API_DIR"/*.md; do
                 # Fallback to filename-based title
                 title="${filename#bogoware.monads.}"
             fi
+            # Remove the H1 line — Starlight auto-generates it from frontmatter title
+            grep -v "^# " "$file" > "$file.tmp" && mv "$file.tmp" "$file"
             add_frontmatter "$file" "$title"
         fi
         echo "Processed: $filename"

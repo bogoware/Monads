@@ -4,7 +4,6 @@ sidebar:
   order: 1
 ---
 
-# Bogoware.Monads
 
 ## Bogoware.Monads
 

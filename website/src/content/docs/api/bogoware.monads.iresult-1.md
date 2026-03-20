@@ -4,7 +4,6 @@ sidebar:
   order: 99
 ---
 
-# IResult&lt;TValue&gt;
 
 Namespace: Bogoware.Monads
 

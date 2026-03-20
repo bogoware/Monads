@@ -4,7 +4,6 @@ sidebar:
   order: 99
 ---
 
-# MaybeEnumerableExtensions
 
 Namespace: Bogoware.Monads
 

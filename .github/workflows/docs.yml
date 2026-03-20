@@ -81,6 +81,8 @@ jobs:
                 else
                   title="${filename#bogoware.monads.}"
                 fi
+                # Remove H1 — Starlight generates it from frontmatter title
+                grep -v "^# " "$file" > "$file.tmp" && mv "$file.tmp" "$file"
               fi
               temp_file=$(mktemp)
               echo "---" > "$temp_file"
