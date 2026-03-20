@@ -5,7 +5,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
-DOCS_API_DIR="$ROOT_DIR/docs/sites/monads/src/content/docs/api"
+DOCS_API_DIR="$ROOT_DIR/website/src/content/docs/api"
 
 echo "=== Generating API Documentation ==="
 

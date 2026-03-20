@@ -9,7 +9,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT_DIR = path.join(__dirname, '..');
-const DOCS_DIR = path.join(ROOT_DIR, 'docs', 'sites', 'monads', 'src', 'content', 'docs');
+const DOCS_DIR = path.join(ROOT_DIR, 'website', 'src', 'content', 'docs');
 
 /**
  * Adds YAML frontmatter to markdown content (supports nested objects)

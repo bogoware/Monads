@@ -6,7 +6,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
-DOCS_DIR="$ROOT_DIR/docs"
+DOCS_DIR="$ROOT_DIR/website"
 
 echo "=== Full Documentation Rebuild ==="
 echo ""
@@ -35,6 +35,6 @@ echo ""
 echo "=== Documentation Build Complete ==="
 echo ""
 echo "To preview the site locally, run:"
-echo "  cd docs && pnpm -C sites/monads preview"
+echo "  cd website && pnpm preview"
 echo ""
-echo "The built site is in: $DOCS_DIR/sites/monads/dist"
+echo "The built site is in: $DOCS_DIR/dist"

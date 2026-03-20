@@ -60,11 +60,11 @@ jobs:
         env:
           DLL_FILE: ${{ steps.find-xml.outputs.dll_file }}
         run: |
-          mkdir -p docs/sites/monads/src/content/docs/api
-          dotnet xmldoc2md "$DLL_FILE" -o docs/sites/monads/src/content/docs/api --index-page-name index --github-pages
+          mkdir -p website/src/content/docs/api
+          dotnet xmldoc2md "$DLL_FILE" -o website/src/content/docs/api --index-page-name index --github-pages
 
           # Add Starlight frontmatter to generated files
-          for file in docs/sites/monads/src/content/docs/api/*.md; do
+          for file in website/src/content/docs/api/*.md; do
             if [ -f "$file" ]; then
               filename=$(basename "$file" .md)
               if [ "$filename" = "index" ]; then
@@ -99,16 +99,16 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install
-        working-directory: docs
+        working-directory: website
 
       - name: Build Starlight site
         run: pnpm build
-        working-directory: docs
+        working-directory: website
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/sites/monads/dist
+          path: website/dist
 
   deploy:
     environment:
