@@ -1,0 +1,70 @@
+---
+export interface Props {
+  icon?: string;
+  title: string;
+  description: string;
+  href?: string;
+}
+
+const { icon, title, description, href } = Astro.props;
+const Tag = href ? 'a' : 'div';
+---
+
+<Tag class="bw-feature-card" {...(href ? { href } : {})}>
+  {icon && <span class="bw-feature-icon">{icon}</span>}
+  <h3 class="bw-feature-title">{title}</h3>
+  <p class="bw-feature-description">{description}</p>
+</Tag>
+
+<style>
+  .bw-feature-card {
+    background: var(--bw-surface, #1e293b);
+    border: 1px solid var(--bw-border, #334155);
+    border-radius: var(--bw-radius-lg, 12px);
+    padding: var(--bw-space-6, 24px);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: border-color var(--bw-transition-fast, 150ms ease),
+                transform var(--bw-transition-fast, 150ms ease);
+    position: relative;
+    overflow: hidden;
+  }
+  .bw-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--bw-indigo, #6366f1), var(--bw-violet, #8b5cf6));
+    border-radius: 3px 0 0 3px;
+    opacity: 0;
+    transition: opacity var(--bw-transition-fast, 150ms ease);
+  }
+  .bw-feature-card:hover {
+    border-color: color-mix(in srgb, var(--bw-indigo, #6366f1) 40%, transparent);
+    transform: translateY(-2px);
+  }
+  .bw-feature-card:hover::before {
+    opacity: 1;
+  }
+  .bw-feature-icon {
+    display: inline-block;
+    font-size: 1.5rem;
+    margin-bottom: var(--bw-space-3, 12px);
+  }
+  .bw-feature-title {
+    font-family: var(--bw-font-heading, inherit);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: var(--bw-space-2, 8px);
+    color: var(--bw-text, #e2e8f0);
+  }
+  .bw-feature-description {
+    font-size: var(--bw-text-small, 0.875rem);
+    line-height: 1.5;
+    color: var(--bw-text-muted, #94a3b8);
+    margin: 0;
+  }
+</style>
