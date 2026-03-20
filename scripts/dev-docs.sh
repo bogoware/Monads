@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Start the Docusaurus development server
+# Start the Starlight development server
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
@@ -12,14 +12,14 @@ echo ""
 
 # Install dependencies if needed
 if [ ! -d "$DOCS_DIR/node_modules" ]; then
-    echo "Installing npm dependencies..."
+    echo "Installing dependencies..."
     cd "$DOCS_DIR"
-    npm install
+    pnpm install
 fi
 
 # Start the development server
 cd "$DOCS_DIR"
-echo "Starting Docusaurus dev server..."
-echo "The site will be available at: http://localhost:3000/monads/"
+echo "Starting Starlight dev server..."
+echo "The site will be available at: http://localhost:4321/Monads/"
 echo ""
-npm run start
+pnpm dev

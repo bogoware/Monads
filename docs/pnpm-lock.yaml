@@ -65,7 +65,7 @@ importers:
         specifier: ^3.0.0
         version: 3.2.4(@types/debug@4.1.13)(@types/node@25.5.0)(jiti@1.21.7)(terser@5.46.1)
 
-  sites/playground:
+  sites/monads:
     dependencies:
       '@astrojs/sitemap':
         specifier: ^3.7.1

@@ -5,7 +5,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const playgroundDir = resolve(__dirname, '../../sites/playground');
+const playgroundDir = resolve(__dirname, '../../sites/monads');
 const distDir = resolve(playgroundDir, 'dist');
 
 /** Read all CSS files from the dist/_astro directory and concatenate them. */

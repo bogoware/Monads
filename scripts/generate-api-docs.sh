@@ -5,7 +5,7 @@ set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
-DOCS_API_DIR="$ROOT_DIR/docs/docs/api"
+DOCS_API_DIR="$ROOT_DIR/docs/sites/monads/src/content/docs/api"
 
 echo "=== Generating API Documentation ==="
 
@@ -57,7 +57,8 @@ add_frontmatter() {
         local temp_file=$(mktemp)
         echo "---" > "$temp_file"
         echo "title: \"$title\"" >> "$temp_file"
-        echo "sidebar_position: $position" >> "$temp_file"
+        echo "sidebar:" >> "$temp_file"
+        echo "  order: $position" >> "$temp_file"
         echo "---" >> "$temp_file"
         echo "" >> "$temp_file"
         cat "$file" >> "$temp_file"

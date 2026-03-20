@@ -3,9 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
+    "dev": "pnpm -C sites/monads dev",
+    "build": "pnpm -C sites/monads build",
+    "preview": "pnpm -C sites/monads preview",
     "docusaurus": "docusaurus",
     "start": "docusaurus start",
-    "build": "docusaurus build",
+    "build:docusaurus": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
