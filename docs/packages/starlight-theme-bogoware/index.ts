@@ -26,25 +26,23 @@ export default function bogowareTheme(
           cssImports.push('@bogoware/starlight-theme/styles/florentine.css');
         }
 
-        // TODO: Register component overrides once override .astro files exist
-        // const componentOverrides: Record<string, string> = {
-        //   Header: '@bogoware/starlight-theme/overrides/Header.astro',
-        //   Hero: '@bogoware/starlight-theme/overrides/Hero.astro',
-        //   Sidebar: '@bogoware/starlight-theme/overrides/Sidebar.astro',
-        //   Footer: '@bogoware/starlight-theme/overrides/Footer.astro',
-        //   Head: '@bogoware/starlight-theme/overrides/Head.astro',
-        // };
+        const componentOverrides: Record<string, string> = {
+          Header: '@bogoware/starlight-theme/overrides/Header.astro',
+          Hero: '@bogoware/starlight-theme/overrides/Hero.astro',
+          Sidebar: '@bogoware/starlight-theme/overrides/Sidebar.astro',
+          Footer: '@bogoware/starlight-theme/overrides/Footer.astro',
+          // TODO: Head override (Task 10)
+        };
 
         updateConfig({
           customCss: [
             ...(starlightConfig.customCss ?? []),
             ...cssImports,
           ],
-          // TODO: Uncomment when override components are created
-          // components: {
-          //   ...starlightConfig.components,
-          //   ...componentOverrides,
-          // },
+          components: {
+            ...starlightConfig.components,
+            ...componentOverrides,
+          },
         });
       },
     },

@@ -8,11 +8,10 @@
   },
   "exports": {
     ".": "./index.ts",
-    "./styles/base.css": "./styles/base.css",
-    "./styles/architect.css": "./styles/architect.css",
-    "./styles/florentine.css": "./styles/florentine.css",
+    "./styles/*": "./styles/*",
     "./overrides/*": "./overrides/*",
-    "./components/*": "./components/*"
+    "./components/*": "./components/*",
+    "./assets/*": "./assets/*"
   },
   "peerDependencies": {
     "@astrojs/starlight": ">=0.30.0",

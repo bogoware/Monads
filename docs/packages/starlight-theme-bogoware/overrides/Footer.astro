@@ -1,0 +1,29 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+---
+
+<footer class="bw-footer">
+  <div class="bw-footer-inner">
+    <div class="bw-footer-brand">
+      <span class="bw-footer-copyright">&copy; {new Date().getFullYear()} Bogoware. Built with Astro + Starlight.</span>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .bw-footer {
+    border-top: 1px solid var(--bw-border, #334155);
+    padding: var(--bw-space-6, 24px) var(--bw-space-4, 16px);
+    margin-top: var(--bw-space-12, 48px);
+  }
+  .bw-footer-inner {
+    max-width: var(--bw-content-wide-max-width, 1200px);
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+  .bw-footer-copyright {
+    font-size: var(--bw-text-small, 0.875rem);
+    color: var(--bw-text-muted, #94a3b8);
+  }
+</style>

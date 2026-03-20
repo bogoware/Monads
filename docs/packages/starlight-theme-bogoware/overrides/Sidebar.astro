@@ -1,0 +1,13 @@
+---
+import type { Props } from '@astrojs/starlight/props';
+import Default from '@astrojs/starlight/components/Sidebar.astro';
+---
+
+<Default {...Astro.props}><slot /></Default>
+
+<style>
+  :global([aria-current="page"]) {
+    border-inline-start-color: var(--bw-indigo, #6366f1) !important;
+    color: var(--bw-indigo, #6366f1) !important;
+  }
+</style>
