@@ -1,0 +1,81 @@
+---
+/**
+ * OG Image template component.
+ *
+ * Renders a 1200x630 card suitable for conversion to a social sharing image.
+ * Consumer sites can use @vercel/og or astro-og-canvas to render this
+ * component to a PNG at build time for per-page OG images.
+ *
+ * For sites that don't need dynamic generation, the static SVG at
+ * `@bogoware/starlight-theme/assets/og-default.svg` can be used directly.
+ */
+export interface Props {
+  title: string;
+  description?: string;
+  siteName?: string;
+}
+
+const { title, description = '', siteName = 'Bogoware' } = Astro.props;
+---
+
+<div class="og-card">
+  <div class="og-logo">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="80" height="80">
+      <defs>
+        <linearGradient id="og-g1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#6366f1"/>
+          <stop offset="100%" stop-color="#8b5cf6"/>
+        </linearGradient>
+        <linearGradient id="og-g2" x1="100%" y1="100%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#99f0ff"/>
+          <stop offset="100%" stop-color="#b0a0ff"/>
+        </linearGradient>
+      </defs>
+      <path d="M 28,28 C 72,28 55,88 100,100 C 145,112 128,172 172,172" fill="none" stroke="url(#og-g1)" stroke-width="5" stroke-linecap="round"/>
+      <path d="M 172,28 C 128,28 145,88 100,100 C 55,112 72,172 28,172" fill="none" stroke="url(#og-g2)" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="100" cy="100" r="7" fill="white"/>
+    </svg>
+  </div>
+  <h1 class="og-title">{title}</h1>
+  {description && <p class="og-description">{description}</p>}
+  <span class="og-site">{siteName}</span>
+</div>
+
+<style>
+  .og-card {
+    width: 1200px;
+    height: 630px;
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px;
+    font-family: 'Space Grotesk', sans-serif;
+    color: #e2e8f0;
+    position: relative;
+  }
+  .og-logo {
+    margin-bottom: 24px;
+  }
+  .og-title {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    max-width: 800px;
+  }
+  .og-description {
+    font-size: 22px;
+    color: #94a3b8;
+    margin-top: 16px;
+    max-width: 700px;
+  }
+  .og-site {
+    position: absolute;
+    bottom: 40px;
+    right: 80px;
+    font-size: 18px;
+    color: #64748b;
+    font-family: 'JetBrains Mono', monospace;
+  }
+</style>

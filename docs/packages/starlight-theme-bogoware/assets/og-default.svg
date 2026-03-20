@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="g1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="g2" x1="100%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#99f0ff"/>
+      <stop offset="100%" stop-color="#b0a0ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle field lines -->
+  <g opacity="0.06" stroke="#94a3b8" stroke-width="1" fill="none">
+    <path d="M 0,150 C 200,120 400,200 600,180 S 1000,140 1200,160"/>
+    <path d="M 0,250 C 200,230 400,290 600,270 S 1000,240 1200,260"/>
+    <path d="M 0,350 C 200,320 400,400 600,370 S 1000,340 1200,360"/>
+    <path d="M 0,450 C 200,430 400,490 600,470 S 1000,440 1200,460"/>
+    <path d="M 0,550 C 200,520 400,590 600,560 S 1000,530 1200,550"/>
+  </g>
+
+  <!-- Vertex mark (left side) -->
+  <g transform="translate(100, 215)">
+    <path d="M 28,28 C 72,28 55,88 100,100 C 145,112 128,172 172,172"
+          fill="none" stroke="url(#g1)" stroke-width="6" stroke-linecap="round"/>
+    <path d="M 172,28 C 128,28 145,88 100,100 C 55,112 72,172 28,172"
+          fill="none" stroke="url(#g2)" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="100" cy="100" r="8" fill="#e2e8f0"/>
+  </g>
+
+  <!-- "Bogoware" wordmark -->
+  <text x="600" y="340"
+        font-family="'Space Grotesk', 'Inter', system-ui, sans-serif"
+        font-size="72" font-weight="700"
+        fill="#e2e8f0" text-anchor="middle"
+        letter-spacing="-0.02em">
+    Bogoware
+  </text>
+
+  <!-- Tagline -->
+  <text x="600" y="390"
+        font-family="'JetBrains Mono', 'Fira Code', monospace"
+        font-size="22" fill="#64748b" text-anchor="middle">
+    Functional .NET Libraries
+  </text>
+</svg>
