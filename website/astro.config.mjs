@@ -23,6 +23,7 @@ export default defineConfig({
             defaultDescription: 'Functional programming patterns for C# — Result, Maybe, and more',
             structuredData: { type: 'SoftwareSourceCode', author: 'Bogoware' },
           },
+          analytics: { googleAnalyticsId: 'G-JK35QX0826' },
         }),
       ],
       social: {
