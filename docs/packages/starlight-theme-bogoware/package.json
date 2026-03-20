@@ -14,8 +14,12 @@
     "./assets/*": "./assets/*"
   },
   "peerDependencies": {
+    "@astrojs/sitemap": ">=3.0.0",
     "@astrojs/starlight": ">=0.30.0",
     "astro": ">=5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@astrojs/sitemap": { "optional": true }
   },
   "dependencies": {
     "zod": "^3.23.0"
