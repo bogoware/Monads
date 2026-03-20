@@ -1,1 +1,99 @@
-/* Base CSS tokens and spacing — placeholder for Task 3 */
+/*
+ * Bogoware Starlight Theme — Base Design Tokens
+ *
+ * Color-scheme-independent tokens, dark/light mode palettes,
+ * spacing scale, layout dimensions, and Starlight mappings.
+ */
+
+/* ============================================================
+ * :root — color-scheme-independent tokens
+ * ============================================================ */
+:root {
+  /* Primary palette */
+  --bw-indigo: #6366f1;
+  --bw-violet: #8b5cf6;
+  --bw-cyan: #99f0ff;
+  --bw-periwinkle: #b0a0ff;
+
+  /* Brand gradients */
+  --bw-gradient-brand: linear-gradient(135deg, var(--bw-indigo), var(--bw-violet));
+  --bw-gradient-accent: linear-gradient(135deg, var(--bw-cyan), var(--bw-periwinkle));
+  --bw-gradient-hero: linear-gradient(160deg, var(--bw-indigo), var(--bw-violet), var(--bw-cyan));
+
+  /* Spacing scale (4px base) */
+  --bw-space-1: 4px;
+  --bw-space-2: 8px;
+  --bw-space-3: 12px;
+  --bw-space-4: 16px;
+  --bw-space-6: 24px;
+  --bw-space-8: 32px;
+  --bw-space-12: 48px;
+  --bw-space-16: 64px;
+
+  /* Layout dimensions */
+  --bw-content-max-width: 720px;
+  --bw-content-wide-max-width: 1200px;
+  --bw-sidebar-width: 240px;
+  --bw-navbar-height: 64px;
+
+  /* Border radii */
+  --bw-radius-sm: 4px;
+  --bw-radius-md: 8px;
+  --bw-radius-lg: 12px;
+  --bw-radius-xl: 16px;
+  --bw-radius-full: 9999px;
+
+  /* Transitions */
+  --bw-transition-fast: 150ms ease;
+  --bw-transition-base: 250ms ease;
+  --bw-transition-slow: 400ms ease;
+
+  /* Code syntax accent colors */
+  --bw-code-cyan: #67e8f9;
+  --bw-code-mint: #86efac;
+  --bw-code-indigo: #a5b4fc;
+  --bw-code-amber: #fcd34d;
+  --bw-code-rose: #fda4af;
+}
+
+/* ============================================================
+ * Dark mode (default)
+ * ============================================================ */
+:root,
+[data-theme='dark'] {
+  --bw-bg: #0f172a;
+  --bw-surface: #1e293b;
+  --bw-border: #334155;
+  --bw-text: #e2e8f0;
+  --bw-text-muted: #94a3b8;
+
+  /* Starlight integration */
+  --sl-color-accent-low: #1e1b4b;
+  --sl-color-accent: var(--bw-indigo);
+  --sl-color-accent-high: var(--bw-periwinkle);
+  --sl-color-bg-nav: var(--bw-surface);
+  --sl-color-bg-sidebar: var(--bw-bg);
+}
+
+/* ============================================================
+ * Light mode
+ * ============================================================ */
+[data-theme='light'] {
+  --bw-bg: #f8fafc;
+  --bw-surface: #ffffff;
+  --bw-border: #e2e8f0;
+  --bw-text: #1e293b;
+  --bw-text-muted: #64748b;
+
+  /* Deeper brand shades for light backgrounds */
+  --bw-indigo-deep: #4f46e5;
+  --bw-violet-deep: #7c3aed;
+  --bw-cyan-deep: #06b6d4;
+
+  /* Starlight integration */
+  --sl-color-accent-low: #eef2ff;
+  --sl-color-accent: var(--bw-indigo-deep);
+  --sl-color-accent-high: #312e81;
+  --sl-color-bg-nav: var(--bw-surface);
+  --sl-color-bg-sidebar: var(--bw-bg);
+}
