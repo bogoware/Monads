@@ -5,21 +5,15 @@ sidebar:
   order: 1
 ---
 
-import { Aside, LinkCard } from '@astrojs/starlight/components';
+import { LinkCard } from '@astrojs/starlight/components';
 
-Railway-oriented programming is a pattern for modeling the flow of operations that can succeed or fail, visualized as two parallel tracks - the success track and the failure track.
+Railway-oriented programming is a pattern for modeling the flow of operations that can succeed or fail, visualized as two parallel tracks — the success track and the failure track.
 
 ## The Pattern
 
-<Aside type="tip" title="The Railway Metaphor">
-```
-Success Track:  ───●───●───●───●──→ Success
-                   │   │   │   │
-Failure Track:  ───────────────────→ Failure
-```
+Each operation either continues on the **success track** or switches to the **failure track**. Once on the failure track, subsequent operations are bypassed — no exceptions, no hidden control flow.
 
-Each operation either continues on the success track (if successful) or switches to the failure track (if it fails). Once on the failure track, subsequent operations are skipped.
-</Aside>
+<img src={new URL('./_railway-diagram.svg', import.meta.url).href} alt="Railway-oriented programming diagram showing success and failure tracks with Validate, Bind, Map, and Execute operations" style="width:100%;max-width:820px;margin:1.5rem auto;display:block;" />
 
 ## Basic Pipeline
 
