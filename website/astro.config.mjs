@@ -9,6 +9,10 @@ export default defineConfig({
     starlight({
       title: 'Bogoware.Monads',
       tagline: 'Functional programming patterns for C# — Result, Maybe, and more',
+      logo: {
+        src: './src/assets/logo-favicon.svg',
+        replacesTitle: false,
+      },
       plugins: [
         bogowareTheme({
           mode: 'architect',
