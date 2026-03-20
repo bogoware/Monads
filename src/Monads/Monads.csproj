@@ -23,8 +23,7 @@
         <Summary>Provides Maybe and Result Monads suitable to support functional stye in C#.</Summary>
         <PackageTags>c# functional maybe result success failure error some none map bind flatmap linq option either monad async</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <!-- <PackageIcon>packageIcon.png</PackageIcon> -->
-        <!-- <PackageIconUrl></PackageIconUrl> -->
+        <PackageIcon>nuget-icon.png</PackageIcon>
         <!-- <PackageProjectUrl>https://mr.bogoware.io/projects/2023/monads</PackageProjectUrl> -->
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
@@ -51,6 +50,7 @@
 
     <ItemGroup>
         <None Include="../../README.md" Pack="true" PackagePath="" />
+        <None Include="../../assets/nuget-icon.png" Pack="true" PackagePath="" />
     </ItemGroup>
 
 </Project>
