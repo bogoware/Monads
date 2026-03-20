@@ -1,10 +1,9 @@
 ---
 title: Changelog
+description: "All notable changes to Bogoware.Monads, following Keep a Changelog and Semantic Versioning."
 sidebar:
   order: 2
 ---
-
-# Changelog
 
 All notable changes to this project will be documented in this file.
 

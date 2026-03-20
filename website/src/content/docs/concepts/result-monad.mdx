@@ -1,10 +1,11 @@
 ---
 title: "Result<T> Monad"
+description: "Use Result<T> to model operations that can fail with explicit, composable error handling in C#."
 sidebar:
   order: 1
 ---
 
-# Result&lt;T&gt; Monad
+import { Aside, LinkCard, CardGrid } from '@astrojs/starlight/components';
 
 The `Result<T>` monad is designed for modeling operations that can either fail or return a value. It is a generic type, with `T` representing the type of the value returned by the successful operation.
 
@@ -78,7 +79,9 @@ var message = result.Match(
 
 ## Unsafe Methods
 
-Use sparingly - these deviate from functional paradigm:
+<Aside type="danger" title="Unsafe Methods">
+These methods deviate from the functional paradigm and should be used sparingly. They throw exceptions when called on the wrong state, bypassing the safety guarantees that `Result<T>` provides.
+</Aside>
 
 ```csharp
 // Extract value (throws if failure)
@@ -94,6 +97,6 @@ result.ThrowIfFailure();
 
 ## See Also
 
-- [Error Types](./error-types)
-- [Maybe&lt;T&gt; Monad](./maybe-monad)
-- [Async Programming](./async-programming)
+<LinkCard title="Error Types" description="Learn about the structured error hierarchy" href="/Monads/concepts/error-types/" />
+<LinkCard title="Maybe\<T\> Monad" description="Handle optional values with Maybe" href="/Monads/concepts/maybe-monad/" />
+<LinkCard title="Async Programming" description="Use Result with async/await patterns" href="/Monads/concepts/async-programming/" />

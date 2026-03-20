@@ -1,10 +1,11 @@
 ---
 title: Working with Collections
+description: "Extension methods for working with sequences of Result and Maybe values including MapEach, BindEach, and AggregateResults."
 sidebar:
   order: 2
 ---
 
-# Working with Collections
+import { LinkCard } from '@astrojs/starlight/components';
 
 The library provides extension methods for working with sequences of `Maybe<T>` and `Result<T>` instances.
 
@@ -123,3 +124,8 @@ var allSuccess = new[] {
 var combined = allSuccess.AggregateResults();
 // Result<IEnumerable<int>> with [1, 2, 3]
 ```
+
+## See Also
+
+<LinkCard title="Result\<T\> Monad" description="Core Result monad operations and patterns" href="/Monads/concepts/result-monad/" />
+<LinkCard title="Maybe\<T\> Monad" description="Core Maybe monad operations and patterns" href="/Monads/concepts/maybe-monad/" />

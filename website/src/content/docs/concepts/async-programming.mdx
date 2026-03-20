@@ -1,0 +1,109 @@
+---
+title: Async Programming with Monads
+description: "Full async/await support for Result and Maybe operations including Map, Bind, Match, and side effects."
+sidebar:
+  order: 4
+---
+
+import { Tabs, TabItem, LinkCard } from '@astrojs/starlight/components';
+
+Both `Result<T>` and `Maybe<T>` provide full async support for all major operations.
+
+## Async Map
+
+<Tabs>
+  <TabItem label="Result">
+    ```csharp
+    var result = await Result.Success("file.txt")
+        .Map(async fileName => await File.ReadAllTextAsync(fileName));
+    ```
+  </TabItem>
+  <TabItem label="Maybe">
+    ```csharp
+    var maybe = await Maybe.Some("data")
+        .Map(async data => await ProcessDataAsync(data));
+    ```
+  </TabItem>
+</Tabs>
+
+## Async Bind
+
+<Tabs>
+  <TabItem label="Result">
+    ```csharp
+    public async Task<Result<User>> GetUserAsync(int id) =>
+        await ValidateId(id)
+            .Bind(async validId => await database.GetUserAsync(validId));
+    ```
+  </TabItem>
+  <TabItem label="Maybe">
+    ```csharp
+    var result = await Maybe.Some(userId)
+        .Bind(async id => await FindUserAsync(id));
+    ```
+  </TabItem>
+</Tabs>
+
+## Async Side Effects
+
+<Tabs>
+  <TabItem label="Result">
+    ```csharp
+    var result = await CreateUserAsync(email)
+        .IfSuccess(async user => await SendWelcomeEmailAsync(user))
+        .IfFailure(async error => await LogErrorAsync(error));
+    ```
+  </TabItem>
+  <TabItem label="Maybe">
+    ```csharp
+    await maybe
+        .IfSome(async value => await ProcessValueAsync(value))
+        .IfNone(async () => await HandleMissingValueAsync());
+    ```
+  </TabItem>
+</Tabs>
+
+## Async Match
+
+```csharp
+var message = await result.Match(
+    async user => await FormatUserDetailsAsync(user),
+    async error => await FormatErrorMessageAsync(error)
+);
+```
+
+## Async Ensure
+
+```csharp
+var validated = await result
+    .Ensure(async user => await IsUserActiveAsync(user),
+            new LogicError("User is not active"));
+```
+
+## Task Extensions
+
+All methods work seamlessly with `Task<Result<T>>` and `Task<Maybe<T>>`:
+
+```csharp
+public async Task<Result<ProcessedData>> ProcessUserDataAsync(int userId)
+{
+    return await GetUserAsync(userId)          // Task<Result<User>>
+        .Bind(async user => await GetUserDataAsync(user.Id))
+        .Map(async data => await ProcessDataAsync(data))
+        .IfSuccess(async result => await CacheResultAsync(result));
+}
+```
+
+## Safe Async Execution
+
+```csharp
+// Catches exceptions as RuntimeError
+var result = await Result.Execute(async () =>
+    await RiskyAsyncOperation()
+);
+```
+
+## See Also
+
+<LinkCard title="Result\<T\> Monad" description="Core Result monad operations and patterns" href="/Monads/concepts/result-monad/" />
+<LinkCard title="Maybe\<T\> Monad" description="Core Maybe monad operations and patterns" href="/Monads/concepts/maybe-monad/" />

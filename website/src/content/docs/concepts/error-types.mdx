@@ -1,10 +1,11 @@
 ---
 title: Error Types
+description: "Model application errors with a structured hierarchy of LogicError, RuntimeError, and AggregateError types."
 sidebar:
   order: 3
 ---
 
-# Error Types
+import { LinkCard } from '@astrojs/starlight/components';
 
 The `Error` class is used for modeling errors and works in conjunction with the `Result<T>` monad.
 
@@ -123,4 +124,4 @@ public IActionResult HandleResult<T>(Result<T> result)
 
 ## See Also
 
-- [Result&lt;T&gt; Monad](./result-monad)
+<LinkCard title="Result\<T\> Monad" description="Learn how Result uses the Error type hierarchy" href="/Monads/concepts/result-monad/" />

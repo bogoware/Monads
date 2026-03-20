@@ -1,0 +1,52 @@
+---
+title: Installation
+description: Install Bogoware.Monads via NuGet and start using Result and Maybe monads in your C# projects.
+sidebar:
+  order: 1
+---
+
+import { Tabs, TabItem, Steps, LinkCard } from '@astrojs/starlight/components';
+
+## NuGet Package
+
+Install Bogoware.Monads via NuGet:
+
+<Tabs>
+  <TabItem label=".NET CLI">
+    ```shell
+    dotnet add package Bogoware.Monads
+    ```
+  </TabItem>
+  <TabItem label="Package Manager">
+    ```powershell
+    Install-Package Bogoware.Monads
+    ```
+  </TabItem>
+</Tabs>
+
+## Supported Platforms
+
+| Platform | Version |
+|----------|---------|
+| .NET Standard | 2.1 |
+| .NET | 8.0, 9.0, 10.0 |
+
+## Basic Usage
+
+<Steps>
+
+1. Add the namespace to your code:
+
+   ```csharp
+   using Bogoware.Monads;
+   ```
+
+2. You're now ready to use `Result<T>` and `Maybe<T>` in your projects.
+
+</Steps>
+
+## Next Steps
+
+<LinkCard title="Result\<T\> Monad" description="Learn how to model operations that can fail" href="/Monads/concepts/result-monad/" />
+<LinkCard title="Maybe\<T\> Monad" description="Learn how to handle optional values safely" href="/Monads/concepts/maybe-monad/" />
+<LinkCard title="API Reference" description="Explore the complete API documentation" href="/Monads/api/" />
