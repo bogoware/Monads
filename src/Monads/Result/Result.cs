@@ -447,4 +447,9 @@ public readonly struct Result<TValue> : IResult<TValue>, IEquatable<Result<TValu
     public static bool operator ==(Result<TValue> left, Result<TValue> right) => left.Equals(right);
 
     public static bool operator !=(Result<TValue> left, Result<TValue> right) => !left.Equals(right);
+
+    public override string ToString() =>
+        IsSuccess
+            ? $"Success({_value})"
+            : $"Failure<{typeof(TValue).GetFriendlyTypeName()}>({_error!.Message})";
 }
