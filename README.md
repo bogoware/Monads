@@ -1,6 +1,6 @@
 # Bogoware Monads
 
-![Nuget](https://img.shields.io/nuget/dt/Bogoware.Monads?logo=nuget&style=plastic) ![Nuget](https://img.shields.io/nuget/v/Bogoware.Monads?style=plastic) [![Documentation](https://img.shields.io/badge/docs-online-blue)](https://bogoware.github.io/Monads/)
+[![Build](https://github.com/bogoware/Monads/actions/workflows/build.yml/badge.svg)](https://github.com/bogoware/Monads/actions/workflows/build.yml) ![Nuget](https://img.shields.io/nuget/v/Bogoware.Monads?style=plastic) ![Nuget](https://img.shields.io/nuget/dt/Bogoware.Monads?logo=nuget&style=plastic) [![License: MIT](https://img.shields.io/github/license/bogoware/Monads?style=plastic)](./LICENSE) [![Documentation](https://img.shields.io/badge/docs-online-blue)](https://bogoware.github.io/Monads/)
 
 _A functional programming library for C# providing `Result<T>` and `Maybe<T>` monads_
 

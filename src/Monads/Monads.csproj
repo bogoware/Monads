@@ -19,9 +19,9 @@
         <Copyright>Copyright © Giovanni Costagliola 2023</Copyright>
         <NeutralLanguage>en-US</NeutralLanguage>
         <Title>Bogoware C# Monads</Title>
-        <Description>Provides Maybe and Result Monads suitable to support functional stye in C#.</Description>
-        <Summary>Provides Maybe and Result Monads suitable to support functional stye in C#.</Summary>
-        <PackageTags>c# functional maybe result success failure error some none map bind flatmap linq option either monad async</PackageTags>
+        <Description>Composable Result&lt;T&gt; and Maybe&lt;T&gt; monads for C#: type-safe, railway-oriented functional error handling. Multi-targets netstandard2.1, net8.0, net9.0, net10.0.</Description>
+        <Summary>Composable Result&lt;T&gt; and Maybe&lt;T&gt; monads for C#: type-safe, railway-oriented functional error handling.</Summary>
+        <PackageTags>c# csharp dotnet functional functional-programming monad maybe result option either error-handling railway-oriented-programming pattern-matching map bind flatmap linq async value-object discriminated-union</PackageTags>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageIcon>nuget-icon.png</PackageIcon>
         <PackageProjectUrl>https://bogoware.github.io/Monads/</PackageProjectUrl>
