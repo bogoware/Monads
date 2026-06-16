@@ -12,6 +12,6 @@
     "@astrojs/sitemap": "^3.7.1",
     "@astrojs/starlight": "^0.30.0",
     "@bogoware/starlight-theme": "^0.2.0",
-    "astro": "^5.17.0"
+    "astro": "^6.4.6"
   }
 }
