@@ -35,6 +35,7 @@ public static class MaybeAsyncExtensions
         => await (await maybeTask).Map(map);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Consider using WithDefault(() => value) instead to benefit from lazy evaluation. Direct values are always evaluated, even when the Maybe is Some.", false)]
     public static async Task<Maybe<TValue>> WithDefault<TValue>(
         this Task<Maybe<TValue>> maybeTask,
         TValue value) where TValue : class

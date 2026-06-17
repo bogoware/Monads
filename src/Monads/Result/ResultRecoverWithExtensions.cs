@@ -10,6 +10,7 @@ public static class ResultRecoverWithExtensions
     #region Functional Closure Extensions
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Consider using RecoverWith(() => value) instead to benefit from lazy evaluation. Direct values are always evaluated, even when the Result is Success.", false)]
     public static Result<TValue> RecoverWith<TValue, TError>(
         this Result<TValue> result, TValue newValue)
         where TError : Error
@@ -42,6 +43,7 @@ public static class ResultRecoverWithExtensions
         => await (await result).RecoverWith(functor);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [Obsolete("Consider using RecoverWith(() => value) instead to benefit from lazy evaluation. Direct values are always evaluated, even when the Result is Success.", false)]
     public static async Task<Result<TValue>> RecoverWith<TValue>(
         this Task<Result<TValue>> result, TValue newValue)
         => (await result).RecoverWith(newValue);
